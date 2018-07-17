@@ -1,0 +1,54 @@
+.animCarouselFlip {
+  width: 210px;
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+  -webkit-perspective: 1000px;
+  /* Chrome 12+, Safari 4+ */
+  -ms-perspective: 1000px;
+  /* IE 10 */
+  perspective: 1000px;
+  -webkit-transition: height 0.5s ease-out;
+  -moz-transition: height 0.5s ease-out;
+  transition: height 0.5s ease-out;
+}
+.animCarouselFlip .carousel {
+  display: none;
+  width: 210px;
+  height: 100%;
+  position: absolute;
+  -webkit-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transition: transform .5s;
+  transition: transform .5s;
+}
+.animCarouselFlip .panel {
+  margin: 0;
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 210px;
+  height: auto;
+  opacity: 1;
+}
+/************************* LIST ROW ADD / DELETE ***********************************/
+/*
+  You must / should set max-height of the element
+ */
+.animListRow .animDeleteRow {
+  animation: removed-item-animation 0.4s cubic-bezier(0.55, -0.04, 0.91, 0.94) forwards;
+  overflow: hidden;
+}
+@keyframes removed-item-animation {
+  from {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  to {
+    opacity: 0;
+    max-height: 0px;
+    transform: translateY(-100%);
+  }
+}

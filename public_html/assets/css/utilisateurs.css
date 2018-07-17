@@ -1,0 +1,32 @@
+.module_utilisateurs {
+  width: 400px;
+  height: 200px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  text-align: center;
+}
+.module_utilisateurs .loginInnerBox {
+  table-layout: fixed;
+  width: 300px;
+  margin: auto;
+  margin-top: 26px;
+  margin-bottom: 20px;
+  border: solid black 1px;
+}
+.module_utilisateurs .loginInnerBox .label {
+  width: 120px;
+  text-align: right;
+  padding-right: 10px;
+}
+.module_utilisateurs .loginInnerBox .field {
+  text-align: left;
+}
+.module_utilisateurs .loginInnerBox input {
+  width: 160px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

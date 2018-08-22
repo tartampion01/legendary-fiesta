@@ -8,20 +8,17 @@
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>
-        <div id="titre" class="col-xs-6 col-sm-8">menu</div>
+        <div id="titre" class="col-xs-6 col-sm-8">UTILISATEURS</div>
         <div id="user" class="col-xs-3 col-sm-2">
             <div><?php echo $_SESSION["username"]; ?>!</div>
-            <a href="#" class="offline_hide">
+           <a href="#" class="offline_hide">
                 <div id="logout" class="hyperlien" onclick="window.location.href='logout.php'">Déconnexion</div>
             </a>
         </div>
     </div>
 <div id="contenu">
-    <div class="menufloat">
-        <?php 
-            IL_Utils::getUserMenu($_SESSION["level"]);
-        ?>        
-    </div>
+
+    
 </div>
     
 <footer id="pied">

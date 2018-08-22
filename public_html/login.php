@@ -1,4 +1,40 @@
-<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
+?>
+
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <title>
+        Login
+    </title>
+
+    <script type="text/json" class="communicator">[{"nop":""}]</script>
+    <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
+    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="application/javascript" src="assets/js/dsTools/dsSwissKnife.js"></script>
+    <script type="application/javascript" src="assets/js/dsTools/dsAjaxCommunicator.js"></script>
+    <script type="application/javascript" src="assets/js/dsTools/dsAjaxV2.js"></script>
+    <script type="application/javascript" src="assets/js/dsTools/dsValueFormatter.js"></script>
+    <script type="application/javascript" src="assets/js/container.js"></script>
+    <script type="application/javascript" src="assets/js/animator.js"></script>
+    <script type="application/javascript" src="assets/js/popup.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/animator.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/utilisateurs.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/login.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/popup.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/menu.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/layout_normal.css" />
+    
+    <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
+</head>
 <body>
 <div name='login' class='page_login base_page serializable'>
     <?php
@@ -31,12 +67,18 @@
                     
                     $_SESSION["username"] = $username;
                     $_SESSION["level"] = $level;
-
+                    
+                    // Most useless switch ever?!?
                     switch($level)
                     {
+                        // USER
                         case 0: header('Location: ' . "default.php");
                                 break;
+                        // ADMIN
                         case 1: header('Location: ' . "default.php");
+                                break;
+                        // BOTH
+                        case 2: header('Location: ' . "default.php");
                                 break;
                         case -1: $usernameErr = "Utilisateur inexistant/Mauvais mot de passe";
                             break;
@@ -56,7 +98,7 @@
         </div>
         <div class="row login">
             <div class="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 loginBox">
-                <form name="form" role="form" method="POST" action="/<?php echo $NOMPAGE; ?>">
+                <form name="form" role="form" method="POST" action="/login.php">
                     <div class="row">
                         <div class="col-xs-6 label">Nom d'utilisateur</div>
                         <div class="col-xs-6 field">

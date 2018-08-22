@@ -1,11 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Personne de 'loggé'
+if( !isset($_SESSION["username"]))
+    header('Location: ' . "../login.php");
+
+?>
+
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
 <?PHP
     // Don't show errors on webpage
     //error_reporting(0);
     // Show errors on webpage
     error_reporting(E_ALL);
-    session_start();
 
     $NOMPAGE = htmlspecialchars(basename($_SERVER['PHP_SELF']));
     // REQUIRED BY ALL PAGES
@@ -40,8 +50,8 @@
     <link rel="stylesheet" type="text/css" href="assets/css/popup.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/menu.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/layout_normal.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/livraison.css" />
     <link rel='canonical' href='<?PHP echo $NOMPAGE ?>' />
     
-    <meta content="<?PHP IL_Header::getMetaContent($NOMPAGE); ?>" name="description" />
     <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
 </head>

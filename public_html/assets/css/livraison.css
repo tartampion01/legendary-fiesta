@@ -1,0 +1,39 @@
+.page_livraison {
+  font-weight: bold;
+  overflow: hidden;
+  /* enlève les spinners pour les champs numériques */
+}
+.page_livraison section {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+.page_livraison .row {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+.page_livraison input {
+  width: 100%;
+}
+.page_livraison .module_livraison {
+  padding-top: 0px;
+}
+.page_livraison .module_livraison .awesomplete {
+  width: 100%;
+}
+.page_livraison .module_livraison .awesomplete ul {
+  line-height: 2em;
+}
+.page_livraison .buttons {
+  margin-top: 1em;
+}
+.page_livraison button {
+  width: 100%;
+}
+.page_livraison input[type="number"]::-webkit-outer-spin-button,
+.page_livraison input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.page_livraison input[type="number"] {
+  -moz-appearance: textfield;
+}

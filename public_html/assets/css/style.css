@@ -984,3 +984,29 @@ i.fa {
   color: orange;
   font-weight: bold;
 }
+
+.module_liste table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+.module_liste table .input {
+  width: 100%;
+}
+.module_liste table th,
+.module_liste table td {
+  overflow: hidden;
+}
+.module_liste table th.sortable:hover {
+  cursor: pointer;
+}
+.module_liste table .sortIcon {
+  margin-left: 5px;
+}
+.module_liste table td * {
+  vertical-align: middle;
+}
+.module_liste table tr.hoverable:hover * {
+  cursor: pointer;
+  background-color: lightgrey;
+}

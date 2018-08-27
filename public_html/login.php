@@ -38,54 +38,92 @@ require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
 <body>
 <div name='login' class='page_login base_page serializable'>
     <?php
-        $usernameErr = $passwordErr = "";
+        // Define variables and initialize with empty values
         $username = $password = "";
-
-        $errorCount = 0;
+        $username_err = $password_err = $client_id_err = "";
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if(isset($_POST['btnLogin']))
             {
-                if (empty($_POST["username"])){
-                    $usernameErr = "Champ obligatoire";
-                    $errorCount += 1;
+                // Check if username is empty
+                if(empty(trim($_POST["username"]))){
+                    $username_err = 'Veuillez entrer votre nom d\'utilisateur.';
+                } else{
+                    $username = trim($_POST["username"]);
                 }
-                else
-                    $username = IL_Utils::test_input($_POST["username"]);
+    
+                // Check if password is empty
+                if(empty(trim($_POST['password']))){
+                    $password_err = 'Veuillez entrer votre mot de passe.';
+                } else{
+                    $password = trim($_POST['password']);
+                }
+    
+                // Validate credentials
+                if(empty($username_err) && empty($password_err)){
+                    // Prepare a select statement
+                    $conn = IL_Database::getConn();
+        
+                    
+                    echo password_hash(mysqli_real_escape_string($conn, '966'),PASSWORD_DEFAULT);
+                    echo password_hash(mysqli_real_escape_string($conn, 'phil'),PASSWORD_DEFAULT);
+                    echo password_hash(mysqli_real_escape_string($conn, '999'),PASSWORD_DEFAULT);
+                    
+                    
+                    $sql = "SELECT username, password FROM users WHERE username = ?";
 
-                if (empty($_POST["password"])){
-                    $passwordErr = "Champ obligatoire";
-                    $errorCount += 1;
-                }
-                else
-                    $password = IL_Utils::test_input($_POST["password"]);
-                
-                // LOGIN
-                if( $errorCount == 0 )
-                {
-                    $level = IL_Utils::login($username,$password);
-                    
-                    $_SESSION["username"] = $username;
-                    $_SESSION["level"] = $level;
-                    
-                    // Most useless switch ever?!?
-                    switch($level)
-                    {
-                        // USER
-                        case 0: header('Location: ' . "default.php");
-                                break;
-                        // ADMIN
-                        case 1: header('Location: ' . "default.php");
-                                break;
-                        // BOTH
-                        case 2: header('Location: ' . "default.php");
-                                break;
-                        case -1: $usernameErr = "Utilisateur inexistant/Mauvais mot de passe";
-                            break;
+                    if($stmt = mysqli_prepare($conn, $sql)){
+                        // Bind variables to the prepared statement as parameters
+                        mysqli_stmt_bind_param($stmt, "s", $param_username);
+
+                        // Set parameters
+                        $param_username = $username;
+                        
+                        // Attempt to execute the prepared statement
+                        if(mysqli_stmt_execute($stmt)){
+                            // Store result
+                            mysqli_stmt_store_result($stmt);
+
+                            // Check if username exists, if yes then verify password
+                            if(mysqli_stmt_num_rows($stmt) == 1){                    
+                                // Bind result variables
+
+                                mysqli_stmt_bind_result($stmt, $username, $hashed_password);
+                                if(mysqli_stmt_fetch($stmt)){
+                                    if(password_verify($password, $hashed_password)){
+
+                                        /* Password is correct, so start a new session and
+                                        save the username to the session */
+                                        session_start();
+
+                                        $_SESSION["username"] = $username;
+                                        
+                                        $user = new IL_Users();
+                                        $user->load(0,'',$username);
+                                        $_SESSION["id_user"] = $user->id;
+                                        $_SESSION["level"] = $user->level;
+                                        
+                                        header('Location: ' . "default.php");
+                                        
+                                    } else{
+                                        // Display an error message if password is not valid
+                                        $password_err = 'Le mot de passe n\'est pas valide.';
+                                    }
+                                }
+                            } else{
+                                // Display an error message if username doesn't exist
+                                $username_err = 'Ce compte n\'existe pas.';
+                            }
+                        } else{
+                            echo "Houla! Une grave erreur s'est produite";
+                        }
                     }
-                    
-                    echo $result;
+                    // Close statement
+                    mysqli_stmt_close($stmt);
                 }
+                // Close connection
+                mysqli_close($conn);
+
             }
         }
     ?>
@@ -103,14 +141,14 @@ require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
                         <div class="col-xs-6 label">Nom d'utilisateur</div>
                         <div class="col-xs-6 field">
                             <input type="text" id="username" name="username" class="input" value="<?php echo $username;?>"/>
-                            <span class="error"><?php echo $usernameErr;?></span>
+                            <span class="error"><?php echo $username_err;?></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-6 label">Mot de passe</div>
                         <div class="col-xs-6 field">
                             <input type="password" id="password" name="password" class="input" value=""/>
-                            <span class="error"><?php echo $passwordErr ;?></span>
+                            <span class="error"><?php echo $password_err ;?></span>
                         </div>
                     </div>
                     <div class="row buttons">

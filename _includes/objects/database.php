@@ -1,5 +1,5 @@
 <?php
-class Database{
+class IL_Database{
  
     // specify your own database credentials
 //    private $host     = "127.0.0.1";
@@ -31,7 +31,7 @@ class Database{
     
     public static function getConn()
     {
-        $db = new Database();
+        $db = new IL_Database();
         $db->conn = null;
  
         try{

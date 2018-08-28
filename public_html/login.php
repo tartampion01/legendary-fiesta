@@ -63,12 +63,10 @@ require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
                 if(empty($username_err) && empty($password_err)){
                     // Prepare a select statement
                     $conn = IL_Database::getConn();
-        
                     
-                    echo password_hash(mysqli_real_escape_string($conn, '966'),PASSWORD_DEFAULT);
-                    echo password_hash(mysqli_real_escape_string($conn, 'phil'),PASSWORD_DEFAULT);
-                    echo password_hash(mysqli_real_escape_string($conn, '999'),PASSWORD_DEFAULT);
-                    
+//                    echo password_hash(mysqli_real_escape_string($conn, '966'),PASSWORD_DEFAULT);
+//                    echo password_hash(mysqli_real_escape_string($conn, 'phil'),PASSWORD_DEFAULT);
+//                    echo password_hash(mysqli_real_escape_string($conn, '999'),PASSWORD_DEFAULT);
                     
                     $sql = "SELECT username, password FROM users WHERE username = ?";
 
@@ -153,7 +151,7 @@ require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
                     </div>
                     <div class="row buttons">
                         <div class=" col-xs-12">
-                            <input type="submit" class="buttonStyle btn-default" id="btnLogin" name="btnLogin" />
+                            <input type="submit" class="buttonStyle btn-default" id="btnLogin" name="btnLogin" value="Entrer" />
                         </div>
                     </div>
                 </form>

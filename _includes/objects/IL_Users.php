@@ -8,12 +8,11 @@ class IL_Users{
     public $hash_key = '';
     
     public function load($id = 0, $hash_key = '', $username){
-        $database = new IL_Database();
-        $conn = $database->getConn();
+        $conn = IL_Database::getConn();
         
         if($id>0){
             $id = mysqli_real_escape_string($conn, $id);
-            $sql = "SELECT users FROM clients WHERE client_id=$id";
+            $sql = "SELECT * FROM users WHERE id_user=$id";
         }
         elseif($hash_key != ''){
             $hash_key = mysqli_real_escape_string($conn, $hash_key);
@@ -39,17 +38,15 @@ class IL_Users{
     }
     
     public function save(){
-        $database = new IL_Database();
-        $conn = $database->getConn();
+        $conn = IL_Database::getConn();
         
-        $nom = mysqli_real_escape_string($conn, $this->username);
+        $username = mysqli_real_escape_string($conn, $this->username);
         $actif = mysqli_real_escape_string($conn, $this->actif);
         $level = mysqli_real_escape_string($conn, $this->level);       
         $password = password_hash(mysqli_real_escape_string($conn, $this->password),PASSWORD_DEFAULT);
         
-        $sql = "UPDATE users SET nom='$nom',level='$level',actif='$actif',numero_apt='$numero_apt',"
-                . "password='$password' WHERE id_user=".$this->id;
-        
+        $sql = "UPDATE users SET username='$username',level='$level',actif='$actif',password='$password' WHERE id_user=".$this->id;
+
         mysqli_query($conn, $sql);
         
         return true;
@@ -61,7 +58,8 @@ class IL_Users{
      * @return   bool
      */
     public function create($disposable = 0){
-        global $conn;
+        
+        $conn = IL_Database::getConn();
         
         $username = mysqli_real_escape_string($conn, $this->username);
         $level = mysqli_real_escape_string($conn, $this->level);
@@ -74,6 +72,17 @@ class IL_Users{
 
         mysqli_query($conn, $sql);
         $this->id = $conn->insert_id;
+        
+        return true;
+    }
+    
+    public function delete(){
+        
+        $conn = IL_Database::getConn();
+        
+        $sql = "UPDATE users SET actif='0' WHERE id_user=".$this->id;
+
+        mysqli_query($conn, $sql);
         
         return true;
     }

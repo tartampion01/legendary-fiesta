@@ -17,27 +17,197 @@
         </div>
     </div>
 <div id="contenu">
+    <form action="utilisateurs.php" method="POST">
     <?php
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+            // NEW or UPDATE?
+            if( isset($_POST["btnSauvegarder"]) )
+            {
+                $errorMessage = "";
+                $username = $password = $passwordconfirmation = "";
+                $admin = $livreur = 0;
+                $user = new IL_Users();
+                
+                if( isset($_POST["hidID"]))
+                {
+                    $id_user = $_POST["hidID"];
+                    $username = $_POST["tbUsername"];
+                    $password = $_POST["tbPassword"];
+                    $passwordconfirmation = $_POST["tbPasswordConfirmation"];
+                    $admin = $_POST["cbAdmin"];
+                    $livreur = $_POST["cbLivreur"];
+                    $level = -1;
+                    
+//                    echo $username . "<br>";
+//                    echo $password . "<br>";
+//                    echo $passwordconfirmation . "<br>";
+//                    echo $admin . "<br>";
+//                    echo $livreur . "<br>";
+//                    echo $_POST["hidID"] . "<br>";
+                    
+                    // LEVEL
+                    if( $admin == 0 && $livreur == 0 )
+                        $errorMessage = "Veuillez choisir un groupe";
+                    else
+                    {
+                        if( $admin == 0 && $livreur == 1 )
+                            $level = 0;
+                        if( $admin == 1 && $livreur == 0 )
+                            $level = 1;
+                        if( $admin == 1 && $livreur == 1 )
+                            $level = 2;
+                    }
+                    
+                    if( $level != -1 ){
+                        if( $username != "" ){
+                            if( $password != "" && $passwordconfirmation != ""){
+                                if( strcmp($password,$passwordconfirmation) == 0 ){
+                                    
+                                    $user->username = $username;
+                                    $user->actif = 1;
+                                    $user->level = $level;
+                                    $user->password = $password;
+                                    
+                                    // CREATE
+                                    if($_POST["hidID"] == "new" )
+                                    {
+                                        $user->create();
+                                        $id_user = $user->id;
+                                        if( $id_user == 0 )
+                                        {
+                                            $id_user = "new";
+                                            $errorMessage = "Un utilisateur avec ce nom existe déjà";
+                                        }
+                                        else
+                                            $errorMessage = "L'utilisateur à été crée";
+                                            $id_user = "new";
+                                            $username = "";
+                                            $admin = 0;
+                                            $livreur = 0;
+                                            
+                                    }
+                                    // UPDATE
+                                    else
+                                    {
+                                        $id_user = $_POST["hidID"];
+                                        $user->id = $id_user;
+                                        $user->save();
+                                        $errorMessage = "L'utilisateur à été modifié";
+                                    }
+                                }
+                                else
+                                    $errorMessage = "Le mot de passe et la confirmation ne correspondent pas";
+                            }
+                            else
+                                $errorMessage = "Le mot de passe ne peut être vide";
+                        }
+                        else
+                            $errorMessage = "Veuillez entrer un nom d'utilisateur";
+                    }
+                }?>
+                    <div class="module_liste base_module">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <?php if( $id_user == "new" ){ ?>
+                                        <th colspan="2" class="username">Nouvel utilisateur</th>
+                                    <?php } else { ?>
+                                        <th colspan="2" class="username">Modifier un utilisateur</th>
+                                    <?php } ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr hidden="">
+                                    <td class="label">
+                                        <div class="fieldLabel">ID</div>
+                                    </td>
+                                    <td class="field">
+                                        <input name="hidID" id="hidID" value="<?php echo $id_user?>" readonly="" maxlength="10" class="input" type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="username" colspan="2">
+                                        <?php echo $errorMessage; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <div class="fieldLabel">Nom d'utilisateur</div>
+                                    </td>
+                                    <td class="field">
+                                        <input name="tbUsername" value="<?php echo $username; ?>" maxlength="50" class="input" type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <div class="fieldLabel">Mot de passe</div>
+                                    </td>
+                                    <td class="field">
+                                        <input name="tbPassword" value="" maxlength="255" class="input" type="password">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <div class="fieldLabel">Confirmez</div>
+                                    </td>
+                                    <td class="field">
+                                        <input name="tbPasswordConfirmation" value="" maxlength="255" class="input" type="password">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <div class="fieldLabel">Groupes</div>
+                                    </td>
+                                    <td class="field">
+                                        <ul name="groupes" data-serializer="checkboxlist" class="input" type="checkboxlist">
+                                            <li>
+                                                <input type="hidden" id="cbAdmin" name="cbAdmin" value="0">
+                                                <input type="checkbox" id="cbAdmin" name="cbAdmin" title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
+                                                <label>administrateurs</label>
+                                            </li>
+                                            <li>
+                                                <input type="hidden" id="cbLivreur" name="cbLivreur" value="0">
+                                                <input type="checkbox" id="cbLivreur" name="cbLivreur" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
+                                                <label>livreurs</label>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input class="buttonStyle buttonMedium" type="submit" id="btnSauvegarder" name="btnSauvegarder" value="Sauvegarder" />
+                        <?php if( $id_user != "new" ){ ?>
+                        <a class="buttonStyle buttonMedium" href="utilisateurs?supprimer=<?php echo base64_encode($id_user); ?>" onclick="return confirm('Confirmer la suppression...?');">Supprimer</a>
+                        <?php } ?>
+                        <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
+                    </div>
+                <?php 
+            }            
         }
         else
         {
             // EDIT OR NEW USER
             if( isset( $_REQUEST["id_user"] ))
             {
+                $errorMessage = "";
                 $username = $password = $passwordconfirmation = "";
                 $admin = $livreur = 0;
                 
                 $id_user = $_REQUEST["id_user"];
+                
                 if( $id_user == "new" )
                 {
                     
                 }
                 else
                 {
+                    // We have an ID
+                    $id_user = base64_decode($_REQUEST["id_user"]);
                     $user = new IL_Users();
-                    $user->load($id_user);
+                    $user->load($id_user,'','');
+                    $username = $user->username;
+
                     switch( $user->level )
                     {
                         case 0: $admin = 0;
@@ -52,15 +222,29 @@
                     }
                 }
                 ?>
-                    <div class="userInfo">
+                    <div class="module_liste base_module">
                         <table>
+                            <thead>
+                                <tr>
+                                    <?php if( $id_user == "new" ){ ?>
+                                        <th colspan="2" class="username">Nouvel utilisateur</th>
+                                    <?php } else { ?>
+                                        <th colspan="2" class="username">Modifier un utilisateur</th>
+                                    <?php } ?>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <tr hidden="">
                                     <td class="label">
                                         <div class="fieldLabel">ID</div>
                                     </td>
                                     <td class="field">
-                                        <input name="ID" value="" readonly="" maxlength="10" class="input" type="text">
+                                        <input name="hidID" id="hidID" value="<?php echo $id_user?>" readonly="" maxlength="10" class="input" type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="username" colspan="2">
+                                        <?php echo $errorMessage; ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -68,7 +252,7 @@
                                         <div class="fieldLabel">Nom d'utilisateur</div>
                                     </td>
                                     <td class="field">
-                                        <input name="username" value="<?php echo $username; ?>" maxlength="30" class="input" type="text">
+                                        <input name="tbUsername" value="<?php echo $username; ?>" maxlength="50" class="input" type="text">
                                     </td>
                                 </tr>
                                 <tr>
@@ -76,7 +260,7 @@
                                         <div class="fieldLabel">Mot de passe</div>
                                     </td>
                                     <td class="field">
-                                        <input name="password" value="<?php echo $password; ?>" maxlength="255" class="input" type="password">
+                                        <input name="tbPassword" value="" maxlength="255" class="input" type="password">
                                     </td>
                                 </tr>
                                 <tr>
@@ -84,7 +268,7 @@
                                         <div class="fieldLabel">Confirmez</div>
                                     </td>
                                     <td class="field">
-                                        <input name="password2" value="" maxlength="255" class="input" type="password">
+                                        <input name="tbPasswordConfirmation" value="" maxlength="255" class="input" type="password">
                                     </td>
                                 </tr>
                                 <tr>
@@ -94,11 +278,13 @@
                                     <td class="field">
                                         <ul name="groupes" data-serializer="checkboxlist" class="input" type="checkboxlist">
                                             <li>
-                                                <input name="administrateurs" type="checkbox" value="<?php echo $admin; ?>">
+                                                <input type="hidden" id="cbAdmin" name="cbAdmin" value="0">
+                                                <input type="checkbox" id="cbAdmin" name="cbAdmin" title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
                                                 <label>administrateurs</label>
                                             </li>
                                             <li>
-                                                <input name="livreurs" type="checkbox" value="<?php echo $admin; ?>">
+                                                <input type="hidden" id="cbLivreur" name="cbLivreur" value="0">
+                                                <input type="checkbox" id="cbLivreur" name="cbLivreur" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
                                                 <label>livreurs</label>
                                             </li>
                                         </ul>
@@ -106,52 +292,87 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="buttonStyle buttonMedium" onclick="dsAjaxV2.eventCommitContainer(event, 'sauvegarder')">Sauvegarder</button>
-                        <button class="buttonStyle buttonMedium" onclick="location.href='?page=gestionUtilisateurs'">Annuler</button>
+                        <input class="buttonStyle buttonMedium" type="submit" id="btnSauvegarder" name="btnSauvegarder" value="Sauvegarder" />
+                        <?php if( $id_user != "new" ){ ?>
+                        <a class="buttonStyle buttonMedium" href="utilisateurs?supprimer=<?php echo base64_encode($id_user); ?>" onclick="return confirm('Confirmer la suppression...?');">Supprimer</a>
+                        <?php } ?>
+                        <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
                     </div>
-    <?php
+        <?php
+            }
+            // DELETE
+            elseif( isset($_REQUEST["supprimer"]))
+            {
+                $id_user = base64_decode($_REQUEST["supprimer"]);
+                $user = new IL_Users();
+                $user->load($id_user,'','');
+                $username = $user->username;
+                $user->delete();
+                
+                ?>
+                <div class="module_liste base_module">
+                    <table>                            
+                        <tbody>
+                            <tr hidden="">
+                                <td class="label">
+                                    <div class="fieldLabel">ID</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="username">
+                                    L'utilisateur [&nbsp;<b><?php echo $username; ?></b>&nbsp;] a été supprimé
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="username">
+                                    <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <?php
             }
             // SHOW ALL USERS
             else
             { ?>
-            <div name="lst_users" class="module_liste base_module serializable">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="ID isHidden">ID</th>
-                            <th class="username">Nom d'utilisateur</th>
-                            <th class="edit"></th>
-                        </tr>
-                    </thead>
-                <tbody>
-                <?php
-                    $conn = IL_Database::getConn();
-                    $sql = "SELECT * FROM users WHERE actif=1";
+                <div name="lst_users" class="module_liste base_module serializable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="username">Nom d'utilisateur</th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                    <?php
+                        $conn = IL_Database::getConn();
+                        $sql = "SELECT * FROM users WHERE actif=1";
 
-                    $users = mysqli_query($conn, $sql);
+                        $users = mysqli_query($conn, $sql);
 
-                    if(mysqli_num_rows($users) > 0){
-                        while($row = mysqli_fetch_assoc($users)) {
-                            echo '<tr name="0" class="serializable hoverable" onclick="">';
-                            echo '<td>';
-                            echo '<form action="utilisateurs.php" method="post">';
-                            echo '<input id="hidUserId" name="hidUserId" type="hidden" value="' . $row["id_user"] . '" />';
-                            echo '<input name="username" value=' . $row["username"] . ' readonly="" maxlength="30" class="input" type="text" />';
-                            echo '<a name="edit" class="" href="utilisateurs.php?id_user=' . $row["id_user"] . '"><img src="assets/images/pencil-edit-button.png" alt=""/></a>';
-                            echo '</form>';
-                            echo '</td>';
-                            echo '</tr>';
-                        } ?>
+                        if(mysqli_num_rows($users) > 0){
+                            while($row = mysqli_fetch_assoc($users)) {
+                                echo '<tr name="0" onclick="window.location.href=\'utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '\'" class="serializable hoverable">';
+                                echo '<td style="width:95%">';
+                                echo '<input id="hidUserId" name="hidUserId" type="hidden" value="' . $row["id_user"] . '" />';
+                                echo '<input name="tbUsername" value="' . $row["username"] . '" readonly="" maxlength="100" class="input" type="text" />';
+                                echo '</td>';
+                                echo '<td style="width:5%">';
+                                echo '<a name="edit" class="" href="utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '"><img src="assets/images/pencil-edit-button.png" alt=""/></a>';
+                                echo '</td>';
+                                echo '</tr>';
+                            } ?>
                     </tbody>
                     </table>
-                    <button class="newUser buttonStyle buttonLarge" onclick="window.location.href='utilisateurs.php?id_user=new'">Nouvel utilisateur</button>
+                    <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php?id_user=new">Nouvel utilisateur</a>
                     <?php }
                     else
                         echo "Aucun utilisateur trouvé.";
             }
         }
         ?>
-    </div>
+            </div>
+    </form>
 </div>
     
 <footer id="pied">
@@ -159,7 +380,7 @@
         <div class="copyright"></div>
     </div>
 </footer>
-</div>
+    </div>
     <div id="showLoading">
         <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
         <span class="sr-only">Loading...</span>

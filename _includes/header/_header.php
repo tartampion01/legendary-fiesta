@@ -41,6 +41,8 @@ if( !isset($_SESSION["username"]))
     <script type="application/javascript" src="assets/js/container.js"></script>
     <script type="application/javascript" src="assets/js/animator.js"></script>
     <script type="application/javascript" src="assets/js/popup.js"></script>
+    <script type="application/javascript" src="assets/js/jSignature/jSignature.min.js"></script>
+    <script type="application/javascript" src="assets/js/utilities.js"></script>
     
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/animator.css" />

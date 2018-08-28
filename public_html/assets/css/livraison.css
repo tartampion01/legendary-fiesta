@@ -37,3 +37,25 @@
 .page_livraison input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.module_signature {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.module_signature .signPad {
+    width: 600px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #eeeeee;
+}
+.signPad.active {
+    background-color: #FFF;
+}
+.jSignature {
+    background-color: rgb(255, 255, 255) !important;
+}
+.jSignature.disabled {
+    background-color: rgb(238, 238, 238) !important;
+}

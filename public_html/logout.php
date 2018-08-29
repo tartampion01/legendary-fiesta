@@ -1,8 +1,6 @@
 <?php
-$_SESSION["username"] = "";
-$_SESSION["level"] = "";
-session_unset();
-session_destroy();
+require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
 
+IL_Session::destroy();
 header('Location: ' . "login.php");
 ?>

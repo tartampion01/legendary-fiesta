@@ -10,7 +10,7 @@
         </div>
         <div id="titre" class="col-xs-6 col-sm-8">UTILISATEURS</div>
         <div id="user" class="col-xs-3 col-sm-2">
-            <div><?php echo $_SESSION["username"]; ?>!</div>
+            <div><?php echo IL_Session::r(IL_SessionVariables::USERNAME); ?></div>
            <a href="#" class="offline_hide">
                 <div id="logout" class="hyperlien" onclick="window.location.href='logout.php'">Déconnexion</div>
             </a>

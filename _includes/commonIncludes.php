@@ -15,9 +15,7 @@ require_once(dirname(__DIR__). '/_includes/objects/IL_Users.php');
 require_once(dirname(__DIR__). '/_includes/objects/IL_PageLink.php');
 require_once(dirname(__DIR__). '/_includes/objects/IL_Email.php');
 
-// Utils
+// UTILS
 require_once(dirname(__DIR__). '/_includes/objects/IL_Utils.php');
 
-// "GLOBALES" useless si tout est static dans IL_Utils...
-$G_IL_Utils = new IL_Utils();
 ?>

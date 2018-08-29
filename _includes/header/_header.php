@@ -4,10 +4,11 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Personne de 'loggé'
-if( !isset($_SESSION["username"]))
-    header('Location: ' . "../login.php");
+require_once(dirname(__DIR__).'/commonIncludes.php');
 
+// Personne de 'loggé'
+if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
+    header('Location: ' . "../login.php");
 ?>
 
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">

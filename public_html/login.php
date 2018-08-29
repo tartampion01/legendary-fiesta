@@ -93,9 +93,9 @@
 
                                         $user = new IL_Users();
                                         $user->load(0,'',$username);
-                                        IL_Session::w(IL_SessionVariables::USERNAME,$username);
-                                        IL_Session::w(IL_SessionVariables::LEVEL,$user->level);
+                                        IL_Session::w(IL_SessionVariables::USERNAME,$user->username);
                                         IL_Session::w(IL_SessionVariables::ID_USER,$user->id);
+                                        IL_Session::w(IL_SessionVariables::LEVEL,$user->level);
                                         
                                         header('Location: ' . "default.php");
                                         

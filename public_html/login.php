@@ -1,9 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
+    require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
 ?>
 
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
@@ -94,12 +91,11 @@ require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
                                         save the username to the session */
                                         session_start();
 
-                                        $_SESSION["username"] = $username;
-                                        
                                         $user = new IL_Users();
                                         $user->load(0,'',$username);
-                                        $_SESSION["id_user"] = $user->id;
-                                        $_SESSION["level"] = $user->level;
+                                        IL_Session::w(IL_SessionVariables::USERNAME,$username);
+                                        IL_Session::w(IL_SessionVariables::LEVEL,$user->level);
+                                        IL_Session::w(IL_SessionVariables::ID_USER,$user->id);
                                         
                                         header('Location: ' . "default.php");
                                         

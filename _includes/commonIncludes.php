@@ -9,12 +9,11 @@ $applicationConfig = parse_ini_file(dirname(__DIR__).'/_configs/application.ini'
 
 // CONNECTION DB
 require_once(dirname(__DIR__). '/_includes/objects/database.php');
-// FONCTIONS
-require_once(dirname(__DIR__). '/_includes/functions/dbFunctions.php');
 // OBJECTS
+require_once(dirname(__DIR__). '/_includes/objects/IL_Session.php');
+require_once(dirname(__DIR__). '/_includes/objects/IL_Users.php');
 require_once(dirname(__DIR__). '/_includes/objects/IL_PageLink.php');
 require_once(dirname(__DIR__). '/_includes/objects/IL_Email.php');
-require_once(dirname(__DIR__). '/_includes/objects/IL_Users.php');
 
 // Utils
 require_once(dirname(__DIR__). '/_includes/objects/IL_Utils.php');

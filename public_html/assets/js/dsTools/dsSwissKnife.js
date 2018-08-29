@@ -54,12 +54,12 @@ var dsSwissKnife = new function(){
 		case "date":
 			var d = value; // js date object
 			function pad(n){return n<10 ? '0'+n : n}
-				return d.getUTCFullYear()+'-'
-					+ pad(d.getUTCMonth()+1)+'-'
-					+ pad(d.getUTCDate()) +' '
-					+ pad(d.getUTCHours())+':'
-					+ pad(d.getUTCMinutes())+':'
-					+ pad(d.getUTCSeconds());
+				return d.getFullYear()+'-'
+					+ pad(d.getMonth()+1)+'-'
+					+ pad(d.getDate()) +' '
+					+ pad(d.getHours())+':'
+					+ pad(d.getMinutes())+':'
+					+ pad(d.getSeconds());
 				break;
 		}
 	};

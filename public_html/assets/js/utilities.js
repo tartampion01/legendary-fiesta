@@ -35,9 +35,10 @@ $( document ).ready(function() {
             var datapair = $('.jSignature').jSignature('getData', 'svgbase64');
             var i = new Image();
             i.src = 'data:' + datapair[0] + ',' + datapair[1];
+            i.name = 'HALABELLEIMAGEDESIGNATURE';
+            i.id = 'HALABELLEIMAGEDESIGNATURE';
             $('.dumpSignature').empty(); // *** TO BE REMOVED ***
             $(i).appendTo($('.dumpSignature')); // append the image (SVG) to DOM.
-            
             $('.jSignature').removeClass('active');
             $sigdiv.jSignature('disable');
         }

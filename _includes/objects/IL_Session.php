@@ -74,7 +74,7 @@ class IL_Session
      * 
      * @var integer
      */
-    protected static $SESSION_AGE = 1800;
+    protected static $SESSION_AGE = 86400;
     
     /**
      * Writes a value to the current session data.

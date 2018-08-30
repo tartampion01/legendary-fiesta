@@ -33,12 +33,12 @@ function getNewTruck($id, $fieldCriteria='', $value='')
     return mysqli_query($conn, $sql);
 }
 
-function selectNewTrucksDisctinctCriteria($field, $customCriteria, $orderBy, $order)
+function selectLivraisonsDisctinctCriteria($field, $customCriteria, $orderBy, $order)
 {
-    $conn = Database::getConn();
+    $conn = IL_Database::getConn();
     
     //$sql = "SELECT COUNT($field) AS COUNT,$field FROM inventory WHERE DisplayOnWebSite=1 GROUP BY $field ORDER BY " . $field;
-    $sql = "SELECT COUNT($field) AS COUNT,$field FROM inventory WHERE $customCriteria DisplayOnWebSite=1 GROUP BY $field ORDER BY $orderBy $order";
+    $sql = "SELECT COUNT($field) AS COUNT,$field FROM livraisons WHERE $customCriteria GROUP BY $field ORDER BY $orderBy $order";
 //echo $sql;
     $result = mysqli_query($conn, $sql);
     

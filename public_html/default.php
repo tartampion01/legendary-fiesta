@@ -23,7 +23,7 @@
         ?>        
     </div>
 </div>
-    
+    <a href="sandbox.php">SANDBOX</a>
 <footer id="pied">
     <div class="bottomBanner">
         <div class="copyright"></div>

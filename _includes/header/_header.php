@@ -42,9 +42,12 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <script type="application/javascript" src="assets/js/container.js"></script>
     <script type="application/javascript" src="assets/js/animator.js"></script>
     <script type="application/javascript" src="assets/js/popup.js"></script>
+    <script type="application/javascript" src="assets/js/offline/offline.min.js"></script>
     <script type="application/javascript" src="assets/js/jSignature/jSignature.min.js"></script>
     <script type="application/javascript" src="assets/js/utilities.js"></script>
+    <script type='text/javascript' src='assets/js/jquery.tmpl.js'></script>
     
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/animator.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
@@ -54,7 +57,12 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <link rel="stylesheet" type="text/css" href="assets/css/menu.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/layout_normal.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/livraison.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-theme-chrome.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-language-french.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-language-french-indicator.css" />
     <link rel='canonical' href='<?PHP echo $NOMPAGE ?>' />
     
     <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
 </head>
+    
+    <div class="offline-ui"></div>

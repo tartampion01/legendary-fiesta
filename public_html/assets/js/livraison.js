@@ -96,7 +96,30 @@ $( document ).ready(function() {
         });
         postData.itemRows = itemRows;
         
-        console.log(postData);
+        var timestamp = new Date().valueOf();
+        localforage.setItem('query-'+timestamp, postData).then(function (value) {
+            // Do other things once the value has been saved.
+            console.log(value);
+        }).catch(function(err) {
+            // This code runs if there were any errors
+            console.log(err);
+        });
+        
+        $.ajax({
+            type: "POST",
+            url: "api/create-livraison.php",
+            data: {'postData': postData},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data){
+                alert(data);
+            },
+            error: function(errMsg) {
+                console.log(errMsg);
+            }
+        });
+        
+        //console.log(postData);
         
         
         // After posting, clear form data

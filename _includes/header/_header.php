@@ -14,7 +14,7 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
 <?PHP
     // Don't show errors on webpage
-    error_reporting(0);
+    //error_reporting(0);
     // Show errors on webpage
     error_reporting(E_ALL);
 

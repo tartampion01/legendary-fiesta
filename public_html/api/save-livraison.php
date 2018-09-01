@@ -21,7 +21,7 @@ $livraison = new IL_Livraison($conn);
 // get posted data
 $data = json_decode($_GET['postData']);
 
-// set product property values
+// set livraison property values
 $livraison->dateLivraison = (isset($data->tbDate) ? $data->tbDate : '');
 $livraison->destinataire = (isset($data->tbDestinataire) ? $data->tbDestinataire : '');
 $livraison->nomSignataire = (isset($data->tbNomSignataire) ? $data->tbNomSignataire : '');
@@ -29,17 +29,17 @@ $livraison->signature = (isset($data->signature) ? $data->signature : '');
 $livraison->noEmploye = (isset($data->noEmploye) ? $data->noEmploye : '');
 $livraison->colis = (isset($data->colis) ? $data->colis : '');
 
-// create the livraison
-if($livraison->create()){
+// update the livraison
+if($livraison->save()){
     echo '{';
-        echo '"message": "La livraison a été créée."';
+        echo '"message": "La livraison a été mise à jour."';
     echo '}';
 }
  
-// if unable to create the livraison, tell the user
+// if unable to update the livraison, tell the user
 else{
     echo '{';
-        echo '"message": "Impossible de créer de livraison."';
+        echo '"message": "Impossible de mettre à jour la livraison."';
     echo '}';
 }
 ?>

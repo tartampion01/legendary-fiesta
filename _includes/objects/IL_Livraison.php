@@ -274,5 +274,46 @@ class IL_Livraison{
 
         return false;
     }
+    
+    function save() {
+        
+        $conn = IL_Database::getConn();
+        $sql = "UPDATE livraisons SET dateLivraison='$livraison->dateLivraison'" . 
+                "destinataire='$livraison->destinataire'".
+                "nomSignataire='$livraison->nomSignataire'".
+                "signature='$livraison->signature'".
+                "noEmploye='$livraison->noEmploye'".
+                "WHERE id_livraison='$livraison->id_livraison".
+                    
+        $sql = "UPDATE users SET username='$username',level='$level',actif='$actif',password='$password' WHERE id_user=".$this->id;
+        
+        $result = mysqli_query($conn, $sql);
+        
+        $this->saveColis();
+
+        return true;
+    }
+    
+    function saveColis()
+    {
+        $conn = IL_Database::getConn();
+        // DELETE associated colis and create new associations?
+        $sql = "DELETE from livraisonsColis where fk_livraison='$this->id_livraison'";
+        
+        $result = mysqli_query($conn, $sql);
+        
+        foreach ($this->colis as $colis){
+            $sql = "INSERT INTO livraisonsColis (fk_colis, fk_livraison VALUES (?,?,?,?,?)";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $livraison->id_livraison, 1);
+
+            // execute query
+            if($stmt->execute()){
+                $insert_id = $stmt->insert_id;
+            }
+        }
+        
+    }
 }
 ?>

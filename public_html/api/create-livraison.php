@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -9,33 +12,34 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/../_includes/objects/IL_Livraison.ph
 
 // instantiate database and product object
 $database = new IL_Database();
-$db = $database->getConnection();
+//$db = $database->getConnection();
+$conn = IL_Database::getConn();
 
 // initialize object
-$livraison = new IL_Livraison($db);
+$livraison = new IL_Livraison($conn);
 
 // get posted data
-$data = json_decode($_POST['postData']);
+$data = json_decode($_GET['postData']);
 
 // set product property values
-$livraison->dateLivraison = $data->tbDate;
-$livraison->destinataire = $data->tbDestinataire;
-$livraison->nomSignataire = $data->tbNomSignataire;
-$livraison->signature = $data->signature;
-$livraison->noEmploye = $data->noEmploye;
-$livraison->colis = $dat->colis;
+$livraison->dateLivraison = (isset($data->tbDate) ? $data->tbDate : '');
+$livraison->destinataire = (isset($data->tbDestinataire) ? $data->tbDestinataire : '');
+$livraison->nomSignataire = (isset($data->tbNomSignataire) ? $data->tbNomSignataire : '');
+$livraison->signature = (isset($data->signature) ? $data->signature : '');
+$livraison->noEmploye = (isset($data->noEmploye) ? $data->noEmploye : '');
+$livraison->colis = (isset($data->colis) ? $data->colis : '');
 
 // create the product
 if($livraison->create()){
     echo '{';
-        echo '"message": "Product was created."';
+        echo '"message": "La livraison a été créée."';
     echo '}';
 }
  
 // if unable to create the product, tell the user
 else{
     echo '{';
-        echo '"message": "Unable to create product."';
+        echo '"message": "Impossible de créer de livraison."';
     echo '}';
 }
 ?>

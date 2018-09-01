@@ -257,5 +257,22 @@ class IL_Livraison{
         return $stmt;
     }
     
+    function create() {
+        
+        $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye) VALUES (?,?,?,?,?)";
+        $conn = IL_Database::getConn();
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye);
+        
+        // execute query
+        if($stmt->execute()){
+            $insert_id = $stmt->insert_id;
+            
+            return true;
+        }
+
+        return false;
+    }
 }
 ?>

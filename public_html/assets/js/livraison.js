@@ -96,31 +96,32 @@ $( document ).ready(function() {
         });
         postData.itemRows = itemRows;
         
-        var timestamp = new Date().valueOf();
-        localforage.setItem('query-'+timestamp, postData).then(function (value) {
-            // Do other things once the value has been saved.
-            console.log(value);
-        }).catch(function(err) {
-            // This code runs if there were any errors
-            console.log(err);
-        });
-        
-        $.ajax({
-            type: "POST",
-            url: "api/create-livraison.php",
-            data: {'postData': postData},
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(data){
-                alert(data);
-            },
-            error: function(errMsg) {
-                console.log(errMsg);
-            }
-        });
-        
-        //console.log(postData);
-        
+        // Check connection is up/down
+        if(Offline.state == 'up') {
+            
+            // Create livraison over ajax
+            $.ajax({
+                type: "GET",
+                url: "api/create-livraison.php",
+                data: {'postData': JSON.stringify(postData)},
+                //contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: true,
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(errMsg) {
+                    console.log(errMsg);
+                }
+            });
+
+            //console.log(postData);
+        }
+        else if(Offline.state == 'down') {
+            
+            // Store de query into localForage
+            insertQueryIntoLocalForage(postData);
+        }
         
         // After posting, clear form data
         tbEmploye: $('#tbEmploye').val('');
@@ -138,3 +139,64 @@ $( document ).ready(function() {
     });
     
 });
+
+function insertQueryIntoLocalForage(postData) {
+    
+    var timestamp = new Date().valueOf();
+    localforage.setItem('query-'+timestamp, postData).then(function (value) {
+        // Do other things once the value has been saved.
+        console.log(value);
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log(err);
+    });
+}
+
+function pushQueriesFromLocalForage() {
+    
+    var defer = $.Deferred();
+    
+    $('.loading').show();
+    
+    localforage.iterate(function(value, key, iterationNumber) {
+        // Resulting key/value pair -- this callback
+        // will be executed for every item in the
+        // database.
+        
+        // Create livraison over ajax
+        $.ajax({
+            type: "GET",
+            url: "api/create-livraison.php",
+            data: {'postData': JSON.stringify(value)},
+            //contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: function(data){
+                
+                // Remove item from localForage
+                localforage.removeItem(key).then(function() {
+                    // Run this code once the key has been removed.
+                    console.log('Key is cleared!');
+                }).catch(function(err) {
+                    // This code runs if there were any errors
+                    console.log(err);
+                });
+            },
+            error: function(errMsg) {
+                console.log(errMsg);
+            }
+        });
+
+        console.log([key, value]);
+    }, function(err) {
+        if (!err) {
+            console.log('Iteration has completed');
+            
+            defer.resolve('DONE');
+        }
+        else
+            defer.resolve('ERROR');
+    });
+    
+    return defer.promise();
+}

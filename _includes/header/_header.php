@@ -14,7 +14,7 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
 <?PHP
     // Don't show errors on webpage
-    //error_reporting(0);
+    error_reporting(0);
     // Show errors on webpage
     error_reporting(E_ALL);
 
@@ -46,7 +46,8 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <script type="application/javascript" src="assets/js/offline/offline.min.js"></script>
     <script type="application/javascript" src="assets/js/jSignature/jSignature.min.js"></script>
     <script type="application/javascript" src="assets/js/utilities.js"></script>
-    <script type='text/javascript' src='assets/js/jquery.tmpl.js'></script>
+    <script type="application/javascript" src="assets/js/jquery.tmpl.js"></script>
+    <script type="application/javascript" src="assets/js/awesomplete/awesomplete.js"></script>
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
@@ -61,9 +62,11 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-theme-chrome.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-language-french.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-language-french-indicator.css" />
-    <link rel='canonical' href='<?PHP echo $NOMPAGE ?>' />
+    <link rel="stylesheet" href="assets/css/awesomplete/awesomplete.css" />
+    <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
     
     <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
 </head>
     
     <div class="offline-ui"></div>
+    <div class="loading" style="display: none;">Loading&#8230;</div>

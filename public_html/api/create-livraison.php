@@ -26,11 +26,11 @@ $livraison->dateLivraison = (isset($data->tbDate) ? $data->tbDate : '');
 $livraison->destinataire = (isset($data->tbDestinataire) ? $data->tbDestinataire : '');
 $livraison->nomSignataire = (isset($data->tbNomSignataire) ? $data->tbNomSignataire : '');
 $livraison->signature = (isset($data->signature) ? $data->signature : '');
-$livraison->noEmploye = (isset($data->noEmploye) ? $data->noEmploye : '');
+$livraison->noEmploye = (isset($data->tbEmploye) ? $data->tbEmploye : '');
 $livraison->colis = (isset($data->colis) ? $data->colis : '');
 
 // create the livraison
-if($livraison->create()){
+if($livraison->create($livraison)){
     echo '{';
         echo '"message": "La livraison a été créée."';
     echo '}';

@@ -585,6 +585,7 @@ body.wait #showLoading img {
 }
 .base_module button {
   width: 150px;
+  height: auto !important;
 }
 .base_module button:not([disabled]) {
   background: #000000;

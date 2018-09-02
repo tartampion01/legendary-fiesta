@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -9,13 +12,46 @@ include_once ($_SERVER['DOCUMENT_ROOT'] . '/../_includes/objects/IL_Livraison.ph
  
 // instantiate database and product object
 $database = new IL_Database();
-$db = $database->getConnection();
+//$db = $database->getConnection();
+$conn = IL_Database::getConn();
 
 // initialize object
-$livraison = new IL_Livraison($db);
+$livraison = new IL_Livraison($conn);
  
-$stmt = $livraison->readTest($_GET['params']);
+$results = $livraison->readTest($_GET['params']);
 
+if(mysqli_num_rows($results) > 0){
+    
+    $Livraisons_arr=array();
+    $Livraisons_arr["records"]=array();
+
+    // count rows
+    $rowcount = mysqli_num_rows($results);
+    $countRows = $rowcount;
+    $Livraisons_arr["countRows"] = $countRows;
+
+    while($row = mysqli_fetch_assoc($results)) {
+        
+        $Livraisons_item=array(
+            "id_livraison" => $row['id_livraison'],
+            "dateLivraison" => $row['dateLivraison'],
+            "dateHumain" => $row['dateHumain'],
+            "destinataire" => $row['destinataire'],
+            "nomSignataire" => $row['nomSignataire'],
+            "signature" => $row['signature'],
+            "noEmploye" => $row['noEmploye']
+        );
+        
+        array_push($Livraisons_arr["records"], $Livraisons_item);
+    }
+    
+    echo json_encode($Livraisons_arr);
+}
+
+
+
+
+/*
 $num = $stmt->rowCount();
  
 // check if more than 0 record found
@@ -55,5 +91,5 @@ else{
     echo json_encode(
         array("message" => "Aucun résultat n'a été trouvé pour votre recherche.")
     );
-}
+}*/
 ?>

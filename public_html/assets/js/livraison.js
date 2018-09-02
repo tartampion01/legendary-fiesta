@@ -69,7 +69,7 @@ $( document ).ready(function() {
     // Bind click on "Effacer la signature" button
     $('.btnClear').on('click', function() {
         // Destroy the signature plugin instance
-        $sigdiv.jSignature('clear');
+        $sigdiv.jSignature('reset');
         
         // *** TO BE REMOVED ***
         $('.dumpSignature').empty();
@@ -107,15 +107,18 @@ $( document ).ready(function() {
                 //contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: true,
+                cache: false,
                 success: function(data){
                     console.log(data);
+                    
+                    //location.reload();
                 },
                 error: function(errMsg) {
                     console.log(errMsg);
                 }
             });
 
-            //console.log(postData);
+            console.log(postData);
         }
         else if(Offline.state == 'down') {
             
@@ -125,14 +128,14 @@ $( document ).ready(function() {
         
         // After posting, clear form data
         tbEmploye: $('#tbEmploye').val('');
-        tbDestinataire: $('#tbDestinataire').val('')
+        tbDestinataire: $('#tbDestinataire').val('');
         tbNomSignataire: $('#tbNomSignataire').val('');
-        $('.clonable').find('input[name^="tbNoFacture"]').val(''),
-        $('.clonable').find('input[name^="tbNoColis"]').val('')
+        $('.clonable').find('input[name^="tbNoFacture"]').val('');
+        $('.clonable').find('input[name^="tbNoColis"]').val('');
         $('.cloned').remove();
         $('.addItem.firstItemRow').attr('data-item-row', 1);
         // Destroy the signature plugin instance
-        $sigdiv.jSignature('clear');
+        $sigdiv.jSignature('reset');
         
         // *** TO BE REMOVED ***
         $('.dumpSignature').empty();

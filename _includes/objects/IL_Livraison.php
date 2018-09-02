@@ -94,43 +94,37 @@ class IL_Livraison{
         $params = json_decode($params);
         
         // check for empty parameters (search for all products)
-        if(empty($params->field) && empty($params->value)) {
+        //if(empty($params->field) && empty($params->value)) {
             // select all query
-            $query = "SELECT * FROM livraisons WHERE $params->customCriteria ORDER BY id_livraison LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            //$query = "SELECT * FROM livraisons WHERE $params->customCriteria ORDER BY id_livraison LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY dateLivraison DESC LIMIT 200";
+            //$query = "SELECT * FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY COUNT DESC LIMIT 20";
             //echo $query;
             
             $where = '';
-            $count = count($params->arrayFilters);
+            /*$count = count($params->arrayFilters);
             for($i=0; $i<$count; $i++) {
-                /*if($count == 1)
-                    $where .= $params->arrayFilters[$i]->field . ' = "' . $params->arrayFilters[$i]->value . '"';
-                else*/
-                    $where .= $params->arrayFilters[$i]->field . ' = "' . $params->arrayFilters[$i]->value . '" AND ';
-            }
-            
-            /*if($where != '' && empty($params->customCriteria) && $count > 1) {
-                $where = substr($where, 0, -4);
+                    
             }*/
             
             if($where == '') {
-                $query = "SELECT * FROM livraisons WHERE $params->customCriteria ORDER BY id_livraison LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+                //$query = "SELECT * FROM livraisons WHERE $params->customCriteria ORDER BY id_livraison LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+                $query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY dateLivraison DESC LIMIT 200";
+                //$query = "SELECT * FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY COUNT DESC LIMIT 20";
                 //echo "#1". $query;
             }
             else {
                 $query = "SELECT * FROM livraisons WHERE $where $params->customCriteria ORDER BY id_livraison LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
                 //echo "#1 ". $query;
             }
-        }
-        else {
+        //}
+        //else {
             
             $where = '';
             
-            for($i=0; $i<count($params->arrayFilters); $i++) {
+            /*for($i=0; $i<count($params->arrayFilters); $i++) {
                 $where .= $params->arrayFilters[$i]->field . ' = "' . $params->arrayFilters[$i]->value . '" AND ';
             }
-            //die($where);
-            //print_r($params->arrayFilters[0]);
-            //print_r($where);
             
             if($where != '') {
                 // select filtered query
@@ -140,15 +134,42 @@ class IL_Livraison{
             else {
                 // select filtered query
                 $query = "SELECT * FROM livraisons WHERE $params->field = '$params->value' AND $params->customCriteria ORDER BY id_livraison ".$params->sortBy." LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            }*/
+        //}
+ //echo $query;
+ 
+        $conn = IL_Database::getConn();
+        
+        $results = mysqli_query($conn, $query);
+        
+        // prepare query statement
+        //$stmt = $conn->prepare($query);
+        // execute query
+        //$stmt->execute();
+        
+        return $results;
+        
+        
+        /*
+        $conn = IL_Database::getConn();
+        
+        //$sql = "SELECT COUNT($field) AS COUNT,$field FROM inventory WHERE DisplayOnWebSite=1 GROUP BY $field ORDER BY " . $field;
+        $sql = "SELECT COUNT(dateLivraison) AS COUNT,dateLivraison FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY COUNT DESC LIMIT 20";
+        //echo $sql;
+        $result = mysqli_query($conn, $sql);
+
+        $fieldArray = array();
+        $countArray = array();
+
+        if(mysqli_num_rows($result) > 0){
+            while($row = mysqli_fetch_assoc($result)) {
+                array_push($fieldArray, $row['dateLivraison']);
+                array_push($countArray, $row['COUNT']);
             }
         }
- 
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-        // execute query
-        $stmt->execute();
         
-        return $stmt;
+        //echo json_encode(array_combine($fieldArray, $countArray));
+        return json_encode(array_combine($fieldArray, $countArray));*/
     }
     
     function readTestCount($params){
@@ -257,11 +278,11 @@ class IL_Livraison{
         return $stmt;
     }
     
-    function create() {
+    function create($livraison) {
         
         $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye) VALUES (?,?,?,?,?)";
         $conn = IL_Database::getConn();
-        
+        //echo $livraison->signature;
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye);
         

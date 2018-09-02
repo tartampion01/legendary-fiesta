@@ -48,6 +48,7 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <script type="application/javascript" src="assets/js/utilities.js"></script>
     <script type="application/javascript" src="assets/js/jquery.tmpl.js"></script>
     <script type="application/javascript" src="assets/js/awesomplete/awesomplete.js"></script>
+    <script type="application/javascript" src="assets/js/stupidtable.js"></script>
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
@@ -62,7 +63,8 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-theme-chrome.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-language-french.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-language-french-indicator.css" />
-    <link rel="stylesheet" href="assets/css/awesomplete/awesomplete.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/awesomplete/awesomplete.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/recherche.css" />
     <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
     
     <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />

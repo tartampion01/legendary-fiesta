@@ -181,7 +181,8 @@ a {
   background: black;
 }
 .buttonStyle:disabled,
-.buttonStyle[disabled] {
+.buttonStyle[disabled],
+.buttonStyle.disabled{
   background: #000000;
   /* Old browsers */
   background: -moz-linear-gradient(top, #000000 0%, #413d3e 100%);
@@ -217,15 +218,17 @@ a {
   /* Non-prefixed version, currently not supported by any browser */
   cursor: default;
   opacity: .7;
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 .buttonStyle:disabled img,
-.buttonStyle[disabled] img {
+.buttonStyle[disabled] img,
+.buttonStyle.disabled img{
   height: 30px;
   padding-right: 5px;
 }
 .buttonStyle:disabled *,
-.buttonStyle[disabled] * {
+.buttonStyle[disabled] *,
+.buttonStyle.disabled *{
   -webkit-touch-callout: none;
   /* iOS Safari */
   -webkit-user-select: none;

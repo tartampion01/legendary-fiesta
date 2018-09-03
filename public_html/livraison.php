@@ -110,7 +110,7 @@
                                 Facture
                             </div>
                             <div class="col-xs-12">
-                                <input type="text" name="tbNoFacture[]" id="1" value="" maxlength="20"  class="input"></input><br>
+                                <input type="text" name="tbNoFacture[]" id="tbNoFacture1" value="" maxlength="20"  class="input"></input><br>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                                 Colis
                             </div>
                             <div class="col-xs-12">
-                                <input type="text" name="tbNoColis[]" id="1" value="" maxlength="20"  class="input"></input><br>
+                                <input type="text" name="tbNoColis[]" id="tbNoColis1" value="" maxlength="20"  class="input"></input><br>
                             </div>
                         </div>
                     </div>
@@ -250,14 +250,14 @@
             <div class="col-xs-5">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input type="text" name="tbNoFacture[]" id="${counter}" value="" maxlength="20"  class="input"></input><br>
+                        <input type="text" name="tbNoFacture[]" id="tbNoColis${counter}" value="" maxlength="20"  class="input"></input><br>
                     </div>
                 </div>
             </div>
             <div class="col-xs-5">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input type="text" name="tbNoColis[]" id="${counter}" value="" maxlength="20"  class="input"></input><br>
+                        <input type="text" name="tbNoColis[]" id="tbNoColis${counter}" value="" maxlength="20"  class="input"></input><br>
                     </div>
                 </div>
             </div>

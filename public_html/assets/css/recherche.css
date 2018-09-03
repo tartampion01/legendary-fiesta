@@ -9,7 +9,7 @@
   float: left;
 }
 .module_rechercheCustom .crits {
-  margin: 15px 0px;
+  margin: 15px 0px 0px 0px;
 }
 .module_rechercheCustom .crits .row {
   margin-top: 2px;
@@ -110,6 +110,10 @@
 .module_paginator .pageNo {
   display: inline-block;
   padding: 5px;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%)
   /* must match buttons padding */
 }
 

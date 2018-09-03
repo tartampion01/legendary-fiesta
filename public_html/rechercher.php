@@ -30,10 +30,10 @@
                     <div class="col-xs-2">&nbsp;</div>
                 </div>
 
-                <div class="crits animListRow">
-                    <div name="row0" class="row serializable">
+                <div class="crits animListRow cloneDestination">
+                    <div name="row0" class="row clonable serializable">
                         <div class="col-xs-4">
-                            <select name="field" value="dateLivraison" class="input">
+                            <select name="field" id="field1" value="dateLivraison" class="input">
                                 <option value="dateLivraison" selected="">Date de livraison</option>
                                 <option value="noFacture"># facture</option>
                                 <option value="destinataire">Destinataire</option>
@@ -44,29 +44,29 @@
                             </select>
                         </div>
                         <div class="col-xs-3">
-                            <select name="comparator" value="like" class="input">
+                            <select name="comparator" id="comparator1" value="like" class="input">
                                 <option value="like" selected="">contient</option>
-                                <option value="egal">=</option>
-                                <option value="pluspetit">&lt;</option>
-                                <option value="plusgrand">&gt;</option>
+                                <option value="=">=</option>
+                                <option value="<">&lt;</option>
+                                <option value=">">&gt;</option>
                             </select>
                         </div>
                         <div class="col-xs-5">
-                            <input type="text" name="value" value="" maxlength="200" class="input">
+                            <input type="text" name="value" id="value1" value="" maxlength="200" class="input">
                             <i name="delete" class="buttonStyle fas fa-minus" style="display: none;"></i>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-5">
-                            <i name="plus" class="buttonStyle fas fa-plus pull-left"></i>
-                        </div>
-                        <div class="col-xs-7">&nbsp;</div>
+                    
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-xs-5">
+                        <i name="plus" class="addItem firstItemRow buttonStyle fas fa-plus pull-left" data-item-row="1"></i>
                     </div>
-
+                    <div class="col-xs-7">&nbsp;</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-offset-4 col-xs-4">
-                        <button><i class="fas fa-search"></i> Rechercher</button>
+                        <button class="btnSearch"><i class="fas fa-search"></i> Rechercher</button>
                     </div>
                 </div>
 
@@ -104,13 +104,17 @@
         <div name="mod_paginator" class="module_paginator base_module container serializable">
             <div class="">
                 <div class="row">
-                    <div class="col buttonStyle pull-left align-center fas fa-fast-backward" name="pageButton" disabled=""></div>
+
+                    <div class="col pageNo"></div>
+                    <ul class="pagination" id="pagination" style="text-align: right; padding: 0; margin: 0;"></ul>
+
+                    <!--<div class="col buttonStyle pull-left align-center fas fa-fast-backward" name="pageButton" disabled=""></div>
                     <div class="col buttonStyle pull-left align-center fas fa-backward" name="pageButton" disabled=""></div>
 
                     <div class="col pageNo">page 1 / 939</div>
 
                     <div class="col buttonStyle pull-right align-center fas fa-fast-forward" name="pageButton"></div>
-                    <div class="col buttonStyle pull-right align-center fas fa-forward" name="pageButton"></div>
+                    <div class="col buttonStyle pull-right align-center fas fa-forward" name="pageButton"></div>-->
                 </div>
             </div>
         </div>
@@ -140,7 +144,7 @@
     <script id="resultsTemplate" type="text/x-jquery-tmpl">
         <tr name="0" class="serializable hoverable">
             <td class="ID isHidden"><span name="ID" class="input ">${id_livraison}</span></td>
-            <td class="dateLivraison"><span name="dateLivraison" class="input ">${dateLivraison}</span></td>
+            <td class="dateLivraison"><span name="dateLivraison" class="input " data-sort-value="${dateTimestamp}">${dateLivraison}</span></td>
             <td class="noFacture"><span name="noFacture" class="input ">${noFacture}</span></td>
             <td class="destinataire"><span name="destinataire" class="input ">${destinataire}</span></td>
             <td class="noColis"><span name="noColis" class="input ">20</span></td>
@@ -148,5 +152,33 @@
             <td class="signature"><span class="input svgSignature"><img src="${signature}" /></span></td>
             <td class="noEmploye"><span name="noEmploye" class="input ">${noEmploye}</span></td>
         </tr>
+    </script>
+    
+    <script id="filtersTemplate" type="text/x-jquery-tmpl">
+        <div class="row clonable cloned serializable itemRow${counter}">
+            <div class="col-xs-4">
+                <select name="field" id="field${counter}" value="dateLivraison" class="input">
+                    <option value="dateLivraison" selected="">Date de livraison</option>
+                    <option value="noFacture"># facture</option>
+                    <option value="destinataire">Destinataire</option>
+                    <option value="noColis"># colis</option>
+                    <option value="nomSignataire">Nom du signataire</option>
+                    <option value="signature">Signature</option>
+                    <option value="noEmploye"># employé</option>
+                </select>
+            </div>
+            <div class="col-xs-3">
+                <select name="comparator" id="comparator${counter}" value="like" class="input">
+                    <option value="like" selected="">contient</option>
+                    <option value="=">=</option>
+                    <option value="<">&lt;</option>
+                    <option value=">">&gt;</option>
+                </select>
+            </div>
+            <div class="col-xs-5">
+                <input type="text" name="value" id="value${counter}" value="" maxlength="200" class="input">
+                <i name="delete" class="removeItem buttonStyle fas fa-minus" data-item-row="${counter}"></i>
+            </div>
+        </div>
     </script>
     <!-- End : Javascript template -->

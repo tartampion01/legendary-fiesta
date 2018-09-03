@@ -27,15 +27,24 @@ if(mysqli_num_rows($results) > 0){
 
     // count rows
     $rowcount = mysqli_num_rows($results);
-    $countRows = $rowcount;
+    //$countRows = $rowcount;
+    $countRows = $livraison->readTestCount($_GET['params']);
+    $countRows = mysqli_num_rows($countRows);
     $Livraisons_arr["countRows"] = $countRows;
 
     while($row = mysqli_fetch_assoc($results)) {
         
+        $date = new DateTime($row['dateLivraison']);
+        // "-2209078800"
+        //echo $date->format("U");
+        // false
+        $date =  $date->getTimestamp();
+
         $Livraisons_item=array(
             "id_livraison" => $row['id_livraison'],
             "dateLivraison" => $row['dateLivraison'],
             "dateHumain" => $row['dateHumain'],
+            "dateTimestamp" => $date,
             "destinataire" => $row['destinataire'],
             "nomSignataire" => $row['nomSignataire'],
             "signature" => $row['signature'],

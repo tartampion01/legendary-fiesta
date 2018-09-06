@@ -56,7 +56,7 @@
                                 //loop thru the field names to print the correct headers
                                 $i = 0;
                                 while ($i < mysqli_num_fields($result)){
-                                    echo "<th>". mysqli_field_name($result, $i) . "</th>";
+                                    echo "<th><font color='#fff'>". mysqli_field_name($result, $i) . "&nbsp;&nbsp;</font></th>";
                                     $i++;
                                 }
                                 echo "</tr>";
@@ -64,7 +64,7 @@
                                 while ($rows = mysqli_fetch_array($result)){
                                     echo "<tr>";
                                     foreach ($rows as $data)
-                                        echo "<td align='center'>". $data . "</td>";
+                                        echo "<td align='center'><font color='#fff'>". $data . "</font></td>";
                                 }
                             }
                             else{

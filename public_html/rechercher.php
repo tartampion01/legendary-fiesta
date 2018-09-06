@@ -82,13 +82,13 @@
                     <thead>
                         <tr>
                             <th class="ID isHidden">ID</th>
-                            <th class="dateLivraison sortable" data-sort="string">Date de livraison<span class="sortIcon down">▼</span><span class="sortIcon up" style="display: none;">▲</span></th>
-                            <th class="noFacture sortable" data-sort="int"># facture<span class="sortIcon down">▼</span><span class="sortIcon up" style="display: none;">▲</span></th>
-                            <th class="destinataire sortable" data-sort="string">Destinataire<span class="sortIcon down">▼</span><span class="sortIcon up" style="display: none;">▲</span></th>
-                            <th class="noColis sortable" data-sort="int"># colis<span class="sortIcon down">▼</span><span class="sortIcon up" style="display: none;">▲</span></th>
-                            <th class="nomSignataire sortable" data-sort="string">Nom du signataire<span class="sortIcon down">▼</span><span class="sortIcon up" style="display: none;">▲</span></th>
+                            <th class="dateLivraison sortable" data-order-by="dateLivraison">Date de livraison<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
+                            <th class="noFacture sortable" data-order-by="noFacture"># facture<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
+                            <th class="destinataire sortable" data-order-by="destinataire">Destinataire<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
+                            <th class="noColis sortable" data-order-by="noColis"># colis<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
+                            <th class="nomSignataire sortable" data-order-by="nomSignataire">Nom du signataire<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="signature">Signature</th>
-                            <th class="noEmploye sortable" data-sort="string"># employé<span class="sortIcon down">▼</span><span class="sortIcon up" style="display: none;">▲</span></th>
+                            <th class="noEmploye sortable" data-order-by="noEmploye"># employé<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                         </tr>
                     </thead>
                     <tbody class="results-container">

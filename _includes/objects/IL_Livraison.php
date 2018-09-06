@@ -93,16 +93,30 @@ class IL_Livraison{
         // decode search parameters
         $params = json_decode($params);
         
+        $sortBy = 'dateLivraison';
+        if(!is_null($params->sortBy)) {
+            $sortBy = $params->sortBy;
+        }
+        $orderBy = 'DESC';
+        if(!is_null($params->orderBy)) {
+            $orderBy = $params->orderBy;
+        }
+        
         if(is_null($params->filterRows)) {
-            $query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY dateLivraison DESC LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
         }
         else {
             $where = '';
             for($i=0; $i<count($params->filterRows); $i++) {
-                $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "' . $params->filterRows[$i]->value . '"';
+                if($params->filterRows[$i]->comparator == 'like') {
+                    $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "%' . $params->filterRows[$i]->value . '%"';
+                }
+                else {
+                    $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "' . $params->filterRows[$i]->value . '"';
+                }
             }
             //echo $where;
-            $query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY dateLivraison ORDER BY dateLivraison DESC LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
         }
  //echo $query;
  
@@ -124,7 +138,12 @@ class IL_Livraison{
         else {
             $where = '';
             for($i=0; $i<count($params->filterRows); $i++) {
-                $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "' . $params->filterRows[$i]->value . '"';
+                if($params->filterRows[$i]->comparator == 'like') {
+                    $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "%' . $params->filterRows[$i]->value . '%"';
+                }
+                else {
+                    $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "' . $params->filterRows[$i]->value . '"';
+                }
             }
             $queryCount = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY dateLivraison ORDER BY dateLivraison DESC";
         }

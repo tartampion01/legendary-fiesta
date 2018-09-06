@@ -2,14 +2,10 @@ $( document ).ready(function() {
 
     var postData = {};
     postData.filterRows = null;
+    postData.sortBy = null;
+    postData.orderBy = null;
     
     fetchRecords(postData);
-
-    // Blind column order icons
-    $('.sortable').on('click', function() {
-        $('.up', this).toggle();
-        $('.down', this).toggle();
-    });
     
     // Bind click on add an item row (filters)
     $('.addItem').on('click', function() {
@@ -31,11 +27,32 @@ $( document ).ready(function() {
         var itemRow = $(btn).attr('data-item-row');
         $('.itemRow' + itemRow).remove();
         $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
+        
+        $('.btnSearch').trigger('click');
     });
     
+    // Bind click on order by column headers
+    $('.sortable').on('click', function() {
+        var self = $(this);
+        
+        var sortBy = self.attr('data-order-by');
+        var orderBy = self.find('.sortIcon:visible').attr('data-order');
+        
+        postData.sortBy = sortBy;
+        postData.orderBy = orderBy;
+        
+        $('.sortable').css({'color': 'black', 'font-weight': '700'});
+        self.css({color: 'white', 'font-weight': '100'});
+        $('.up', this).toggle();
+        $('.down', this).toggle();
+        
+        fetchRecords(postData);
+    });
+    
+    // Bind click on search button
     $('.btnSearch').on('click', function() {
         
-        var postData = {};
+        //var postData = {};
         var filterRows = [];
         $('.cloneDestination .clonable').each(function() {
             var field = $(this).find('select[name^="field"]').val();
@@ -73,7 +90,9 @@ function fetchRecords(postData) {
     var params = {
         currentPage : currentPage,
         limitPerPage : 20,
-        filterRows: postData.filterRows
+        filterRows: postData.filterRows,
+        sortBy: postData.sortBy,
+        orderBy: postData.orderBy
     };
     
     $.ajax({
@@ -94,7 +113,7 @@ function fetchRecords(postData) {
                     $("#resultsTemplate").tmpl( data.records ).appendTo(".results-container");
                     
                     // Setup sortable table
-                    $(".results-table").stupidtable();
+                    //$(".results-table").stupidtable();
                     
                     // Get total page count
                     var totalPages = Math.ceil(data.countRows / 20);

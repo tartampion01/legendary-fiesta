@@ -3,7 +3,7 @@
 <body>
     <div name='livraison' class='page_livraison layout_normal base_layout base_page serializable'>
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
-    <div id="entete" class="row">
+    <div id="entete" class="row" style="margin-top: 0px;">
         <div id="menu" class="col-xs-3 col-sm-2">
             <a href="default.php">
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">

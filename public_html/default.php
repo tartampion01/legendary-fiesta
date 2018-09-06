@@ -23,7 +23,9 @@
         ?>        
     </div>
 </div>
-    <a href="sandbox.php">SANDBOX</a>
+    <a href="sandbox.php">SANDBOX</a><br>
+    <a href="viewdb.php">VIEWDB</a><br>
+    
 <footer id="pied">
     <div class="bottomBanner">
         <div class="copyright"></div>

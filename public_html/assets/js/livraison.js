@@ -86,15 +86,15 @@ $( document ).ready(function() {
             signature: $('.dumpSignature img').attr('src')
         };
         
-        var itemRows = [];
+        var array_colis = [];
         $('.cloneDestination .clonable').each(function() {
             tmpItem = {
-                tbNoFacture: $(this).find('input[name^="tbNoFacture"]').val(),
-                tbNoColis: $(this).find('input[name^="tbNoColis"]').val()
+                facture: $(this).find('input[name^="tbNoFacture"]').val(),
+                colis: $(this).find('input[name^="tbNoColis"]').val()
             };
-            itemRows.push(tmpItem);
+            array_colis.push(tmpItem);
         });
-        postData.itemRows = itemRows;
+        postData.array_colis = array_colis;
         
         // Check connection is up/down
         if(Offline.state == 'up') {

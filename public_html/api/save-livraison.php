@@ -27,10 +27,10 @@ $livraison->destinataire = (isset($data->tbDestinataire) ? $data->tbDestinataire
 $livraison->nomSignataire = (isset($data->tbNomSignataire) ? $data->tbNomSignataire : '');
 $livraison->signature = (isset($data->signature) ? $data->signature : '');
 $livraison->noEmploye = (isset($data->noEmploye) ? $data->noEmploye : '');
-$livraison->colis = (isset($data->colis) ? $data->colis : '');
+$livraison->colis = (isset($data->array_colis) ? $data->array_colis : '');
 
 // update the livraison
-if($livraison->save()){
+if($livraison->save($livraison)){
     echo '{';
         echo '"message": "La livraison a été mise à jour."';
     echo '}';

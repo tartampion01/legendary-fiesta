@@ -56,7 +56,7 @@ class IL_Livraison{
     {
         $conn = IL_Database::getConn();
         
-        $sql = "SELECT facture, colis FROM colis AS c INNER JOIN livraisonsColis AS cl ON c.id_colis = cl.fk_colis WHERE cl.fk_livraison=$this->id_livraison";
+        $sql = "SELECT facture, colis FROM colisLivraison AS cl INNER JOIN livraison AS l ON cl.fkLivraison = l.id_livraison WHERE cl.fkLivraison=$this->id_livraison";
         
         $result = mysqli_query($conn, $sql);
 
@@ -224,6 +224,8 @@ class IL_Livraison{
         // execute query
         if($stmt->execute()){
             $insert_id = $stmt->insert_id;
+            $this->id_livraison = $insert_id;
+            $this->saveColis();
             
             return true;
         }
@@ -231,7 +233,7 @@ class IL_Livraison{
         return false;
     }
     
-    function save() {
+    function save($livraison) {
         
         $conn = IL_Database::getConn();
         $sql = "UPDATE livraisons SET dateLivraison='$livraison->dateLivraison'" . 
@@ -254,19 +256,23 @@ class IL_Livraison{
     {
         $conn = IL_Database::getConn();
         // DELETE associated colis and create new associations?
-        $sql = "DELETE from livraisonsColis where fk_livraison='$this->id_livraison'";
-        
+        $sql = "DELETE from colisLivraison where fkLivraison='$this->id_livraison'";
+//echo $sql;        
         $result = mysqli_query($conn, $sql);
-        
-        foreach ($this->colis as $colis){
-            $sql = "INSERT INTO livraisonsColis (fk_colis, fk_livraison VALUES (?,?,?,?,?)";
-
+//print_r($this);
+//print_r($this->colis);
+        foreach ($this->colis as $ostidecolis){
+            $colis = (array)$ostidecolis;
+            $sql = "INSERT INTO colisLivraison (fkLivraison, colis, facture) VALUES (?,?,?)";
+//print_r($colis);
+//print_r($this->id_livraison);
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $livraison->id_livraison, 1);
+            $stmt->bind_param("sss", $this->id_livraison, $colis["colis"], $colis["facture"]);
 
             // execute query
             if($stmt->execute()){
                 $insert_id = $stmt->insert_id;
+                //echo $insert_id . "<br>";
             }
         }
         

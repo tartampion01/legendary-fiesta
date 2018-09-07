@@ -47,7 +47,7 @@
                         // remove last comma --> how to do this one in one line?
                         $fieldsQuery = substr($fieldsQuery, 0, -1);
                         $fieldsQuery .= " FROM $tableName" . ";";
-
+//echo $fieldsQuery;
                         // fetch data from table parce que SELECT * from $tableName aurait été trop simple!!!
                         $result = mysqli_query($conn, $fieldsQuery);
                         if(mysqli_num_rows($result) > 0){

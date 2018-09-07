@@ -20,6 +20,7 @@ $livraison = new IL_Livraison($conn);
 
 // get posted data
 $data = json_decode($_GET['postData']);
+//print_r($data);
 
 // set product property values
 $livraison->dateLivraison = (isset($data->tbDate) ? $data->tbDate : '');
@@ -27,7 +28,9 @@ $livraison->destinataire = (isset($data->tbDestinataire) ? $data->tbDestinataire
 $livraison->nomSignataire = (isset($data->tbNomSignataire) ? $data->tbNomSignataire : '');
 $livraison->signature = (isset($data->signature) ? $data->signature : '');
 $livraison->noEmploye = (isset($data->tbEmploye) ? $data->tbEmploye : '');
-$livraison->colis = (isset($data->colis) ? $data->colis : '');
+$livraison->colis = (isset($data->array_colis) ? $data->array_colis : '');
+
+//var_dump($livraison);
 
 // create the livraison
 if($livraison->create($livraison)){

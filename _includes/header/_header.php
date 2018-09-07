@@ -26,12 +26,11 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     header("Access-Control-Allow-Methods: PUT, GET, POST");
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 ?>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
     <title>
         <?PHP IL_Header::getPageTitle($NOMPAGE); ?>
     </title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
     <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

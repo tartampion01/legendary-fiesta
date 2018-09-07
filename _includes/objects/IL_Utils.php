@@ -62,5 +62,34 @@ class IL_Utils
         }
     }
     
+    /***
+     * For autocomplete
+     */
+    public static function getDistinctDestinataires(){
+        
+        $destinataires = "";
+        $option_o = "<option>";
+        $option_c = "</option>";
+        
+        $conn = IL_Database::getConn();
+        $sql = "SELECT * FROM viewDestinataires";
+        
+        $result = mysqli_query($conn, $sql);
+        
+        try
+        {
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_assoc($result)) {
+                    $destinataires .= $option_o .  $row["destinataire"] . $option_c;
+                }
+            }
+        }
+        catch (Exception $e) {
+            //echo $e;
+        }
+
+        return $destinataires == "" ? $option_o . $option_c : $destinataires;
+    }
+    
 }
 ?>

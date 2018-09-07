@@ -257,25 +257,24 @@ class IL_Livraison{
         $conn = IL_Database::getConn();
         // DELETE associated colis and create new associations?
         $sql = "DELETE from colisLivraison where fkLivraison='$this->id_livraison'";
-//echo $sql;        
+
         $result = mysqli_query($conn, $sql);
-//print_r($this);
-//print_r($this->colis);
-        foreach ($this->colis as $ostidecolis){
-            $colis = (array)$ostidecolis;
+
+        // ADD COLIS
+        foreach ($this->colis as $postedColis){
+            $colis = (array)$postedColis; // pour convertr de stdClass
             $sql = "INSERT INTO colisLivraison (fkLivraison, colis, facture) VALUES (?,?,?)";
-//print_r($colis);
-//print_r($this->id_livraison);
+
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sss", $this->id_livraison, $colis["colis"], $colis["facture"]);
 
             // execute query
             if($stmt->execute()){
-                $insert_id = $stmt->insert_id;
-                //echo $insert_id . "<br>";
+                $insert_id = $stmt->insert_id;                
             }
         }
         
+        return true;
     }
 }
 ?>

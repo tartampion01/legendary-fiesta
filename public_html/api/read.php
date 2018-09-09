@@ -48,13 +48,21 @@ if(mysqli_num_rows($results) > 0){
             "destinataire" => $row['destinataire'],
             "nomSignataire" => $row['nomSignataire'],
             "signature" => $row['signature'],
-            "noEmploye" => $row['noEmploye']
+            "noEmploye" => $row['noEmploye'],
+            "facture" => $row['facture'],
+            "colis" => $row['colis']
         );
         
         array_push($Livraisons_arr["records"], $Livraisons_item);
     }
     
     echo json_encode($Livraisons_arr);
+}
+else {
+    $returnData=array(
+        'error' => 'Auncun résultat trouvé'
+    );
+    echo json_encode($returnData);
 }
 
 

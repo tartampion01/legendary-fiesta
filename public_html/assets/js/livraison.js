@@ -85,77 +85,89 @@ $( document ).ready(function() {
     
     // Bind click on "Sauvegarder" button
     $('.btnSave').on('click', function() {
-        // Grabbing form data
-        var postData = {
-            tbDate: $('#tbDate').val(),
-            tbEmploye: $('#tbEmploye').val(),
-            tbDestinataire: $('#tbDestinataire').val(),
-            tbNomSignataire: $('#tbNomSignataire').val(),
-            signature: $('.dumpSignature img').attr('src')
-        };
-        
-        var array_colis = [];
-        $('.cloneDestination .clonable').each(function() {
-            tmpItem = {
-                facture: $(this).find('input[name^="tbNoFacture"]').val(),
-                colis: $(this).find('input[name^="tbNoColis"]').val()
+        var validForm = validateForm();
+
+        if(validForm) {
+            // Grabbing form data
+            var postData = {
+                tbDate: $('#tbDate').val(),
+                tbEmploye: $('#tbEmploye').val(),
+                tbDestinataire: $('#tbDestinataire').val(),
+                tbNomSignataire: $('#tbNomSignataire').val(),
+                signature: $('.dumpSignature img').attr('src')
             };
-            array_colis.push(tmpItem);
-        });
-        postData.array_colis = array_colis;
-        
-        // Check connection is up/down
-        if(Offline.state == 'up') {
-            
-            // Create livraison over ajax
-            if(edit_page == true) {
-                url = 'api/update-livraison.php';
-                postData.id_livraison = $('#id_livraison').val();
-            }
-            else {
-                url = 'api/create-livraison.php';
-            }
-            
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: {'postData': JSON.stringify(postData)},
-                //contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: true,
-                cache: false,
-                success: function(data){
-                    console.log(data);
-                    
-                    //location.reload();
-                },
-                error: function(errMsg) {
-                    console.log(errMsg);
-                }
+
+            var array_colis = [];
+            $('.cloneDestination .clonable').each(function() {
+                tmpItem = {
+                    facture: $(this).find('input[name^="tbNoFacture"]').val(),
+                    colis: $(this).find('input[name^="tbNoColis"]').val()
+                };
+                array_colis.push(tmpItem);
             });
+            postData.array_colis = array_colis;
 
-            console.log(postData);
-        }
-        else if(Offline.state == 'down') {
-            
-            // Store de query into localForage
-            insertQueryIntoLocalForage(postData);
-        }
-        
-        // After posting, clear form data (if not edit page)
-        if(edit_page == false) {
-            tbEmploye: $('#tbEmploye').val('');
-            tbDestinataire: $('#tbDestinataire').val('');
-            tbNomSignataire: $('#tbNomSignataire').val('');
-            $('.clonable').find('input[name^="tbNoFacture"]').val('');
-            $('.clonable').find('input[name^="tbNoColis"]').val('');
-            $('.cloned').remove();
-            $('.addItem.firstItemRow').attr('data-item-row', 1);
-            // Destroy the signature plugin instance
-            $sigdiv.jSignature('reset');
+            // Check connection is up/down
+            if(Offline.state == 'up') {
 
-            // *** TO BE REMOVED ***
-            $('.dumpSignature').empty();
+                // Create livraison over ajax
+                if(edit_page == true) {
+                    url = 'api/update-livraison.php';
+                    postData.id_livraison = $('#id_livraison').val();
+                }
+                else {
+                    url = 'api/create-livraison.php';
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: {'postData': JSON.stringify(postData)},
+                    //contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,
+                    cache: false,
+                    success: function(data){
+                        console.log(data);
+
+                        swal({
+                            position: 'top-end',
+                            type: 'success',
+                            title: 'Livraison enregistrée!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        //location.reload();
+                    },
+                    error: function(errMsg) {
+                        console.log(errMsg);
+                    }
+                });
+
+                console.log(postData);
+            }
+            else if(Offline.state == 'down') {
+
+                // Store de query into localForage
+                insertQueryIntoLocalForage(postData);
+            }
+
+            // After posting, clear form data (if not edit page)
+            if(edit_page == false) {
+                tbEmploye: $('#tbEmploye').val('');
+                tbDestinataire: $('#tbDestinataire').val('');
+                tbNomSignataire: $('#tbNomSignataire').val('');
+                $('.clonable').find('input[name^="tbNoFacture"]').val('');
+                $('.clonable').find('input[name^="tbNoColis"]').val('');
+                $('.cloned').remove();
+                $('.addItem.firstItemRow').attr('data-item-row', 1);
+                // Destroy the signature plugin instance
+                $sigdiv.jSignature('reset');
+
+                // *** TO BE REMOVED ***
+                $('.dumpSignature').empty();
+            }
         }
     });
     
@@ -220,4 +232,85 @@ function pushQueriesFromLocalForage() {
     });
     
     return defer.promise();
+}
+
+function validateForm() {
+    var error = false;
+    var errorMessage = '<ul style="text-align: left; color: #CC0000;">'
+    if($('#tbEmploye').val() == '') {
+        errorMessage+= '<li>Employé</li>';
+        $('#tbEmploye').addClass('control-error');
+        error = true;
+    }
+    else {
+        $('#tbEmploye').removeClass('control-error');
+        //error = false;
+    }
+    
+    if($('#tbNoFacture1').val() == '') {
+        errorMessage+= '<li>Facture</li>';
+        $('#tbNoFacture1').addClass('control-error');
+        error = true;
+    }
+    else {
+        $('#tbNoFacture1').removeClass('control-error');
+        //error = false;
+    }
+    
+    if($('#tbNoColis1').val() == '') {
+        errorMessage+= '<li>Colis</li>';
+        $('#tbNoColis1').addClass('control-error');
+        error = true;
+    }
+    else {
+        $('#tbNoColis1').removeClass('control-error');
+        //error = false;
+    }
+    
+    if($('#tbDestinataire').val() == '') {
+        errorMessage+= '<li>Destinataire</li>';
+        $('#tbDestinataire').addClass('control-error');
+        error = true;
+    }
+    else {
+        $('#tbDestinataire').removeClass('control-error');
+        //error = false;
+    }
+    
+    if($('#tbNomSignataire').val() == '') {
+        errorMessage+= '<li>Nom du signataire</li>';
+        $('#tbNomSignataire').addClass('control-error');
+        error = true;
+    }
+    else {
+        $('#tbNomSignataire').removeClass('control-error');
+        //error = false;
+    }
+    
+    if($('.dumpSignature img').length == 0) {
+        errorMessage+= '<li>Signature</li>';
+        $('.module_signature').addClass('control-error');
+        error = true;
+    }
+    else {
+        $('.module_signature').removeClass('control-error');
+    }
+    
+    errorMessage+= '</ul>';
+    
+    if(error == true) {
+        swal({
+            type: 'error',
+            title: 'Attention!<br />Les champs suivant sont obligatoires',
+            html: errorMessage,
+            allowEscapeKey: false,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.value) {
+                return false;
+            }
+        });
+    }
+    else
+        return true;
 }

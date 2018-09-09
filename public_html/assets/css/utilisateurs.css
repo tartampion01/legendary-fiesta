@@ -30,3 +30,70 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.page_gestionUtilisateurs [name=lst_users] {
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px;
+}
+.page_gestionUtilisateurs [name=lst_users] th.edit {
+  height: 20px;
+  width: 40px;
+}
+.page_gestionUtilisateurs .newUser {
+  margin-top: 20px;
+}
+
+
+
+.page_gestionUtilisateurs_modifier ul {
+  list-style-type: none;
+  padding: 0px 0px 0px 15px;
+}
+.page_gestionUtilisateurs_modifier li {
+  text-align: left;
+}
+.page_gestionUtilisateurs_modifier .userInfo {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.page_gestionUtilisateurs_modifier .userInfo table {
+  table-layout: fixed;
+  width: 500px;
+  margin: 10px;
+}
+.page_gestionUtilisateurs_modifier .userInfo td {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-top: none;
+  border-left: none;
+}
+.page_gestionUtilisateurs_modifier .userInfo tr:last-of-type td {
+  border-bottom: none;
+}
+.page_gestionUtilisateurs_modifier .userInfo .label {
+  width: 40%;
+  vertical-align: middle;
+  text-align: left;
+}
+.page_gestionUtilisateurs_modifier .userInfo .field {
+  vertical-align: middle;
+  text-align: right;
+  width: 60%;
+}
+.page_gestionUtilisateurs_modifier .userInfo .field .input {
+  width: 95%;
+    padding-left: 4px;
+    vertical-align: middle;
+    border-radius: 8px;
+    background-color: #eeeeee;
+}
+.page_gestionUtilisateurs_modifier .userInfo .field li .input {
+  width: auto;
+}
+.module_liste td input,
+.page_livraisons_offline table td input {
+  border: auto;
+}

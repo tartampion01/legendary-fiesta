@@ -104,7 +104,7 @@ class IL_Livraison{
         
         if(is_null($params->filterRows)) {
             //$query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
-            $query = "SELECT id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
         }
         else {
             $where = '';
@@ -118,7 +118,7 @@ class IL_Livraison{
             }
             //echo $where;
             //$query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
-            $query = "SELECT id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
         }
  //echo $query;
  
@@ -135,8 +135,7 @@ class IL_Livraison{
         $params = json_decode($params);
         
         if(is_null($params->filterRows)) {
-            //$queryCount = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY dateLivraison DESC";
-            $queryCount = "SELECT id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 ORDER BY dateLivraison DESC";
+            $queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 GROUP BY colisLivraison.fkLivraison ORDER BY dateLivraison DESC";
         }
         else {
             $where = '';
@@ -148,8 +147,7 @@ class IL_Livraison{
                     $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "' . $params->filterRows[$i]->value . '"';
                 }
             }
-            //$queryCount = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY dateLivraison ORDER BY dateLivraison DESC";
-            $queryCount = "SELECT id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where ORDER BY dateLivraison DESC";
+            $queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY dateLivraison DESC";
         }
         
         $conn = IL_Database::getConn();
@@ -221,7 +219,6 @@ class IL_Livraison{
         
         $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye) VALUES (?,?,?,?,?)";
         $conn = IL_Database::getConn();
-        //echo $livraison->signature;
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye);
         

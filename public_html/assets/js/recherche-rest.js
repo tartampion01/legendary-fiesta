@@ -176,7 +176,8 @@ function fetchRecords(postData) {
                 }
             }
             else {
-                alert(data.message);
+                $(".results-container").empty().html(data.error);
+                $('.loading').hide();
             }
             console.log(data);
         },

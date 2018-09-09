@@ -748,6 +748,7 @@ body.wait #showLoading img {
 .module_liste td,
 .page_livraisons_offline table td {
   border: 1px solid #dddddd;
+  border-right: none;
 }
 .module_liste td input,
 .page_livraisons_offline table td input {
@@ -1136,4 +1137,9 @@ i.fa {
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+/* Sweetalert2 font-size fix */
+.swal2-popup {
+  font-size: 1.6rem !important;
 }

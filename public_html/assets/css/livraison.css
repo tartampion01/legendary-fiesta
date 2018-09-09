@@ -60,4 +60,11 @@
     background-color: rgb(238, 238, 238) !important;
 }
 
-
+.control-error {
+    border: solid 1px #cc0000;
+    background-color: rgba(255, 0, 0, .1);
+}
+.module_signature.control-error {
+    border: solid 1px #cc0000;
+    background-color: #eeeeee;
+}

@@ -35,11 +35,11 @@
                         <div class="col-xs-4">
                             <select name="field" id="field1" value="dateLivraison" class="input">
                                 <option value="dateLivraison" selected="">Date de livraison</option>
-                                <option value="noFacture"># facture</option>
+                                <option value="facture"># facture</option>
                                 <option value="destinataire">Destinataire</option>
-                                <option value="noColis"># colis</option>
+                                <option value="colis"># colis</option>
                                 <option value="nomSignataire">Nom du signataire</option>
-                                <option value="signature">Signature</option>
+                                <!--<option value="signature">Signature</option>-->
                                 <option value="noEmploye"># employé</option>
                             </select>
                         </div>
@@ -83,9 +83,9 @@
                         <tr>
                             <th class="ID isHidden">ID</th>
                             <th class="dateLivraison sortable" data-order-by="dateLivraison">Date de livraison<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
-                            <th class="noFacture sortable" data-order-by="noFacture"># facture<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
+                            <th class="noFacture sortable" data-order-by="facture"># facture<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="destinataire sortable" data-order-by="destinataire">Destinataire<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
-                            <th class="noColis sortable" data-order-by="noColis"># colis<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
+                            <th class="noColis sortable" data-order-by="colis"># colis<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="nomSignataire sortable" data-order-by="nomSignataire">Nom du signataire<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="signature">Signature</th>
                             <th class="noEmploye sortable" data-order-by="noEmploye"># employé<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
@@ -108,13 +108,6 @@
                     <div class="col pageNo"></div>
                     <ul class="pagination" id="pagination" style="text-align: right; padding: 0; margin: 0;"></ul>
 
-                    <!--<div class="col buttonStyle pull-left align-center fas fa-fast-backward" name="pageButton" disabled=""></div>
-                    <div class="col buttonStyle pull-left align-center fas fa-backward" name="pageButton" disabled=""></div>
-
-                    <div class="col pageNo">page 1 / 939</div>
-
-                    <div class="col buttonStyle pull-right align-center fas fa-fast-forward" name="pageButton"></div>
-                    <div class="col buttonStyle pull-right align-center fas fa-forward" name="pageButton"></div>-->
                 </div>
             </div>
         </div>
@@ -128,11 +121,6 @@
     </div>
 </footer>
 </div>
-    <div id="showLoading">
-        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-        <span class="sr-only">Loading...</span>
-        <!--img src="wait.png"-->
-    </div>
     <div id="ajax" style="display:none;">
         <script type="text/json" class="communicator">[{"nop":""}]</script>
         <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
@@ -147,9 +135,9 @@
         <tr name="0" class="serializable hoverable">
             <td class="ID isHidden"><span name="ID" class="input ">${id_livraison}</span></td>
             <td class="dateLivraison"><span name="dateLivraison" class="input " data-sort-value="${dateTimestamp}">${dateLivraison}</span></td>
-            <td class="noFacture"><span name="noFacture" class="input ">${noFacture}</span></td>
+            <td class="noFacture"><span name="noFacture" class="input ">${facture}</span></td>
             <td class="destinataire"><span name="destinataire" class="input ">${destinataire}</span></td>
-            <td class="noColis"><span name="noColis" class="input ">20</span></td>
+            <td class="noColis"><span name="noColis" class="input ">${colis}</span></td>
             <td class="nomSignataire"><span name="nomSignataire" class="input ">${nomSignataire}</span></td>
             <td class="signature"><span class="input svgSignature jSignature" style="display: none;">${signature}</span></td>
             <td class="noEmploye"><span name="noEmploye" class="input ">${noEmploye}</span></td>
@@ -161,11 +149,11 @@
             <div class="col-xs-4">
                 <select name="field" id="field${counter}" value="dateLivraison" class="input">
                     <option value="dateLivraison" selected="">Date de livraison</option>
-                    <option value="noFacture"># facture</option>
+                    <option value="facture"># facture</option>
                     <option value="destinataire">Destinataire</option>
-                    <option value="noColis"># colis</option>
+                    <option value="colis"># colis</option>
                     <option value="nomSignataire">Nom du signataire</option>
-                    <option value="signature">Signature</option>
+                    <!--<option value="signature">Signature</option>-->
                     <option value="noEmploye"># employé</option>
                 </select>
             </div>

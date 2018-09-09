@@ -60,13 +60,16 @@
             </section>
             
             <section name="factures" class="cloneDestination serializable">
+                <?php $counter = 0; ?>
                 <?php foreach($livraison->colis as $value) { ?>
                     <div name="row1" class="row clonable serializable">
                         <div class="col-xs-6">
                             <div class="row">
-                                <div class="col-xs-12 label">
-                                    Facture
-                                </div>
+                                <?php if($counter == 0): ?>
+                                    <div class="col-xs-12 label">
+                                        Facture
+                                    </div>
+                                <?php endif; ?>
                                 <div class="col-xs-12">
                                     <input type="text" name="tbNoFacture[]" id="tbNoFacture1" value="<?php echo $value['facture']; ?>" maxlength="20"  class="input"></input><br>
                                 </div>
@@ -74,15 +77,18 @@
                         </div>
                         <div class="col-xs-6">
                             <div class="row">
-                                <div class="col-xs-12 label">
-                                    Colis
-                                </div>
+                                <?php if($counter == 0): ?>
+                                    <div class="col-xs-12 label">
+                                        Colis
+                                    </div>
+                                <?php endif; ?>
                                 <div class="col-xs-12">
                                     <input type="text" name="tbNoColis[]" id="tbNoColis1" value="<?php echo $value['colis']; ?>" maxlength="20"  class="input"></input><br>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <?php $counter++; ?>
                 <?php } ?>
             </section>
 

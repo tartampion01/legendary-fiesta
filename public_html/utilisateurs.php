@@ -1,6 +1,6 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
 <body>
-    <div name='menu' class='page_menu layout_normal base_layout base_page serializable'>
+    <div name='menu' class='page_gestionUtilisateurs page_gestionUtilisateurs_modifier page_menu layout_normal base_layout base_page serializable'>
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row">
         <div id="menu" class="col-xs-3 col-sm-2">
@@ -28,7 +28,7 @@
                 $username = $password = $passwordconfirmation = "";
                 $admin = $livreur = 0;
                 $user = new IL_Users();
-                
+
                 if( isset($_POST["hidID"]))
                 {
                     $id_user = $_POST["hidID"];
@@ -79,12 +79,13 @@
                                             $id_user = "new";
                                             $errorMessage = "Un utilisateur avec ce nom existe déjà";
                                         }
-                                        else
+                                        else {
                                             $errorMessage = "L'utilisateur à été crée";
                                             $id_user = "new";
                                             $username = "";
                                             $admin = 0;
                                             $livreur = 0;
+                                        }
                                             
                                     }
                                     // UPDATE
@@ -106,7 +107,7 @@
                             $errorMessage = "Veuillez entrer un nom d'utilisateur";
                     }
                 }?>
-                    <div class="module_liste base_module">
+                    <div class="userInfo module_liste base_module">
                         <table>
                             <thead>
                                 <tr>
@@ -127,7 +128,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="username" colspan="2">
+                                    <td class="username" colspan="2" style="color: #cc0000;">
                                         <?php echo $errorMessage; ?>
                                     </td>
                                 </tr>
@@ -176,12 +177,13 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <input class="buttonStyle buttonMedium" type="submit" id="btnSauvegarder" name="btnSauvegarder" value="Sauvegarder" />
-                        <?php if( $id_user != "new" ){ ?>
-                        <a class="buttonStyle buttonMedium" href="utilisateurs?supprimer=<?php echo base64_encode($id_user); ?>" onclick="return confirm('Confirmer la suppression...?');">Supprimer</a>
-                        <?php } ?>
-                        <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
                     </div>
+                    <br />
+                    <input class="buttonStyle buttonMedium" type="submit" id="btnSauvegarder" name="btnSauvegarder" value="Sauvegarder" />
+                    <?php if( $id_user != "new" ){ ?>
+                    <a class="buttonStyle buttonMedium" href="utilisateurs?supprimer=<?php echo base64_encode($id_user); ?>" onclick="return confirm('Confirmer la suppression...?');">Supprimer</a>
+                    <?php } ?>
+                    <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
                 <?php 
             }            
         }
@@ -222,7 +224,7 @@
                     }
                 }
                 ?>
-                    <div class="module_liste base_module">
+                    <div class="userInfo module_liste base_module">
                         <table>
                             <thead>
                                 <tr>
@@ -234,7 +236,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr hidden="">
+                                <tr hidden="" style="display: none;">
                                     <td class="label">
                                         <div class="fieldLabel">ID</div>
                                     </td>
@@ -243,7 +245,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="username" colspan="2">
+                                    <td class="username" colspan="2" style="border: none;">
                                         <?php echo $errorMessage; ?>
                                     </td>
                                 </tr>
@@ -280,24 +282,26 @@
                                             <li>
                                                 <input type="hidden" id="cbAdmin" name="cbAdmin" value="0">
                                                 <input type="checkbox" id="cbAdmin" name="cbAdmin" title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
-                                                <label>administrateurs</label>
+                                                <label> administrateurs</label>
                                             </li>
                                             <li>
                                                 <input type="hidden" id="cbLivreur" name="cbLivreur" value="0">
                                                 <input type="checkbox" id="cbLivreur" name="cbLivreur" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
-                                                <label>livreurs</label>
+                                                <label> livreurs</label>
                                             </li>
                                         </ul>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <input class="buttonStyle buttonMedium" type="submit" id="btnSauvegarder" name="btnSauvegarder" value="Sauvegarder" />
-                        <?php if( $id_user != "new" ){ ?>
-                        <a class="buttonStyle buttonMedium" href="utilisateurs?supprimer=<?php echo base64_encode($id_user); ?>" onclick="return confirm('Confirmer la suppression...?');">Supprimer</a>
-                        <?php } ?>
-                        <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
                     </div>
+                    <br />
+                    <input class="buttonStyle buttonMedium" type="submit" id="btnSauvegarder" name="btnSauvegarder" value="Sauvegarder" />
+                    <?php if( $id_user != "new" ){ ?>
+                    <a class="buttonStyle buttonMedium" href="utilisateurs?supprimer=<?php echo base64_encode($id_user); ?>" onclick="return confirm('Confirmer la suppression...?');">Supprimer</a>
+                    <?php } ?>
+                    <a class="buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
+                    
         <?php
             }
             // DELETE
@@ -310,7 +314,7 @@
                 $user->delete();
                 
                 ?>
-                <div class="module_liste base_module">
+                <div class="userInfo module_liste base_module">
                     <table>                            
                         <tbody>
                             <tr hidden="">
@@ -340,7 +344,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th colspan="2" class="username">Nom d'utilisateur</th>
+                                <th class="ID isHidden">ID</th>
+                                <th class="username">Nom d'utilisateur</th>
+                                <th class="edit"></th>
                             </tr>
                         </thead>
                     <tbody>
@@ -353,18 +359,17 @@
                         if(mysqli_num_rows($users) > 0){
                             while($row = mysqli_fetch_assoc($users)) {
                                 echo '<tr name="0" onclick="window.location.href=\'utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '\'" class="serializable hoverable">';
-                                echo '<td style="width:95%">';
+                                echo '<td>';
                                 echo '<input id="hidUserId" name="hidUserId" type="hidden" value="' . $row["id_user"] . '" />';
                                 echo '<input name="tbUsername" value="' . $row["username"] . '" readonly="" maxlength="100" class="input" type="text" />';
                                 echo '</td>';
-                                echo '<td style="width:5%">';
+                                echo '<td>';
                                 echo '<a name="edit" class="" href="utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '"><img src="assets/images/pencil-edit-button.png" alt=""/></a>';
                                 echo '</td>';
                                 echo '</tr>';
                             } ?>
                     </tbody>
                     </table>
-                    <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php?id_user=new">Nouvel utilisateur</a>
                     <?php }
                     else
                         echo "Aucun utilisateur trouvé.";
@@ -372,6 +377,7 @@
         }
         ?>
             </div>
+        <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php?id_user=new">Nouvel utilisateur</a>
     </form>
 </div>
     

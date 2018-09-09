@@ -4,6 +4,14 @@ $( document ).ready(function() {
     $sigdiv.jSignature();
     $sigdiv.jSignature('disable');
     
+    var edit_page = false;
+    
+    // Check if we are in livraison-edit
+    if($('.dumpSignature.edit').length) {
+        $sigdiv.jSignature("importData", $('.dumpSignature img').attr('src'));
+        edit_page = true;
+    }
+    
     // Bind click on "Faire signer le client" button
     $('.btnSign').on('click', function() {
         var btn = $(this);
@@ -32,13 +40,13 @@ $( document ).ready(function() {
             $('.signPad').removeClass('active');
             
             // Append the signature in a temp element
-            var datapair = $('.jSignature').jSignature('getData', 'svgbase64');
+            var datapair = $('.jSignature').jSignature('getData', 'base30');
             var i = new Image();
             i.src = 'data:' + datapair[0] + ',' + datapair[1];
             i.name = 'HALABELLEIMAGEDESIGNATURE'; // *** TO BE REMOVED OR MODIFIED ***
             i.id = 'HALABELLEIMAGEDESIGNATURE'; // *** TO BE REMOVED OR MODIFIED ***
             $('.dumpSignature').empty(); // *** TO BE REMOVED ***
-            $(i).appendTo($('.dumpSignature')); // append the image (SVG) to DOM.
+            $(i).appendTo($('.dumpSignature')); // append the image (base30) to DOM.
             $('.jSignature').removeClass('active');
             $sigdiv.jSignature('disable');
         }
@@ -100,9 +108,17 @@ $( document ).ready(function() {
         if(Offline.state == 'up') {
             
             // Create livraison over ajax
+            if(edit_page == true) {
+                url = 'api/update-livraison.php';
+                postData.id_livraison = $('#id_livraison').val();
+            }
+            else {
+                url = 'api/create-livraison.php';
+            }
+            
             $.ajax({
                 type: "GET",
-                url: "api/create-livraison.php",
+                url: url,
                 data: {'postData': JSON.stringify(postData)},
                 //contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -126,19 +142,21 @@ $( document ).ready(function() {
             insertQueryIntoLocalForage(postData);
         }
         
-        // After posting, clear form data
-        tbEmploye: $('#tbEmploye').val('');
-        tbDestinataire: $('#tbDestinataire').val('');
-        tbNomSignataire: $('#tbNomSignataire').val('');
-        $('.clonable').find('input[name^="tbNoFacture"]').val('');
-        $('.clonable').find('input[name^="tbNoColis"]').val('');
-        $('.cloned').remove();
-        $('.addItem.firstItemRow').attr('data-item-row', 1);
-        // Destroy the signature plugin instance
-        $sigdiv.jSignature('reset');
-        
-        // *** TO BE REMOVED ***
-        $('.dumpSignature').empty();
+        // After posting, clear form data (if not edit page)
+        if(edit_page == false) {
+            tbEmploye: $('#tbEmploye').val('');
+            tbDestinataire: $('#tbDestinataire').val('');
+            tbNomSignataire: $('#tbNomSignataire').val('');
+            $('.clonable').find('input[name^="tbNoFacture"]').val('');
+            $('.clonable').find('input[name^="tbNoColis"]').val('');
+            $('.cloned').remove();
+            $('.addItem.firstItemRow').attr('data-item-row', 1);
+            // Destroy the signature plugin instance
+            $sigdiv.jSignature('reset');
+
+            // *** TO BE REMOVED ***
+            $('.dumpSignature').empty();
+        }
     });
     
 });

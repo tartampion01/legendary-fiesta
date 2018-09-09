@@ -137,6 +137,8 @@
         <script type="text/json" class="communicator">[{"nop":""}]</script>
         <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
     </div>
+    
+    <div class="converter" style="display: none;"></div>
 </body>
 </html>
 
@@ -149,7 +151,7 @@
             <td class="destinataire"><span name="destinataire" class="input ">${destinataire}</span></td>
             <td class="noColis"><span name="noColis" class="input ">20</span></td>
             <td class="nomSignataire"><span name="nomSignataire" class="input ">${nomSignataire}</span></td>
-            <td class="signature"><span class="input svgSignature"><img src="${signature}" /></span></td>
+            <td class="signature"><span class="input svgSignature jSignature" style="display: none;">${signature}</span></td>
             <td class="noEmploye"><span name="noEmploye" class="input ">${noEmploye}</span></td>
         </tr>
     </script>

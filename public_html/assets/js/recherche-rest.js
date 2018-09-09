@@ -73,6 +73,13 @@ $( document ).ready(function() {
         fetchRecords(postData);
     });
     
+    // Bind click on result rows (to edit page)
+    $('body').on('click', '.results-container tr', function() {
+        var row = $(this);
+        var id_livraison = row.find('.isHidden').find('span').html();
+        window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison;
+    });
+    
 });
 
 function fetchRecords(postData) {
@@ -114,6 +121,17 @@ function fetchRecords(postData) {
                     
                     // Setup sortable table
                     //$(".results-table").stupidtable();
+                    
+                    // Setup jSignature
+                    var fakeSignature = $('.converter');
+                    $('td.signature').each(function() {
+                        var _data = $(this).find('.jSignature').html();
+                        fakeSignature.jSignature();
+                        fakeSignature.jSignature("importData", _data);
+                        svg = fakeSignature.jSignature("getData","svg")[1];
+                        var html = '<div class="svgSignature"><svg viewBox="0 0 600 150">' + svg + '</svg></div>';
+			$(html).appendTo(this);
+                    });
                     
                     // Get total page count
                     var totalPages = Math.ceil(data.countRows / 20);

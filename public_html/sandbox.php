@@ -1,4 +1,40 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
+
+<script type="text/javascript">
+    
+    setTimeout(checkConnectionStatus, 1000);
+    
+    function doesConnectionExist() {
+        var xhr = new XMLHttpRequest();
+        var file = "assets/images/exists.png"; //image path in your project
+        file = "https://www.betainterlivraison.camionbeaudoin.com/assets/images/exists.png";
+        var randomNum = Math.round(Math.random() * 10000);
+        xhr.open('HEAD', file + "?rand=" + randomNum, false);
+        try {
+            xhr.send(null);
+            if (xhr.status >= 200 && xhr.status < 304) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function checkConnectionStatus()
+    {
+        res = doesConnectionExist();
+        
+        if( res )
+            document.getElementById("lInt").innerHTML = "true";
+        else
+            document.getElementById("lInt").innerHTML = "false";
+        
+        setTimeout(checkConnectionStatus, 1000);
+    }
+    
+</script>
 <body>
     <script src="assets/js/livraison-rest.js" type="text/javascript"></script>
     <div name='menu' class='page_menu layout_normal base_layout base_page serializable'>
@@ -9,7 +45,9 @@
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>
-        <div id="titre" class="col-xs-6 col-sm-8">SANDBOX</div>
+        <div id="titre" class="col-xs-6 col-sm-8">SANDBOX</br>
+            <label id='lInt'></label>
+        </div>
         <div id="user" class="col-xs-3 col-sm-2">
             <div><?php echo IL_Session::r(IL_SessionVariables::USERNAME); ?></div>
            <a href="#" class="offline_hide">
@@ -17,6 +55,7 @@
             </a>
         </div>
     </div>
+    
 <div id="contenu">
     <form action="sandbox.php" method="POST">
         <?php
@@ -50,6 +89,7 @@
                 </li>
             </ul>
         </div>
+        <button onclick="crotte();return false">Haha connections</button>
     </form>
 </div>
     

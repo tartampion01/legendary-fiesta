@@ -38,8 +38,8 @@
             ?>        
         </div>
     </div>
-        <a href="sandbox.php">SANDBOX</a><br>
-        <a href="viewdb.php">VIEWDB</a><br>
+        <!--<a href="sandbox.php">SANDBOX</a><br>-->
+        <!--<a href="viewdb.php">VIEWDB</a><br>-->
     <form method="POST" action="default.php">
         <input type="submit" value="Delete livraisons and colis" id="btnDelete" name="btnDelete">
     </form>

@@ -42,21 +42,24 @@ class IL_Utils
         switch($level)
         {
             // USER
-            case 0: echo '<a href="livraison.php" class="menuitem"><button name="livrer" class=""><div class="label">Livrer</div></button></a>
-                          <a href="horsligne.php" class="menuitem"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          <a href="rechercher.php" class="menuitem offline_hide"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
+            case 0: echo '<a href="livraison.php" class="menuitem offline_hide"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                          //<a href="horsligne.php" class="menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
+                          //<a href="horsligne.html" class="menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
+                          '<a href="rechercher.php" class="menuitem offline_hide"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
                           <button name="logout" class="menuitem offline_hide" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
             // ADMIN
-            case 1: echo '<a href="livraison.php" class="menuitem"><button name="livrer" class=""><div class="label">Livrer</div></button></a>
-                          <a href="horsligne.php" class="menuitem"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          <a href="rechercher.php" class="menuitem offline_hide"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
+            case 1: echo '<a href="livraison.php" class= "menuitem offline_hide"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                          //<a href="horsligne.php" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
+                          //<a href="horsligne.html" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
+                          '<a href="rechercher.php" class="menuitem offline_hide"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
                           <a href="utilisateurs.php" class="menuitem offline_hide"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>
                           <button name="logout" class="menuitem offline_hide" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
-            default:echo '<a href="livraison.php" class="menuitem"><button name="livrer" class=""><div class="label">Livrer</div></button></a>
-                          <a href="horsligne.php" class="menuitem"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          <a href="rechercher.php" class="menuitem offline_hide"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
+            default:echo '<a href="livraison.php" class= "menuitem offline_hide"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                          //<a href="horsligne.php" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
+                          //<a href="horsligne.html" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
+                          '<a href="rechercher.php" class="menuitem offline_hide"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
                           <button name="logout" class="menuitem offline_hide" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
         }

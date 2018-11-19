@@ -1,6 +1,66 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
 <script type="application/javascript" src="assets/js/livraison-horsligne.js"></script>
 <body>
+    <script>
+        if(navigator.onLine) { // true|false
+	 alert('online');
+        }
+        else
+            alert('offline');
+        
+        var xmlhttp
+function ConnectToNet(url)
+{
+    xmlhttp=null;
+    try {
+        netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+    } catch (e) {
+
+    //For IE it comes here.
+    //alert("Permission UniversalBrowserRead denied.");
+   }
+    // code for Mozilla, etc.
+    if (window.XMLHttpRequest){
+        xmlhttp=new XMLHttpRequest()
+    }
+    // code for IE
+    else if (window.ActiveXObject){
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")
+    }
+    if (xmlhttp!=null){
+        xmlhttp.onreadystatechange=state_Change
+        xmlhttp.open("GET",url,true)
+        xmlhttp.send(null)
+    }
+    else{
+        alert("Your browser does not support XMLHTTP.")
+    }
+}
+
+function state_Change()
+{
+    // if xmlhttp shows "loaded"
+    if (xmlhttp.readyState==4){
+        try{
+              // if "OK"    
+            if (xmlhttp.status==200){
+            var objDiv = document.getElementById('div1');
+            objDiv.innerHTML = "<font color=blue>Internet is connected.</font>";
+            alert("Internet is Connected.");
+            return;
+        }
+          else{
+            alert("Problem retrieving XML data")
+        }
+    } catch(err){
+        var objDiv = document.getElementById('div1');
+        objDiv.innerHTML += "<font color=red>Internet is not connected.<br/></font>";
+        setTimeout("ConnectToNet('http://www.google.com')",20000);
+    }
+  }
+}
+    </script>
+    
     <div name='menu' class='page_livraisons_offline layout_normal base_layout base_page serializable'>
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row">
@@ -9,7 +69,7 @@
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>
-        <div id="titre" class="col-xs-6 col-sm-8">LIVRAISON HORS LIGNE - PHP</div>
+        <div id="titre" class="col-xs-6 col-sm-8">LIVRAISON HORS LIGNE</div>
         <div id="user" class="col-xs-3 col-sm-2">
             <div><?php echo IL_Session::r(IL_SessionVariables::USERNAME); ?></div>
             <a href="#" class="offline_hide">
@@ -18,7 +78,7 @@
         </div>
     </div>
 <div id="contenu">
-   
+   Horsligne HTML
     <div id="here">
         <div data-reactroot="">
             <table>
@@ -56,10 +116,7 @@
     
     <div class="converter" style="display: none;"></div>
     
-</body>
-</html>
-
-<!-- Start : Javascript template -->
+    <!-- Start : Javascript template -->
 <script id="resultsTemplate" type="text/x-jquery-tmpl">
     <tr name="0" class="serializable hoverable">
         <td class="ID isHidden"><span name="ID" class="input ">${id_livraison}</span></td>
@@ -71,4 +128,7 @@
         <td class="signature"><span class="input svgSignature jSignature" style="display: none;">${signature}</span></td>
         <td class="noEmploye"><span name="noEmploye" class="input ">${tbEmploye}</span></td>
     </tr>
+    doOnlineCheck();
 </script>
+</body>
+</html>

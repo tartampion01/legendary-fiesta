@@ -135,9 +135,9 @@
         <tr name="0" class="serializable hoverable">
             <td class="ID isHidden"><span name="ID" class="input ">${id_livraison}</span></td>
             <td class="dateLivraison"><span name="dateLivraison" class="input " data-sort-value="${dateTimestamp}">${dateLivraison}</span></td>
-            <td class="noFacture"><span name="noFacture" class="input ">${facture}</span></td>
+            <td class="facture"><span name="facture" class="input ">${facture}</span></td>
             <td class="destinataire"><span name="destinataire" class="input ">${destinataire}</span></td>
-            <td class="noColis"><span name="noColis" class="input ">${colis}</span></td>
+            <td class="noColis"><span name="colis" class="input ">${colis}</span></td>
             <td class="nomSignataire"><span name="nomSignataire" class="input ">${nomSignataire}</span></td>
             <td class="signature"><span class="input svgSignature jSignature" style="display: none;">${signature}</span></td>
             <td class="noEmploye"><span name="noEmploye" class="input ">${noEmploye}</span></td>

@@ -11,8 +11,10 @@ class IL_Livraison{
     public $nomSignataire = "";
     public $signature     = "";
     public $noEmploye     = "";
+    public $facture       = "";
+    public $colis         = "";
     
-    public $colis = array(); // TABLE livraisonsColis contient fkColis = colis.id_colis AND fkLivraison = livraisons.id_livraison
+    //public $colis = array(); // TABLE livraisonsColis contient fkColis = colis.id_colis AND fkLivraison = livraisons.id_livraison
                              // la table colis contient les champs facture et colis
     
     // constructor with $db as database connection
@@ -44,8 +46,10 @@ class IL_Livraison{
         $this->nomSignataire = $r['nomSignataire'];
         $this->signature = $r['signature'];
         $this->noEmploye = $r['noEmploye'];
+        $this->facture = $r['facture'];
+        $this->colis = $r['colis'];
         
-        $this->loadColis();
+        //$this->loadColis();
         
         //var_dump($this);
         
@@ -104,7 +108,8 @@ class IL_Livraison{
         
         if(is_null($params->filterRows)) {
             //$query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
-            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            //$query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
         }
         else {
             $where = '';
@@ -118,7 +123,8 @@ class IL_Livraison{
             }
             //echo $where;
             //$query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
-            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            //$query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
         }
  //echo $query;
  
@@ -135,7 +141,8 @@ class IL_Livraison{
         $params = json_decode($params);
         
         if(is_null($params->filterRows)) {
-            $queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 GROUP BY colisLivraison.fkLivraison ORDER BY dateLivraison DESC";
+            //$queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 GROUP BY colisLivraison.fkLivraison ORDER BY dateLivraison DESC";
+            $queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY id_livraison ORDER BY dateLivraison DESC";
         }
         else {
             $where = '';
@@ -147,7 +154,8 @@ class IL_Livraison{
                     $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "' . $params->filterRows[$i]->value . '"';
                 }
             }
-            $queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY dateLivraison DESC";
+            //$queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY dateLivraison DESC";
+            $queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY id_livraison ORDER BY dateLivraison DESC";
         }
         
         $conn = IL_Database::getConn();
@@ -217,16 +225,17 @@ class IL_Livraison{
     
     function create($livraison) {
         
-        $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye, colis, facture) VALUES (?,?,?,?,?,?,?)";
+
         $conn = IL_Database::getConn();
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye);
+        $stmt->bind_param("sssssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye, $livraison->colis, $livraison->facture);
         
         // execute query
         if($stmt->execute()){
             $insert_id = $stmt->insert_id;
             $this->id_livraison = $insert_id;
-            $this->saveColis();
+            //$this->saveColis();
             
             return true;
         }
@@ -242,12 +251,14 @@ class IL_Livraison{
                 " nomSignataire='$livraison->nomSignataire',".
                 " signature='$livraison->signature',".
                 " noEmploye='$livraison->noEmploye'".
+                " colis='$livraison->colis'".
+                " facture='$livraison->facture'".
                 " WHERE id_livraison=$livraison->id_livraison";
       
         //$sql = "UPDATE users SET username='$username',level='$level',actif='$actif',password='$password' WHERE id_user=".$this->id;
         
         if (mysqli_query($conn, $sql)) {
-            $this->saveColis();
+            //$this->saveColis();
             return true;
         }
         

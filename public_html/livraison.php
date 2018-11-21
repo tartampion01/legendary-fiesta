@@ -1,11 +1,11 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
-<script type="application/javascript" src="assets/js/livraison.js"></script>
+<!--<script type="application/javascript" src="assets/js/livraison.js"></script>-->
 <body>
     <div name='livraison' class='page_livraison layout_normal base_layout base_page serializable'>
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row" style="margin-top: 0px;">
         <div id="menu" class="col-xs-3 col-sm-2">
-            <a href="default.php">
+            <a href="default.php" class="home-link">
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>
@@ -204,7 +204,7 @@
                 </div>
             </section>
             
-            <div class="dumpSignature" style="margin: 0px; padding: 0px; border: medium none; height: 150px; width: 100%; touch-action: none; background-color: transparent;">
+            <div class="dumpSignature" style="display: none; margin: 0px; padding: 0px; border: medium none; height: 150px; width: 100%; touch-action: none; background-color: transparent;">
                 
                 
                 

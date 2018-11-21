@@ -47,6 +47,7 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <script type="application/javascript" src="assets/js/offline/offline.min.js"></script>
     <script type="application/javascript" src="assets/js/jSignature/jSignature.min.js"></script>
     <script type="application/javascript" src="assets/js/utilities.js"></script>
+    <script type="application/javascript" src="assets/js/livraison.js"></script>
     <script type="application/javascript" src="assets/js/jquery.tmpl.js"></script>
     <script type="application/javascript" src="assets/js/awesomplete/awesomplete.js"></script>
     <script type="application/javascript" src="assets/js/stupidtable.js"></script>

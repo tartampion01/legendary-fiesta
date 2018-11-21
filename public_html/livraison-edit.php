@@ -1,5 +1,5 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
-<script type="application/javascript" src="assets/js/livraison.js"></script>
+<!--<script type="application/javascript" src="assets/js/livraison.js"></script>-->
 <body>
     <div name='livraison' class='page_livraison layout_normal base_layout base_page serializable'>
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
@@ -138,7 +138,7 @@
                 </div>
             </section>
             
-            <div class="dumpSignature edit" style="margin: 0px; padding: 0px; border: medium none; height: 150px; width: 100%; touch-action: none; background-color: transparent;">
+            <div class="dumpSignature edit" style="display: none; margin: 0px; padding: 0px; border: medium none; height: 150px; width: 100%; touch-action: none; background-color: transparent;">
                 
                 <img src="<?php echo $livraison->signature; ?>" />
                 

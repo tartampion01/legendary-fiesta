@@ -225,43 +225,57 @@ class IL_Livraison{
     
     function create($livraison) {
         
+        $error = false;
         $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye, colis, facture) VALUES (?,?,?,?,?,?,?)";
 
         $conn = IL_Database::getConn();
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye, $livraison->colis, $livraison->facture);
         
-        // execute query
-        if($stmt->execute()){
-            $insert_id = $stmt->insert_id;
-            $this->id_livraison = $insert_id;
-            //$this->saveColis();
+        foreach ($this->colis as $postedColis) {
+            $colis = (array)$postedColis; // pour convertr de stdClass
             
-            return true;
+            $stmt->bind_param("sssssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye, $colis["colis"], $colis["facture"]);
+        
+            // execute query
+            if($stmt->execute()){
+                $insert_id = $stmt->insert_id;
+                $this->id_livraison = $insert_id;
+            }
+            else {
+                $error = true;
+                return;
+            }
         }
-
-        return false;
+        
+        if(!$error)
+            return true;
+        else
+            return false;
     }
     
     function save($livraison) {
+        $arrayColis = (array)$livraison->colis[0]; // pour convertr de stdClass
+        $colis = $arrayColis["colis"];
+        $facture = $arrayColis["facture"];
         
         $conn = IL_Database::getConn();
-        $sql = "UPDATE livraisons SET dateLivraison='$livraison->dateLivraison'," . 
-                " destinataire='$livraison->destinataire',".
-                " nomSignataire='$livraison->nomSignataire',".
-                " signature='$livraison->signature',".
-                " noEmploye='$livraison->noEmploye'".
-                " colis='$livraison->colis'".
-                " facture='$livraison->facture'".
+        $sql = "UPDATE livraisons SET dateLivraison=?," . 
+                " destinataire=?,".
+                " nomSignataire=?,".
+                " signature=?,".
+                " noEmploye=?,".
+                " colis=?,".
+                " facture=?".
                 " WHERE id_livraison=$livraison->id_livraison";
       
-        //$sql = "UPDATE users SET username='$username',level='$level',actif='$actif',password='$password' WHERE id_user=".$this->id;
+        //echo $sql;
+        $stmt = $conn->prepare($sql);
         
-        if (mysqli_query($conn, $sql)) {
-            //$this->saveColis();
+        $stmt->bind_param("sssssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye, $colis, $facture);
+        
+        if($stmt->execute()){
             return true;
         }
-        
         return false;
     }
     

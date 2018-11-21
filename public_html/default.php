@@ -19,7 +19,7 @@
         <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
         <div id="entete" class="row">
             <div id="menu" class="col-xs-3 col-sm-2">
-                <a href="default.php">
+                <a href="default.php" class="home-link">
                     <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
                 </a>
             </div>

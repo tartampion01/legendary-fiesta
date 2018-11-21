@@ -20,7 +20,6 @@ $livraison = new IL_Livraison($conn);
 
 // get posted data
 $data = json_decode($_GET['postData']);
-//print_r($data);
 
 // set product property values
 $livraison->id_livraison = (isset($data->id_livraison) ? $data->id_livraison : '');

@@ -1,8 +1,10 @@
 $( document ).ready(function() {
     
     var $sigdiv = $('.jSignature');
-    $sigdiv.jSignature();
-    $sigdiv.jSignature('disable');
+    if($sigdiv.length > 0) {
+        $sigdiv.jSignature();
+        $sigdiv.jSignature('disable');
+    }
     
     var edit_page = false;
     
@@ -179,6 +181,14 @@ function insertQueryIntoLocalForage(postData) {
     localforage.setItem('query-'+timestamp, postData).then(function (value) {
         // Do other things once the value has been saved.
         console.log(value);
+        
+        swal({
+            position: 'top-end',
+            type: 'success',
+            title: 'Livraison enregistrée!',
+            showConfirmButton: false,
+            timer: 1500
+        });
     }).catch(function(err) {
         // This code runs if there were any errors
         console.log(err);
@@ -191,44 +201,58 @@ function pushQueriesFromLocalForage() {
     
     $('.loading').show();
     
-    localforage.iterate(function(value, key, iterationNumber) {
-        // Resulting key/value pair -- this callback
-        // will be executed for every item in the
-        // database.
+    // If there is somethings in the localForage DB
+    localforage.length().then(function(numberOfKeys) {
         
-        // Create livraison over ajax
-        $.ajax({
-            type: "GET",
-            url: "api/create-livraison.php",
-            data: {'postData': JSON.stringify(value)},
-            //contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: true,
-            success: function(data){
-                
-                // Remove item from localForage
-                localforage.removeItem(key).then(function() {
-                    // Run this code once the key has been removed.
-                    console.log('Key is cleared!');
-                }).catch(function(err) {
-                    // This code runs if there were any errors
-                    console.log(err);
-                });
-            },
-            error: function(errMsg) {
-                console.log(errMsg);
-            }
-        });
+        if(numberOfKeys > 0) {
+            localforage.iterate(function(value, key, iterationNumber) {
+                // Resulting key/value pair -- this callback
+                // will be executed for every item in the
+                // database.
 
-        console.log([key, value]);
-    }, function(err) {
-        if (!err) {
-            console.log('Iteration has completed');
-            
-            defer.resolve('DONE');
+                // Create livraison over ajax
+                $.ajax({
+                    type: "GET",
+                    url: "api/create-livraison.php",
+                    data: {'postData': JSON.stringify(value)},
+                    //contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,
+                    success: function(data){
+
+                        // Remove item from localForage
+                        localforage.removeItem(key).then(function() {
+                            // Run this code once the key has been removed.
+                            console.log('Key is cleared!');
+                        }).catch(function(err) {
+                            // This code runs if there were any errors
+                            console.log(err);
+                        });
+                    },
+                    error: function(errMsg) {
+                        console.log(errMsg);
+                    }
+                });
+
+                console.log([key, value]);
+            }, function(err) {
+                if (!err) {
+                    console.log('Iteration has completed');
+
+                    defer.resolve('DONE');
+                }
+                else
+                    defer.resolve('ERROR');
+            });
         }
-        else
-            defer.resolve('ERROR');
+        else {
+            defer.resolve('NO_DATA_TO_SYNC');
+        }
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log(err);
+        
+        defer.resolve('ERROR');
     });
     
     return defer.promise();

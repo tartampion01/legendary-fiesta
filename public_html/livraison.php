@@ -21,11 +21,11 @@
     <div id="contenu">
         <!--<form name="frmLivraison" action="livraison.php" method="POST">-->
         <div name='mod_livraison' class='module_livraison base_module awesomplete col-lg-offset-2 col-lg-8 serializable' >
-            <div class="" style="display: <?php echo $errorMessageVisibility; ?>">
+            <!--<div class="" style="display: <?php echo $errorMessageVisibility; ?>">
                 <label type="text" name="tbErreur" style="display: <?php echo $errorMessageVisibility; ?>" id="tbErreur" value="" readonly="" class="input ">
                     <?php echo $errorMessage; ?>
                 </label>
-            </div>
+            </div>-->
             <section>
                 <div class="row">
                     <div class="col-xs-6">

@@ -33,7 +33,7 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
-    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="application/javascript" src="assets/js/jquery.min.js"></script>
     <script type="application/javascript" src="assets/js/dsTools/dsSwissKnife.js"></script>
     <script type="application/javascript" src="assets/js/dsTools/dsAjaxCommunicator.js"></script>
     <script type="application/javascript" src="assets/js/dsTools/dsAjaxV2.js"></script>
@@ -53,7 +53,7 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <script type="application/javascript" src="assets/js/stupidtable.js"></script>
     <script type="application/javascript" src="assets/js/jquery.twbsPagination.js"></script>
     
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/fontawesome/all.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/animator.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />

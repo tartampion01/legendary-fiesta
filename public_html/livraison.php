@@ -19,59 +19,6 @@
     </div>
     
     <div id="contenu">
-        <?php 
-            $errorMessageVisibility = "none;";
-            $errorMessage = "";
-            $date = $employe = $facture = $colis = $destinataire = $nomSignataire = $signature = "";
-            
-            if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                
-                if( isset($_POST["btnSave"]) )
-                {
-                    //$errDate = $errEmploye = $errFacture = $errColis = $errDestinataire = $errNomSignataire = $errSignature = "";
-                    $errNo = 0;
-                    
-                    $date = $_POST["tbDate"];
-                    $employe = $_POST["tbEmploye"];
-                    $facture = $_POST["tbNoFacture"];
-                    $colis = $_POST["tbNoColis"];
-                    $destinataire = $_POST["tbDestinataire"];
-                    $nomSignataire = $_POST["tbDate"];
-                    //$signature = ??? canvas
-                    if( isset($nomSignataire) && strcmp($nomSignataire,"") != 0 ){}else{ $errorMessage = "Veuillez spécifier le nom du signataire"; $errNo++;}
-                    if( isset($destinataire) && strcmp($destinataire,"") != 0 ){}else{ $errorMessage = "Veuillez spécifier un destinataire"; $errNo++;}
-                    
-                    $i = 0;
-                    if( isset($colis) ){
-                        
-                        print_r($colis);
-                        foreach ($colis as $petitColis) {
-                            echo "<br>" . "COLIIIIIIS=" . $colis[$i++];
-                            //echo "Petit colis # " . $i++ . " " . $petitColis . "<br>";
-                        }
-                    }else{ 
-                        $errorMessage = "Erreur Colis"; $errNo++;
-                    }
-    
-                    if( isset($facture) && strcmp($facture,"") != 0 ){}else{ $errorMessage = "Erreur facture"; $errNo++;}
-                    if( isset($date) && strcmp($date,"") != 0 ){}else{ $errorMessage = "Erreur de date"; $errNo++;}
-                    if( isset($employe) && strcmp($employe,"") != 0 ){}else{ $errorMessage = "Veuillez spécifier un employé"; $errNo++;}
-//var_dump($_POST);
-                    if( $errNo == 0 )
-                    {                        
-                    }
-                    else
-                        $errorMessageVisibility = "block;";
-                    
-                    echo "<br> NB ERREUR: " . $errNo;
-                            
-                }
-                else
-                {
-
-                }
-            }
-        ?>
         <!--<form name="frmLivraison" action="livraison.php" method="POST">-->
         <div name='mod_livraison' class='module_livraison base_module awesomplete col-lg-offset-2 col-lg-8 serializable' >
             <div class="" style="display: <?php echo $errorMessageVisibility; ?>">

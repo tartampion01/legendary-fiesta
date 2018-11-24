@@ -42,7 +42,7 @@
                                 Employé
                             </div>
                             <div class="col-xs-12">
-                                <input type="text" name="tbEmploye" id="tbEmploye" value="<?php echo $employe; ?>" maxlength="10"  class="input "></input>
+                                <input type="text" name="tbEmploye" id="tbEmploye" value="" maxlength="10"  class="input "></input>
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                     <div class="col-md-12">
                         <span class="label">Destinataire </span>
                         <div class="awesomplete">
-                            <input name="tbDestinataire" id="tbDestinataire" value="<?php echo $destinataire; ?>" list="listeClients" maxlength="20" class="input awesomplete" autocomplete="off" aria-autocomplete="list" type="text">
+                            <input name="tbDestinataire" id="tbDestinataire" value="" list="listeClients" maxlength="20" class="input awesomplete" autocomplete="off" aria-autocomplete="list" type="text">
                             <!--<ul hidden="">
                                 <li aria-selected="false">De<mark>ry</mark></li>
                                 <li aria-selected="false">Ger<mark>ry</mark></li>
@@ -111,7 +111,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <span class="label">Nom du signataire </span>
-                        <input type="text" name="tbNomSignataire" id="tbNomSignataire" value="<?php echo $nomSignataire; ?>" maxlength="200"  class="input "></input>
+                        <input type="text" name="tbNomSignataire" id="tbNomSignataire" value="" maxlength="200"  class="input "></input>
                     </div>
                 </div>
             </section>

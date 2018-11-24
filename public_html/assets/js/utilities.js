@@ -65,3 +65,30 @@ $(function(){
 
 });
 
+$(document).ready(function() {
+    $('.offline-username').html(getCookie('username'));
+    
+    var currentdate = new Date(); 
+    var datetime = currentdate.getFullYear() + "-"
+                    + (currentdate.getMonth()+1)  + "-" 
+                    + currentdate.getDate() + " "  
+                    + currentdate.getHours() + ":"  
+                    + currentdate.getMinutes() + ":" 
+                    + currentdate.getSeconds();
+    $('.offline-date').val(datetime);
+});
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}

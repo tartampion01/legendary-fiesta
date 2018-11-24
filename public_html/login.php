@@ -97,6 +97,8 @@
                                         IL_Session::w(IL_SessionVariables::ID_USER,$user->id);
                                         IL_Session::w(IL_SessionVariables::LEVEL,$user->level);
                                         
+                                        setcookie('username', $user->username, time() + (86400 * 30), "/");
+                                        
                                         header('Location: ' . "default.php");
                                         
                                     } else{

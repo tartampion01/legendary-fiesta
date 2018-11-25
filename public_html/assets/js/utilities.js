@@ -73,7 +73,7 @@ $(document).ready(function() {
                     + (currentdate.getMonth()+1)  + "-" 
                     + currentdate.getDate() + " "  
                     + currentdate.getHours() + ":"  
-                    + currentdate.getMinutes() + ":" 
+                    + (currentdate.getMinutes() < 10 ? ('0' + currentdate.getMinutes()) : currentdate.getMinutes()) + ":" 
                     + (currentdate.getSeconds() < 10 ? ('0' + currentdate.getSeconds()) : currentdate.getSeconds());
     $('.offline-date').val(datetime);
 });

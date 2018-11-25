@@ -66,8 +66,10 @@ $(function(){
 });
 
 $(document).ready(function() {
+    // Set offline username (header)
     $('.offline-username').html(getCookie('username'));
     
+    // Set offline date
     var currentdate = new Date(); 
     var datetime = currentdate.getFullYear() + "-"
                     + (currentdate.getMonth()+1)  + "-" 
@@ -76,6 +78,9 @@ $(document).ready(function() {
                     + (currentdate.getMinutes() < 10 ? ('0' + currentdate.getMinutes()) : currentdate.getMinutes()) + ":" 
                     + (currentdate.getSeconds() < 10 ? ('0' + currentdate.getSeconds()) : currentdate.getSeconds());
     $('.offline-date').val(datetime);
+    
+    // Set offline listeClients from localStorage
+    $('.offline-listeClients').html(localStorage.getItem('listeClients'));
 });
 
 function getCookie(cname) {

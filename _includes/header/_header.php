@@ -73,6 +73,12 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
     
     <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
+    
+    <script type="application/javascript">
+        // Set listeClients in localStoage
+        var listeClients = '<?php echo IL_Utils::getDistinctDestinataires() ?>';
+        localStorage.setItem('listeClients', listeClients);
+    </script>
 </head>
     
     <div class="offline-ui"></div>

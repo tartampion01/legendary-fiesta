@@ -74,7 +74,7 @@ $(document).ready(function() {
                     + currentdate.getDate() + " "  
                     + currentdate.getHours() + ":"  
                     + currentdate.getMinutes() + ":" 
-                    + currentdate.getSeconds();
+                    + (currentdate.getSeconds() < 10 ? ('0' + currentdate.getSeconds()) : currentdate.getSeconds());
     $('.offline-date').val(datetime);
 });
 

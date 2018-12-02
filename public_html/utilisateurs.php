@@ -137,7 +137,11 @@
                                         <div class="fieldLabel">Nom d'utilisateur</div>
                                     </td>
                                     <td class="field">
-                                        <input name="tbUsername" value="<?php echo $username; ?>" maxlength="50" class="input" type="text">
+                                        <?php if( $id_user == "new" ){ ?>
+                                            <input name="tbUsername" value="" maxlength="50" class="input" type="text">
+                                        <?php } else { ?>
+                                            <input name="tbUsername" value="<?php echo $username; ?>" maxlength="50" class="input" type="text">
+                                        <?php } ?>                                        
                                     </td>
                                 </tr>
                                 <tr>
@@ -253,8 +257,12 @@
                                     <td class="label">
                                         <div class="fieldLabel">Nom d'utilisateur</div>
                                     </td>
-                                    <td class="field">
-                                        <input name="tbUsername" value="<?php echo $username; ?>" maxlength="50" class="input" type="text">
+                                    <td class="field">prout
+                                        <?php if( $id_user == "new" ){ ?>
+                                            <input name="tbUsername" value="" maxlength="50" class="input" type="text">
+                                        <?php } else { echo "iduser=" . $id_user; ?>
+                                            <input name="tbUsername" value="<?php echo $username; ?>" maxlength="50" class="input" type="text">
+                                        <?php } ?>
                                     </td>
                                 </tr>
                                 <tr>

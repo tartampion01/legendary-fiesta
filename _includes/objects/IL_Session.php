@@ -354,7 +354,7 @@ class IL_Session
         // Helps prevent hijacking by resetting the session ID at every request.
         // Might cause unnecessary file I/O overhead?
         // TODO: create config variable to control regenerate ID behavior
-        return session_regenerate_id(true);
+        return session_regenerate_id(false);
     }
 }
 ?>

@@ -1,4 +1,4 @@
-/* Offline/Online checking*/
+/* Offline/Online checking */
 $(function(){
 
     var 

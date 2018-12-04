@@ -80,7 +80,7 @@ $(document).ready(function() {
     $('.offline-date').val(datetime);
     
     // Set offline listeClients from localStorage
-    $('.offline-listeClients').html(localStorage.getItem('listeClients'));
+    //$('.offline-listeClients').html(localStorage.getItem('listeClients'));
 });
 
 function getCookie(cname) {

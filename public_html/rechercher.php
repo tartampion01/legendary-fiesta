@@ -60,7 +60,7 @@
                 </div>
                 <div class="row" style="margin-bottom: 15px;">
                     <div class="col-xs-5">
-                        <i name="plus" class="addItem firstItemRow buttonStyle fas fa-plus pull-left" data-item-row="1"></i>
+                        <i name="plus" class="addItemFilter firstItemRow buttonStyle fas fa-plus pull-left" data-item-row="1"></i>
                     </div>
                     <div class="col-xs-7">&nbsp;</div>
                 </div>

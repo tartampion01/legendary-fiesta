@@ -8,25 +8,25 @@ $( document ).ready(function() {
     fetchRecords(postData);
     
     // Bind click on add an item row (filters)
-    $('.addItem').on('click', function() {
+    $('.addItemFilter').on('click', function() {
         btn = $(this);
         var itemRowCount = $(btn).attr('data-item-row');
         itemRowCount++
         var data = [
             { counter: itemRowCount }
         ];
-        $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
+        $('.addItemFilter.firstItemRow').attr('data-item-row', itemRowCount);
         $("#filtersTemplate").tmpl(data).appendTo(".cloneDestination");
     });
     
     // Bind click on remove an item row (filters)
     $('body').on('click', '.removeItem', function() {
         var btn = $(this);
-        var itemRowCount = $('.addItem.firstItemRow').attr('data-item-row');
+        var itemRowCount = $('.addItemFilter.firstItemRow').attr('data-item-row');
         itemRowCount--;
         var itemRow = $(btn).attr('data-item-row');
         $('.itemRow' + itemRow).remove();
-        $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
+        $('.addItemFilter.firstItemRow').attr('data-item-row', itemRowCount);
         
         $('.btnSearch').trigger('click');
     });

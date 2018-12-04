@@ -74,8 +74,8 @@ class IL_Session
      * 
      * @var integer
      */
-    //protected static $SESSION_AGE = 86400; // 1 jour
-    protected static $SESSION_AGE = 592200; // 1 semaine
+    protected static $SESSION_AGE = 86400;
+    
     /**
      * Writes a value to the current session data.
      * 
@@ -327,7 +327,7 @@ class IL_Session
         if ( '' === session_id() )
         {
             $secure = true;
-            $httponly = false;
+            $httponly = true;
             // Disallow session passing as a GET parameter.
             // Requires PHP 4.3.0
             if (ini_set('session.use_only_cookies', 1) === false) {
@@ -354,7 +354,7 @@ class IL_Session
         // Helps prevent hijacking by resetting the session ID at every request.
         // Might cause unnecessary file I/O overhead?
         // TODO: create config variable to control regenerate ID behavior
-        return session_regenerate_id(false);
+        return session_regenerate_id(true);
     }
 }
 ?>

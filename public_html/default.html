@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!--<html manifest="/offline.manifest">-->
+<html>
+    <head>
+        
+        
+        
+        <title>Inter Livraison - Accueil</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/json" class="communicator">[{"nop":""}]</script>
+        <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
+        <script type="application/javascript" src="assets/js/jquery.min.js"></script>
+        <script type="application/javascript" src="assets/js/dsTools/dsSwissKnife.js"></script>
+        <script type="application/javascript" src="assets/js/dsTools/dsAjaxCommunicator.js"></script>
+        <script type="application/javascript" src="assets/js/dsTools/dsAjaxV2.js"></script>
+        <script type="application/javascript" src="assets/js/dsTools/dsValueFormatter.js"></script>
+        <script type="application/javascript" src="assets/js/container.js"></script>
+        <script type="application/javascript" src="assets/js/animator.js"></script>
+        <script type="application/javascript" src="assets/js/popup.js"></script>
+        <script type="application/javascript" src="assets/js/sweetalert2/sweetalert2.all.min.js"></script>
+        <script type="application/javascript" src="assets/js/sweetalert2/promise-polyfill.js"></script>
+        <script type="application/javascript" src="assets/js/localforage.js"></script>
+        <script type="application/javascript" src="assets/js/offline/offline.min.js"></script>
+        <script type="application/javascript" src="assets/js/jSignature/jSignature.min.js"></script>
+        <script type="application/javascript" src="assets/js/utilities.js"></script>
+        <script type="application/javascript" src="assets/js/livraison.js"></script>
+        <script type="application/javascript" src="assets/js/jquery.tmpl.js"></script>
+        <script type="application/javascript" src="assets/js/awesomplete/awesomplete.js"></script>
+        <script type="application/javascript" src="assets/js/stupidtable.js"></script>
+        <script type="application/javascript" src="assets/js/jquery.twbsPagination.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="assets/css/fontawesome/all.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/animator.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/utilisateurs.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/login.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/popup.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/menu.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/layout_normal.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/livraison.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/livraisons-horsligne.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/sweetalert2/sweetalert2.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-theme-chrome.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-language-french.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-language-french-indicator.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/awesomplete/awesomplete.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/recherche.css" />
+        
+        <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
+    </head>
+    <body>
+        <div name='menu' class='page_menu layout_normal base_layout base_page serializable'>
+        <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
+        <div id="entete" class="row">
+            <div id="menu" class="col-xs-3 col-sm-2">
+                <a href="default.html" class="home-link">
+                    <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
+                </a>
+            </div>
+            <div id="titre" class="col-xs-6 col-sm-8">menu</div>
+            <div id="user" class="col-xs-3 col-sm-2">
+                <div class="offline-username"><?php //echo IL_Session::r(IL_SessionVariables::USERNAME); ?></div>
+                <a href="#" class="offline_hide">
+                    <div id="logout" class="hyperlien" onclick="window.location.href='logout.php'">Déconnexion</div>
+                </a>
+            </div>
+        </div>
+    <div id="contenu">
+        <div class="menufloat">
+            <a href="livraison.html" class="menuitem offline_hide livraison">
+                <button name="livrer" class=""><div class="label">Livrer</div></button>
+            </a>
+            <a href="rechercher.php" class="menuitem offline_hide recherche">
+                <button name="recherche" class=""><div class="label">Rechercher</div></button>
+            </a>
+            <a href="utilisateurs.php" class="menuitem offline_hide utilisateurs">
+                <button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button>
+            </a>
+            <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href='logout.php'"><div class="label">Déconnexion</div></button>
+        </div>
+    </div>
+        <!--<a href="sandbox.php">SANDBOX</a><br>-->
+        <!--<a href="viewdb.php">VIEWDB</a><br>-->
+    <form method="POST" action="default.php">
+        <input type="submit" value="Delete livraisons and colis" id="btnDelete" name="btnDelete">
+    </form>
+<footer id="pied">
+    <div class="bottomBanner">
+        <div class="copyright"></div>
+    </div>
+</footer>
+</div>
+    <div id="showLoading">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+        <!--img src="wait.png"-->
+    </div>
+    <div id="ajax" style="display:none;">
+        <script type="text/json" class="communicator">[{"nop":""}]</script>
+        <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
+    </div>
+    </body>
+</html>

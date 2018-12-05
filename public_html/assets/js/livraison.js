@@ -108,10 +108,10 @@ $( document ).ready(function() {
                 array_colis.push(tmpItem);
             });
             postData.array_colis = array_colis;
-
+//alert('navigator.onLine : '+navigator.onLine);
             // Check connection is up/down
-            if(Offline.state == 'up') {
-
+            if(Offline.state == 'up' && navigator.onLine) {
+//alert('Connection is UP');
                 // Create livraison over ajax
                 if(edit_page == true) {
                     url = 'api/update-livraison.php';
@@ -149,8 +149,8 @@ $( document ).ready(function() {
 
                 console.log(postData);
             }
-            else if(Offline.state == 'down') {
-
+            else if(Offline.state == 'down' || !navigator.onLine) {
+//alert('Connection is DOWN');
                 // Store de query into localForage
                 insertQueryIntoLocalForage(postData);
             }

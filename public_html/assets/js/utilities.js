@@ -23,6 +23,7 @@ $(function(){
         $('#logout').hide();
     });
 
+
     Offline.on('confirmed-up', function () {
         $offline.fadeOut(function () {
             $online.fadeIn();
@@ -80,7 +81,17 @@ $(document).ready(function() {
     $('.offline-date').val(datetime);
     
     // Set offline listeClients from localStorage
-    //$('.offline-listeClients').html(localStorage.getItem('listeClients'));
+    $('.offline-listeClients').html(localStorage.getItem('listeClients'));
+    
+    // Hide/Show previously hidden menu items
+    /*if(Offline.state == 'up') {
+        console.log('Connection is UP!!');
+        $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').show();
+    }
+    else {
+        console.log('Connection is DOWN!!');
+        $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
+    }*/
 });
 
 function getCookie(cname) {
@@ -97,3 +108,34 @@ function getCookie(cname) {
     }
     return "";
 }
+
+/* service worker */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+
+window.addEventListener('load', function() {
+    function updateOnlineStatus(event) {
+        
+        if(navigator.onLine) {
+            console.log('Connection is UP!!');
+            $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').show();
+        }
+        else {
+            console.log('Connection is DOWN!!');
+            $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
+        }
+    }
+
+    window.addEventListener('online',  updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+});
+/* service worker */

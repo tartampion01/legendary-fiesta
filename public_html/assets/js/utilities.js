@@ -89,7 +89,7 @@ $(document).ready(function() {
     $('.offline-date').val(datetime);
     
     // Set offline listeClients from localStorage
-    $('.offline-listeClients').html(localStorage.getItem('listeClients'));
+    //$('.offline-listeClients').html(localStorage.getItem('listeClients'));
     
     // Hide/Show previously hidden menu items
     /*if(Offline.state == 'up') {

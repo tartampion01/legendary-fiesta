@@ -76,8 +76,8 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     
     <script type="application/javascript">
         // Set listeClients in localStoage
-        var listeClients = '<?php echo IL_Utils::getDistinctDestinataires() ?>';
-        localStorage.setItem('listeClients', listeClients);
+        //var listeClients = '<?php echo IL_Utils::getDistinctDestinataires() ?>';
+        //localStorage.setItem('listeClients', listeClients);
     </script>
 </head>
     

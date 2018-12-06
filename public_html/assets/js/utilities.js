@@ -5,7 +5,15 @@ $(function(){
         $online = $('.online'),
         $offline = $('.offline');
 
-    Offline.options = {requests: false};
+    Offline.options = {
+        requests: false,
+        reconnect: {
+            initialDelay: 60,
+
+            // How long should we wait between retries.
+            delay: (1.5 * 440)
+        }
+    };
         
     Offline.on('confirmed-down', function () {
         $online.fadeOut(function () {

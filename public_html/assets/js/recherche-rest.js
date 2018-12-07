@@ -126,11 +126,22 @@ function fetchRecords(postData) {
                     var fakeSignature = $('.converter');
                     $('td.signature').each(function() {
                         var _data = $(this).find('.jSignature').html();
+                        var html;
                         fakeSignature.jSignature();
-                        fakeSignature.jSignature("importData", _data);
-                        svg = fakeSignature.jSignature("getData","svg")[1];
-                        var html = '<div class="svgSignature"><svg viewBox="0 0 600 150">' + svg + '</svg></div>';
-			$(html).appendTo(this);
+                        try {
+                            fakeSignature.jSignature("importData", _data);
+                            svg = fakeSignature.jSignature("getData","svg")[1];
+                            
+                            html = '<div class="svgSignature"><svg viewBox="0 0 600 150">' + svg + '</svg></div>';
+                            $(html).appendTo(this);
+                        }
+                        catch(error) {
+                            //alert('Error found');
+                            html = '<div style="font-size:14px; color: #cc0000;">Erreur de signature</div>';
+                            $(this).empty();
+                            $(html).appendTo(this);
+                            console.log(this);
+                        }
                     });
                     
                     // Get total page count
@@ -176,7 +187,8 @@ function fetchRecords(postData) {
                 }
             }
             else {
-                $(".results-container").empty().html(data.error);
+                //$(".results-container").empty().html(data.error);
+                $(".results-container").empty().html('<tr><td colspan="7">Il y a une erreur dans les données!</td></tr>');
                 $('.loading').hide();
             }
             console.log(data);

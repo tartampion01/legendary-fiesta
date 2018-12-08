@@ -385,7 +385,7 @@
     <div class="bottomBanner">
         <div class="copyright">
             <div>
-                <input type="button" id="checkLocalForageSync" class="btn-check-localforage-sync large green button" value="checkLocalForageSync" />
+                <input type="button" id="checkLocalForageSync" class="btn-check-localforage-sync large green button" value="Synchroniser les données" />
             </div>
         </div>
     </div>

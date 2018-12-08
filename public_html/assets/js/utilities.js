@@ -16,9 +16,9 @@ $(function(){
     };
         
     Offline.on('confirmed-down', function () {
-        $online.fadeOut(function () {
+        /*$online.fadeOut(function () {
             $offline.fadeIn();
-        });
+        });*/
         
         // Hide some menu items
         $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
@@ -33,9 +33,9 @@ $(function(){
 
 
     Offline.on('confirmed-up', function () {
-        $offline.fadeOut(function () {
+        /*$offline.fadeOut(function () {
             $online.fadeIn();
-        });
+        });*/
         
         pushQueriesFromLocalForage().done(function(data) {
             

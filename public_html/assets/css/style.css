@@ -1146,7 +1146,7 @@ i.fa {
 
 /* Offline.js cacher la div qui affiche l'état de la connection */
 .offline-ui {
-    display: none;
+    display: none !important;
 }
 
 /* Button Sync localForage */

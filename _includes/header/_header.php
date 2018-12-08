@@ -81,5 +81,5 @@ if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     </script>
 </head>
     
-    <div class="offline-ui"></div>
+    <!--<div class="offline-ui"></div>-->
     <div class="loading" style="display: none;">Loading&#8230;</div>

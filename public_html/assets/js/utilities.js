@@ -23,12 +23,11 @@ $(function(){
         // Hide some menu items
         $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
         
-        // Change header home button href
-        //$('.home-link').attr('href', 'default.html');
-        //$('.menuitem.livraison').attr('href', 'livraison.html');
-        
         //$('#logout').attr('onclick', 'return false');
         $('#logout').hide();
+        
+        // Cacher le bouton de synchronisation des données
+        $('.btn-check-localforage-sync').hide();
     });
 
 
@@ -65,11 +64,10 @@ $(function(){
         // Show previously hidden menu items
         $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').show();
         
-        //$('.home-link').attr('href', 'default.php');
-        //$('.menuitem.livraison').attr('href', 'livraison.php');
-        
-        //$('#logout').attr('onclick', 'window.location.href="logout.php"');
         $('#logout').show();
+        
+        // Afficher le bouton de synchronisation des données
+        $('.btn-check-localforage-sync').show();
     });
 
 });
@@ -91,15 +89,33 @@ $(document).ready(function() {
     // Set offline listeClients from localStorage
     //$('.offline-listeClients').html(localStorage.getItem('listeClients'));
     
-    // Hide/Show previously hidden menu items
-    /*if(Offline.state == 'up') {
-        console.log('Connection is UP!!');
-        $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').show();
-    }
-    else {
-        console.log('Connection is DOWN!!');
-        $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
-    }*/
+    // Button pour forcer la synchronisation des données
+    $('.btn-check-localforage-sync').on('click', function() {
+        pushQueriesFromLocalForage().done(function(data) {
+            
+            var message, type;
+            
+            if(data == 'DONE') {
+                console.log('DONE');
+                $('.loading').hide();
+                message = 'Les données ont été synchronisées avec succès!';
+                type = 'success';
+            }
+            else if(data == 'NO_DATA_TO_SYNC') {
+                $('.loading').hide();
+                message = 'Il n\'y avait aucune donnée à synchroniser!';
+                type = 'info';
+            }
+            
+            swal({
+                position: 'top-end',
+                type: type,
+                title: message,
+                showConfirmButton: false,
+                timer: 3500
+            });
+        });
+    });
 });
 
 function getCookie(cname) {
@@ -119,31 +135,39 @@ function getCookie(cname) {
 
 /* service worker */
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      // registration failed :(
-      console.log('ServiceWorker registration failed: ', err);
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+        });
     });
-  });
 }
 
 window.addEventListener('load', function() {
-    function updateOnlineStatus(event) {
+    if(navigator.onLine) {
+        console.log('Connection is UP!!');
         
-        if(navigator.onLine) {
-            console.log('Connection is UP!!');
-            $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').show();
-        }
-        else {
-            console.log('Connection is DOWN!!');
-            $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
-        }
+        // Show previously hidden menu items
+        $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').show();
+        
+        // Afficher le bouton de synchronisation des données
+        $('.btn-check-localforage-sync').show();
+        
+        $('#logout').show();
     }
-
-    window.addEventListener('online',  updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
+    else {
+        console.log('Connection is DOWN!!');
+        
+        // Hide some menu items
+        $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
+        
+        // Cacher le bouton de synchronisation des données
+        $('.btn-check-localforage-sync').hide();
+        
+        $('#logout').hide();
+    }
 });
 /* service worker */

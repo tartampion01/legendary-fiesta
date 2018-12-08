@@ -151,17 +151,15 @@
 
     <footer id="pied">
         <div class="bottomBanner">
-            <div class="copyright"></div>
+            <div class="copyright">
+                <div>
+                    <input type="button" id="checkLocalForageSync" class="btn-check-localforage-sync large green button" value="checkLocalForageSync" />
+                </div>
+            </div>
         </div>
     </footer>
 </div>
-    
-<footer id="pied">
-    <div class="bottomBanner">
-        <div class="copyright"></div>
-    </div>
-</footer>
-</div>
+
     <div id="ajax" style="display:none;">
         <script type="text/json" class="communicator">[{"nop":""}]</script>
         <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>        

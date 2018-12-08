@@ -45,7 +45,11 @@
     </form>
 <footer id="pied">
     <div class="bottomBanner">
-        <div class="copyright"></div>
+        <div class="copyright">
+            <div>
+                <input type="button" id="checkLocalForageSync" class="btn-check-localforage-sync large green button" value="checkLocalForageSync" />
+            </div>
+        </div>
     </div>
 </footer>
 </div>

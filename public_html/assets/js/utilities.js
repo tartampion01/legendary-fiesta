@@ -36,30 +36,7 @@ $(function(){
             $online.fadeIn();
         });*/
         
-        pushQueriesFromLocalForage().done(function(data) {
-            
-            var message, type;
-            
-            if(data == 'DONE') {
-                console.log('DONE');
-                $('.loading').hide();
-                message = 'Les données ont été synchronisées avec succès!';
-                type = 'success';
-            }
-            else if(data == 'NO_DATA_TO_SYNC') {
-                $('.loading').hide();
-                message = 'Il n\'y avait aucune donnée à synchroniser!';
-                type = 'info';
-            }
-            
-            swal({
-                position: 'top-end',
-                type: type,
-                title: message,
-                showConfirmButton: false,
-                timer: 3500
-            });
-        });
+        callPushQueriesFromLocalForage();
         
         // Show previously hidden menu items
         $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').show();
@@ -91,32 +68,37 @@ $(document).ready(function() {
     
     // Button pour forcer la synchronisation des données
     $('.btn-check-localforage-sync').on('click', function() {
-        pushQueriesFromLocalForage().done(function(data) {
-            
-            var message, type;
-            
-            if(data == 'DONE') {
-                console.log('DONE');
-                $('.loading').hide();
-                message = 'Les données ont été synchronisées avec succès!';
-                type = 'success';
-            }
-            else if(data == 'NO_DATA_TO_SYNC') {
-                $('.loading').hide();
-                message = 'Il n\'y avait aucune donnée à synchroniser!';
-                type = 'info';
-            }
-            
-            swal({
-                position: 'top-end',
-                type: type,
-                title: message,
-                showConfirmButton: false,
-                timer: 3500
-            });
-        });
+        
+        callPushQueriesFromLocalForage();
     });
 });
+
+function callPushQueriesFromLocalForage() {
+    pushQueriesFromLocalForage().done(function(data) {
+            
+        var message, type;
+
+        if(data == 'DONE') {
+            console.log('DONE');
+            $('.loading').hide();
+            message = 'Les données ont été synchronisées avec succès!';
+            type = 'success';
+        }
+        else if(data == 'NO_DATA_TO_SYNC') {
+            $('.loading').hide();
+            message = 'Il n\'y avait aucune donnée à synchroniser!';
+            type = 'info';
+        }
+
+        swal({
+            position: 'top-end',
+            type: type,
+            title: message,
+            showConfirmButton: false,
+            timer: 3500
+        });
+    });
+}
 
 function getCookie(cname) {
     var name = cname + "=";

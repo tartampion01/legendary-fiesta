@@ -74,7 +74,7 @@
                 echo "Purée!!!!";
             }
           ?>
-        <div class="GpcMenuWrapper">
+        <div class="GpcMenuWrapper" name="rien">
             <ul class="GpcMenu FacetedNavigation">
                 <!-- MARQUE -->
                 <li class="GpcMenuCategory expanded">

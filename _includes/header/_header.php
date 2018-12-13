@@ -9,6 +9,12 @@ require_once(dirname(__DIR__).'/commonIncludes.php');
 // Personne de 'loggé'
 if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
     header('Location: ' . "../login.php");
+
+// Load logged user
+if(isset($_COOKIE['username'])) {
+    $user = new IL_Users();
+    $user->load(0, '', $_COOKIE['username']);   
+}
 ?>
 
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">

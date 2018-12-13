@@ -1,4 +1,5 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
+
 <body>
     <div name='menu' class='page_gestionUtilisateurs page_gestionUtilisateurs_modifier page_menu layout_normal base_layout base_page serializable'>
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
@@ -158,6 +159,25 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
+                                        <div class="fieldLabel">Succursale</div>
+                                    </td>
+                                    <td class="field">
+                                        <select name="cboSuccursale">
+                                            <option value="CCB"<?php if( $user->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
+                                            <option value="CIA">CIA</option>
+                                            <option value="CIE">CIE</option>
+                                            <option value="CIWI">CIWI</option>
+                                            <option value="GR">GR</option>
+                                            <option value="RDL"<?php if( $user->succursale == "RDL" ) echo " SELECTED"; ?>>RDL</option>
+                                            <option value="CCA">CCA</option>
+                                            <option value="CI">CI</option>
+                                            <option value="CIMO">CIMO</option>
+                                            <option value="CID">CID</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
                                         <div class="fieldLabel">Groupes</div>
                                     </td>
                                     <td class="field">
@@ -209,7 +229,7 @@
                     $user = new IL_Users();
                     $user->load($id_user,'','');
                     $username = $user->username;
-
+//echo "SUCCURSALE-->" . $user->succursale;
                     switch( $user->level )
                     {
                         case 0: $admin = 0;
@@ -271,6 +291,25 @@
                                     </td>
                                     <td class="field">
                                         <input name="tbPasswordConfirmation" value="" maxlength="255" class="input" type="password">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <div class="fieldLabel">Succursale</div>
+                                    </td>
+                                    <td class="field">
+                                        <select name="cboSuccursale">
+                                            <option value="CCB"<?php if( $user->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
+                                            <option value="CIA">CIA</option>
+                                            <option value="CIE">CIE</option>
+                                            <option value="CIWI">CIWI</option>
+                                            <option value="GR">GR</option>
+                                            <option value="RDL"<?php if( $user->succursale == "RDL" ) echo " SELECTED"; ?>>RDL</option>
+                                            <option value="CCA">CCA</option>
+                                            <option value="CI">CI</option>
+                                            <option value="CIMO">CIMO</option>
+                                            <option value="CID">CID</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>

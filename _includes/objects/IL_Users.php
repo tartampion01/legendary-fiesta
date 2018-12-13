@@ -4,6 +4,7 @@ class IL_Users{
     public $username = '';
     public $level = '';
     public $actif = true;
+    public $succursale = '';
     public $password = '';
     public $hash_key = '';
     
@@ -33,6 +34,7 @@ class IL_Users{
         $this->username = $r['username'];
         $this->level = $r['level'];
         $this->actif = $r['actif'] == 1;
+        $this->succursale = $r['succursale'];
 
         return true;
     }
@@ -42,10 +44,11 @@ class IL_Users{
         
         $username = mysqli_real_escape_string($conn, $this->username);
         $actif = mysqli_real_escape_string($conn, $this->actif);
-        $level = mysqli_real_escape_string($conn, $this->level);       
+        $level = mysqli_real_escape_string($conn, $this->level);
+        $succursale = mysqli_real_escape_string($conn, $this->succursale);
         $password = password_hash(mysqli_real_escape_string($conn, $this->password),PASSWORD_DEFAULT);
         
-        $sql = "UPDATE users SET username='$username',level='$level',actif='$actif',password='$password' WHERE id_user=".$this->id;
+        $sql = "UPDATE users SET username='$username',level='$level',actif='$actif',password='$password', succursale='$succursale' WHERE id_user=".$this->id;
 
         mysqli_query($conn, $sql);
         
@@ -64,6 +67,7 @@ class IL_Users{
         $username = mysqli_real_escape_string($conn, $this->username);
         $level = mysqli_real_escape_string($conn, $this->level);
         $actif = mysqli_real_escape_string($conn, $this->actif);
+        $succursale = mysqli_real_escape_string($conn, $this->succursale);
         $password = password_hash(mysqli_real_escape_string($conn, $this->password),PASSWORD_DEFAULT);
         $hash_key = mysqli_real_escape_string($conn, $this->getHashKey());
         

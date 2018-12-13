@@ -159,7 +159,7 @@ $( document ).ready(function() {
             // After posting, clear form data (if not edit page)
             if(edit_page == false) {
                 tbEmploye: $('#tbEmploye').val('');
-                succursale: $('#succursale').val('');
+                //succursale: $('#succursale').val(''); On ne clear pas la succursale
                 tbDestinataire: $('#tbDestinataire').val('');
                 tbNomSignataire: $('#tbNomSignataire').val('');
                 $('.clonable').find('input[name^="tbNoFacture"]').val('');

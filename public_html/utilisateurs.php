@@ -36,6 +36,7 @@
                     $username = $_POST["tbUsername"];
                     $password = $_POST["tbPassword"];
                     $passwordconfirmation = $_POST["tbPasswordConfirmation"];
+                    $succursale = $_POST["cboSuccursale"];
                     $admin = $_POST["cbAdmin"];
                     $livreur = $_POST["cbLivreur"];
                     $level = -1;
@@ -69,6 +70,7 @@
                                     $user->actif = 1;
                                     $user->level = $level;
                                     $user->password = $password;
+                                    $user->succursale = $succursale;
                                     
                                     // CREATE
                                     if($_POST["hidID"] == "new" )

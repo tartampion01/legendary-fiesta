@@ -134,6 +134,7 @@
                 <div class="row">
                     <div class="col-xs-offset-3 col-xs-6 col-md-offset-3 col-md-6">
                         <button type="submit" name="btnSave" class="btnSave"><i class="far fa-save"></i> Sauvegarder</button>
+                        <input type="text" name="succursale" id="succursale" value="<?php echo $livraison->succursale; ?>" maxlength="25"></input>
                     </div>
                 </div>
             </section>

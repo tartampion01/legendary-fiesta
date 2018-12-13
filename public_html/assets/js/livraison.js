@@ -94,6 +94,7 @@ $( document ).ready(function() {
             var postData = {
                 tbDate: $('#tbDate').val(),
                 tbEmploye: $('#tbEmploye').val(),
+                succursale: $('#succursale').val(),
                 tbDestinataire: $('#tbDestinataire').val(),
                 tbNomSignataire: $('#tbNomSignataire').val(),
                 signature: $('.dumpSignature img').attr('src')
@@ -158,6 +159,7 @@ $( document ).ready(function() {
             // After posting, clear form data (if not edit page)
             if(edit_page == false) {
                 tbEmploye: $('#tbEmploye').val('');
+                succursale: $('#succursale').val('');
                 tbDestinataire: $('#tbDestinataire').val('');
                 tbNomSignataire: $('#tbNomSignataire').val('');
                 $('.clonable').find('input[name^="tbNoFacture"]').val('');
@@ -268,6 +270,16 @@ function validateForm() {
     }
     else {
         $('#tbEmploye').removeClass('control-error');
+        //error = false;
+    }
+    
+    if($('#succursale').val() == '') {
+        errorMessage+= '<li>Succursale</li>';
+        $('#succursale').addClass('control-error');
+        error = true;
+    }
+    else {
+        $('#succursale').removeClass('control-error');
         //error = false;
     }
     

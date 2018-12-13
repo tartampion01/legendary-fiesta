@@ -28,6 +28,7 @@ $livraison->destinataire = (isset($data->tbDestinataire) ? $data->tbDestinataire
 $livraison->nomSignataire = (isset($data->tbNomSignataire) ? $data->tbNomSignataire : '');
 $livraison->signature = (isset($data->signature) ? $data->signature : '');
 $livraison->noEmploye = (isset($data->tbEmploye) ? $data->tbEmploye : '');
+$livraison->succursale = (isset($data->succursale) ? $data->succursale : '');
 //$livraison->colis = (isset($data->tbColis) ? $data->tbNoColis : '');
 $livraison->colis = (isset($data->array_colis) ? $data->array_colis : '');
 $livraison->facture = (isset($data->tbFacture) ? $data->tbNoFacture : '');

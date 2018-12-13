@@ -11,6 +11,7 @@ class IL_Livraison{
     public $nomSignataire = "";
     public $signature     = "";
     public $noEmploye     = "";
+    public $succursale    = "";
     public $facture       = "";
     public $colis         = "";
     
@@ -46,6 +47,7 @@ class IL_Livraison{
         $this->nomSignataire = $r['nomSignataire'];
         $this->signature = $r['signature'];
         $this->noEmploye = $r['noEmploye'];
+        $this->succursale = $r['succursale'];
         $this->facture = $r['facture'];
         $this->colis = $r['colis'];
         
@@ -226,7 +228,7 @@ class IL_Livraison{
     function create($livraison) {
         
         $error = false;
-        $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye, colis, facture) VALUES (?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye, colis, facture, succursale) VALUES (?,?,?,?,?,?,?,?)";
 
         $conn = IL_Database::getConn();
         $stmt = $conn->prepare($sql);
@@ -234,7 +236,7 @@ class IL_Livraison{
         foreach ($this->colis as $postedColis) {
             $colis = (array)$postedColis; // pour convertr de stdClass
             
-            $stmt->bind_param("sssssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye, $colis["colis"], $colis["facture"]);
+            $stmt->bind_param("ssssssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye, $colis["colis"], $colis["facture"], $livraison->succursale);
         
             // execute query
             if($stmt->execute()){

@@ -49,6 +49,7 @@ if(mysqli_num_rows($results) > 0){
             "nomSignataire" => $row['nomSignataire'],
             "signature" => $row['signature'],
             "noEmploye" => $row['noEmploye'],
+            "succursale" => $row['succursale'],
             "facture" => $row['facture'],
             "colis" => $row['colis']
         );

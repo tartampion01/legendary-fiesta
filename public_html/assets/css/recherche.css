@@ -80,7 +80,10 @@
   width: 7em;
 }
 .page_recherche .module_liste th.noEmploye {
-  width: 6em;
+  width: 7em;
+}
+.page_recherche .module_liste th.succursale {
+  width: 15em;
 }
 .page_recherche .section {
   margin-top: 4ex;

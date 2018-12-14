@@ -164,7 +164,7 @@
                                         <div class="fieldLabel">Succursale</div>
                                     </td>
                                     <td class="field">
-                                        <select name="cboSuccursale">
+                                        <select name="cboSuccursale" class="input">
                                             <option value="CCB"<?php if( $user->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
                                             <option value="CIA">CIA</option>
                                             <option value="CIE">CIE</option>
@@ -300,7 +300,7 @@
                                         <div class="fieldLabel">Succursale</div>
                                     </td>
                                     <td class="field">
-                                        <select name="cboSuccursale">
+                                        <select name="cboSuccursale" class="input">
                                             <option value="CCB"<?php if( $user->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
                                             <option value="CIA">CIA</option>
                                             <option value="CIE">CIE</option>

@@ -17,31 +17,34 @@
             </a>
         </div>
     </div>
-<div id="contenu">
-    <form action="utilisateurs.php" method="POST">
+<div id="contenu">    
     <?php
+    
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // NEW or UPDATE?
             if( isset($_POST["btnSauvegarder"]) )
             {
                 $errorMessage = "";
-                $username = $password = $passwordconfirmation = "";
+                $utilisateurname = $password = $passwordconfirmation = "";
                 $admin = $livreur = 0;
-                $user = new IL_Users();
+                $utilisateur = new IL_Users();
 
                 if( isset($_POST["hidID"]))
                 {
                     $id_user = $_POST["hidID"];
-                    $username = $_POST["tbUsername"];
+                    $utilisateurname = $_POST["tbNomCompte"];
                     $password = $_POST["tbPassword"];
                     $passwordconfirmation = $_POST["tbPasswordConfirmation"];
                     $succursale = $_POST["cboSuccursale"];
+                    
+                    echo "SUCC  " . $succursale;
+                    
                     $admin = $_POST["cbAdmin"];
                     $livreur = $_POST["cbLivreur"];
                     $level = -1;
                     
-//                    echo $username . "<br>";
+//                    echo $utilisateurname . "<br>";
 //                    echo $password . "<br>";
 //                    echo $passwordconfirmation . "<br>";
 //                    echo $admin . "<br>";
@@ -62,21 +65,21 @@
                     }
                     
                     if( $level != -1 ){
-                        if( $username != "" ){
+                        if( $utilisateurname != "" ){
                             if( $password != "" && $passwordconfirmation != ""){
                                 if( strcmp($password,$passwordconfirmation) == 0 ){
                                     
-                                    $user->username = $username;
-                                    $user->actif = 1;
-                                    $user->level = $level;
-                                    $user->password = $password;
-                                    $user->succursale = $succursale;
+                                    $utilisateur->username = $utilisateurname;
+                                    $utilisateur->actif = 1;
+                                    $utilisateur->level = $level;
+                                    $utilisateur->password = $password;
+                                    $utilisateur->succursale = $succursale;
                                     
                                     // CREATE
                                     if($_POST["hidID"] == "new" )
                                     {
-                                        $user->create();
-                                        $id_user = $user->id;
+                                        $utilisateur->create();
+                                        $id_user = $utilisateur->id;
                                         if( $id_user == 0 )
                                         {
                                             $id_user = "new";
@@ -85,7 +88,7 @@
                                         else {
                                             $errorMessage = "L'utilisateur à été crée";
                                             $id_user = "new";
-                                            $username = "";
+                                            $utilisateurname = "";
                                             $admin = 0;
                                             $livreur = 0;
                                         }
@@ -95,8 +98,8 @@
                                     else
                                     {
                                         $id_user = $_POST["hidID"];
-                                        $user->id = $id_user;
-                                        $user->save();
+                                        $utilisateur->id = $id_user;
+                                        $utilisateur->save();
                                         $errorMessage = "L'utilisateur à été modifié";
                                     }
                                 }
@@ -110,6 +113,7 @@
                             $errorMessage = "Veuillez entrer un nom d'utilisateur";
                     }
                 }?>
+                <form action="utilisateurs.php" method="POST">
                     <div class="userInfo module_liste base_module">
                         <table>
                             <thead>
@@ -140,7 +144,7 @@
                                         <div class="fieldLabel">Nom d'utilisateur</div>
                                     </td>
                                     <td class="field">
-                                        <input name="tbUsername" value="<?php echo $username; ?>" maxlength="50" class="input" type="text">
+                                        <input name="tbNomCompte" value="<?php echo $utilisateurname; ?>" maxlength="50" class="input" type="text">
                                     </td>
                                 </tr>
                                 <tr>
@@ -164,17 +168,18 @@
                                         <div class="fieldLabel">Succursale</div>
                                     </td>
                                     <td class="field">
-                                        <select name="cboSuccursale" class="input">
-                                            <option value="CCB"<?php if( $user->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
-                                            <option value="CIA">CIA</option>
-                                            <option value="CIE">CIE</option>
-                                            <option value="CIWI">CIWI</option>
-                                            <option value="GR">GR</option>
-                                            <option value="RDL"<?php if( $user->succursale == "RDL" ) echo " SELECTED"; ?>>RDL</option>
-                                            <option value="CCA">CCA</option>
-                                            <option value="CI">CI</option>
-                                            <option value="CIMO">CIMO</option>
-                                            <option value="CID">CID</option>
+                                        <select name="cboSuccursale" class="input">                                            
+                                            <option value="CIB"<?php if( $utilisateur->succursale == "CIB" ) echo " SELECTED"; ?>>CIB</option>
+                                            <option value="CID"<?php if( $utilisateur->succursale == "CID" ) echo " SELECTED"; ?>>CID</option>                                            
+                                            <option value="CIE"<?php if( $utilisateur->succursale == "CIE" ) echo " SELECTED"; ?>>CIE</option>
+                                            <option value="CIA"<?php if( $utilisateur->succursale == "CIA" ) echo " SELECTED"; ?>>CIA</option>
+                                            <option value="CCB"<?php if( $utilisateur->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
+                                            <option value="CCA"<?php if( $utilisateur->succursale == "CCA" ) echo " SELECTED"; ?>>CCA</option>
+                                            <option value="RDL"<?php if( $utilisateur->succursale == "RDL" ) echo " SELECTED"; ?>>RDL</option>                                            
+                                            <option value="GR"<?php if( $utilisateur->succursale == "GR" ) echo " SELECTED"; ?>>GR</option>
+                                            <option value="CI"<?php if( $utilisateur->succursale == "CI" ) echo " SELECTED"; ?>>CI</option>
+                                            <option value="CIWI"<?php if( $utilisateur->succursale == "CIWI" ) echo " SELECTED"; ?>>CIWI</option>
+                                            <option value="CIMO"<?php if( $utilisateur->succursale == "CIMO" ) echo " SELECTED"; ?>>CIMO</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -206,33 +211,35 @@
                     <a class="buttonStyle buttonMedium" href="utilisateurs?supprimer=<?php echo base64_encode($id_user); ?>" onclick="return confirm('Confirmer la suppression...?');">Supprimer</a>
                     <?php } ?>
                     <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
+                </form>
                 <?php 
             }            
         }
         else
         {
+            ECHO "F5!!!";
             // EDIT OR NEW USER
-            if( isset( $_REQUEST["id_user"] ))
+            if( isset( $_GET["id_user"] ))
             {
                 $errorMessage = "";
-                $username = $password = $passwordconfirmation = "";
+                $utilisateurname = $password = $passwordconfirmation = "";
                 $admin = $livreur = 0;
                 
                 $id_user = $_REQUEST["id_user"];
                 
                 if( $id_user == "new" )
                 {
-                    
+                    $utilisateurname = "";
                 }
                 else
                 {
                     // We have an ID
                     $id_user = base64_decode($_REQUEST["id_user"]);
-                    $user = new IL_Users();
-                    $user->load($id_user,'','');
-                    $username = $user->username;
-//echo "SUCCURSALE-->" . $user->succursale;
-                    switch( $user->level )
+                    $utilisateur = new IL_Users();
+                    $utilisateur->load($id_user,'','');
+                    $utilisateurname = $utilisateur->username;
+//echo "SUCCURSALE-->" . $utilisateur->succursale;
+                    switch( $utilisateur->level )
                     {
                         case 0: $admin = 0;
                                 $livreur = 1;
@@ -246,6 +253,7 @@
                     }
                 }
                 ?>
+                <form action="utilisateurs.php" method="POST">
                     <div class="userInfo module_liste base_module">
                         <table>
                             <thead>
@@ -276,7 +284,7 @@
                                         <div class="fieldLabel">Nom d'utilisateur</div>
                                     </td>
                                     <td class="field">
-                                        <input name="tbUsername" value="<?php echo $username; ?>" maxlength="50" class="input" type="text">
+                                        <input name="tbNomCompte" value="<?php echo $utilisateurname; ?>" maxlength="50" class="input" type="text">
                                     </td>
                                 </tr>
                                 <tr>
@@ -300,17 +308,18 @@
                                         <div class="fieldLabel">Succursale</div>
                                     </td>
                                     <td class="field">
-                                        <select name="cboSuccursale" class="input">
-                                            <option value="CCB"<?php if( $user->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
-                                            <option value="CIA">CIA</option>
-                                            <option value="CIE">CIE</option>
-                                            <option value="CIWI">CIWI</option>
-                                            <option value="GR">GR</option>
-                                            <option value="RDL"<?php if( $user->succursale == "RDL" ) echo " SELECTED"; ?>>RDL</option>
-                                            <option value="CCA">CCA</option>
-                                            <option value="CI">CI</option>
-                                            <option value="CIMO">CIMO</option>
-                                            <option value="CID">CID</option>
+                                        <select name="cboSuccursale" class="input">                                            
+                                            <option value="CIB"<?php if( $utilisateur->succursale == "CIB" ) echo " SELECTED"; ?>>CIB</option>
+                                            <option value="CID"<?php if( $utilisateur->succursale == "CID" ) echo " SELECTED"; ?>>CID</option>                                            
+                                            <option value="CIE"<?php if( $utilisateur->succursale == "CIE" ) echo " SELECTED"; ?>>CIE</option>
+                                            <option value="CIA"<?php if( $utilisateur->succursale == "CIA" ) echo " SELECTED"; ?>>CIA</option>
+                                            <option value="CCB"<?php if( $utilisateur->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
+                                            <option value="CCA"<?php if( $utilisateur->succursale == "CCA" ) echo " SELECTED"; ?>>CCA</option>
+                                            <option value="RDL"<?php if( $utilisateur->succursale == "RDL" ) echo " SELECTED"; ?>>RDL</option>                                            
+                                            <option value="GR"<?php if( $utilisateur->succursale == "GR" ) echo " SELECTED"; ?>>GR</option>
+                                            <option value="CI"<?php if( $utilisateur->succursale == "CI" ) echo " SELECTED"; ?>>CI</option>
+                                            <option value="CIWI"<?php if( $utilisateur->succursale == "CIWI" ) echo " SELECTED"; ?>>CIWI</option>
+                                            <option value="CIMO"<?php if( $utilisateur->succursale == "CIMO" ) echo " SELECTED"; ?>>CIMO</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -342,6 +351,7 @@
                     <a class="buttonStyle buttonMedium" href="utilisateurs?supprimer=<?php echo base64_encode($id_user); ?>" onclick="return confirm('Confirmer la suppression...?');">Supprimer</a>
                     <?php } ?>
                     <a class="buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
+                </form>
                     
         <?php
             }
@@ -349,10 +359,10 @@
             elseif( isset($_REQUEST["supprimer"]))
             {
                 $id_user = base64_decode($_REQUEST["supprimer"]);
-                $user = new IL_Users();
-                $user->load($id_user,'','');
-                $username = $user->username;
-                $user->delete();
+                $utilisateur = new IL_Users();
+                $utilisateur->load($id_user,'','');
+                $utilisateurname = $utilisateur->username;
+                $utilisateur->delete();
                 
                 ?>
                 <div class="userInfo module_liste base_module">
@@ -365,7 +375,7 @@
                             </tr>
                             <tr>
                                 <th class="username">
-                                    L'utilisateur [&nbsp;<b><?php echo $username; ?></b>&nbsp;] a été supprimé
+                                    L'utilisateur [&nbsp;<b><?php echo $utilisateurname; ?></b>&nbsp;] a été supprimé
                                 </th>
                             </tr>
                             <tr>
@@ -392,17 +402,18 @@
                         </thead>
                     <tbody>
                     <?php
+                    
                         $conn = IL_Database::getConn();
                         $sql = "SELECT * FROM users WHERE actif=1";
 
-                        $users = mysqli_query($conn, $sql);
+                        $utilisateurs = mysqli_query($conn, $sql);
 
-                        if(mysqli_num_rows($users) > 0){
-                            while($row = mysqli_fetch_assoc($users)) {
+                        if(mysqli_num_rows($utilisateurs) > 0){
+                            while($row = mysqli_fetch_assoc($utilisateurs)) {
                                 echo '<tr name="0" onclick="window.location.href=\'utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '\'" class="serializable hoverable">';
                                 echo '<td>';
                                 echo '<input id="hidUserId" name="hidUserId" type="hidden" value="' . $row["id_user"] . '" />';
-                                echo '<input name="tbUsername" value="' . $row["username"] . '" readonly="" maxlength="100" class="input" type="text" />';
+                                echo '<input name="tbNomCompte" value="' . $row["username"] . '" readonly="" maxlength="100" class="input" type="text" />';
                                 echo '</td>';
                                 echo '<td>';
                                 echo '<a name="edit" class="" href="utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '"><img src="assets/images/pencil-edit-button.png" alt=""/></a>';
@@ -418,8 +429,7 @@
         }
         ?>
             </div>
-        <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php?id_user=new">Nouvel utilisateur</a>
-    </form>
+        <a class="newUser buttonStyle buttonLarge" href="utilisateurs.php?id_user=new">Nouvel utilisateur</a>    
 </div>
     
 <footer id="pied">
@@ -431,7 +441,6 @@
         </div>
     </div>
 </footer>
-    </div>
     <div id="showLoading">
         <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
         <span class="sr-only">Loading...</span>
@@ -440,6 +449,7 @@
     <div id="ajax" style="display:none;">
         <script type="text/json" class="communicator">[{"nop":""}]</script>
         <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
+    </div>
     </div>
 </body>
 </html>

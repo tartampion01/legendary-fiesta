@@ -71,8 +71,8 @@ class IL_Users{
         $password = password_hash(mysqli_real_escape_string($conn, $this->password),PASSWORD_DEFAULT);
         $hash_key = mysqli_real_escape_string($conn, $this->getHashKey());
         
-        $sql = "INSERT INTO users(username,level,actif,password,hash_key) ";
-        $sql .= "VALUES('$username','$level','$actif','$password','$hash_key')";
+        $sql = "INSERT INTO users(username,level,actif,password,hash_key,succursale) ";
+        $sql .= "VALUES('$username','$level','$actif','$password','$hash_key','$succursale')";
 
         mysqli_query($conn, $sql);
         $this->id = $conn->insert_id;

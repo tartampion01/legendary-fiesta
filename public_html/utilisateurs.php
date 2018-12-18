@@ -170,10 +170,10 @@
                                     <td class="field">
                                         <select name="cboSuccursale" class="input">                                            
                                             <option value="CIB"<?php if( $utilisateur->succursale == "CIB" ) echo " SELECTED"; ?>>CIB</option>
-                                            <option value="CID"<?php if( $utilisateur->succursale == "CID" ) echo " SELECTED"; ?>>CID</option>                                            
-                                            <option value="CIE"<?php if( $utilisateur->succursale == "CIE" ) echo " SELECTED"; ?>>CIE</option>
-                                            <option value="CIA"<?php if( $utilisateur->succursale == "CIA" ) echo " SELECTED"; ?>>CIA</option>
                                             <option value="CCB"<?php if( $utilisateur->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
+                                            <option value="CIE"<?php if( $utilisateur->succursale == "CIE" ) echo " SELECTED"; ?>>CIE</option>
+                                            <option value="CID"<?php if( $utilisateur->succursale == "CID" ) echo " SELECTED"; ?>>CID</option>                                                                                        
+                                            <option value="CIA"<?php if( $utilisateur->succursale == "CIA" ) echo " SELECTED"; ?>>CIA</option>                                            
                                             <option value="CCA"<?php if( $utilisateur->succursale == "CCA" ) echo " SELECTED"; ?>>CCA</option>
                                             <option value="RDL"<?php if( $utilisateur->succursale == "RDL" ) echo " SELECTED"; ?>>RDL</option>                                            
                                             <option value="GR"<?php if( $utilisateur->succursale == "GR" ) echo " SELECTED"; ?>>GR</option>
@@ -310,10 +310,10 @@
                                     <td class="field">
                                         <select name="cboSuccursale" class="input">                                            
                                             <option value="CIB"<?php if( $utilisateur->succursale == "CIB" ) echo " SELECTED"; ?>>CIB</option>
-                                            <option value="CID"<?php if( $utilisateur->succursale == "CID" ) echo " SELECTED"; ?>>CID</option>                                            
-                                            <option value="CIE"<?php if( $utilisateur->succursale == "CIE" ) echo " SELECTED"; ?>>CIE</option>
-                                            <option value="CIA"<?php if( $utilisateur->succursale == "CIA" ) echo " SELECTED"; ?>>CIA</option>
                                             <option value="CCB"<?php if( $utilisateur->succursale == "CCB" ) echo " SELECTED"; ?>>CCB</option>
+                                            <option value="CIE"<?php if( $utilisateur->succursale == "CIE" ) echo " SELECTED"; ?>>CIE</option>
+                                            <option value="CID"<?php if( $utilisateur->succursale == "CID" ) echo " SELECTED"; ?>>CID</option>                                                                                        
+                                            <option value="CIA"<?php if( $utilisateur->succursale == "CIA" ) echo " SELECTED"; ?>>CIA</option>                                            
                                             <option value="CCA"<?php if( $utilisateur->succursale == "CCA" ) echo " SELECTED"; ?>>CCA</option>
                                             <option value="RDL"<?php if( $utilisateur->succursale == "RDL" ) echo " SELECTED"; ?>>RDL</option>                                            
                                             <option value="GR"<?php if( $utilisateur->succursale == "GR" ) echo " SELECTED"; ?>>GR</option>

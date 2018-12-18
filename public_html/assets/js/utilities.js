@@ -8,10 +8,11 @@ $(function(){
     Offline.options = {
         requests: false,
         reconnect: {
-            initialDelay: 60,
+            initialDelay: 310,
 
             // How long should we wait between retries.
-            delay: (1.5 * 440)
+            //delay: (1.5 * 440)
+            delay: 310
         }
     };
         

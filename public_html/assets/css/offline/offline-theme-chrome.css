@@ -562,30 +562,7 @@
 }
 /* line 81, ../sass/offline-theme-chrome.sass */
 .offline-ui.offline-ui-down.offline-ui-connecting:after, .offline-ui.offline-ui-down.offline-ui-waiting:after {
-  -webkit-animation: offline-rotation 0.7s linear infinite;
-  -moz-animation: offline-rotation 0.7s linear infinite;
-  -ms-animation: offline-rotation 0.7s linear infinite;
-  -o-animation: offline-rotation 0.7s linear infinite;
-  animation: offline-rotation 0.7s linear infinite;
-  -webkit-backface-visibility: hidden;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
-  border-radius: 50%;
-  content: " ";
-  display: block;
-  position: absolute;
-  right: 1em;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  height: 1em;
-  width: 1em;
-  border: 2px solid rgba(0, 0, 0, 0);
-  border-top-color: rgba(0, 0, 0, 0.5);
-  border-left-color: rgba(0, 0, 0, 0.5);
-  opacity: 0.7;
+  
 }
 /* line 98, ../sass/offline-theme-chrome.sass */
 .offline-ui.offline-ui-down.offline-ui-waiting {

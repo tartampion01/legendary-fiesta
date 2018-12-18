@@ -435,9 +435,9 @@
 <footer id="pied">
     <div class="bottomBanner">
         <div class="copyright">
-            <div>
+            <!--<div>
                 <input type="button" id="checkLocalForageSync" class="btn-check-localforage-sync large green button" value="Synchroniser les données" />
-            </div>
+            </div>-->
         </div>
     </div>
 </footer>

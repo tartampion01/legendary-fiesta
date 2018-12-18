@@ -1146,6 +1146,9 @@ i.fa {
 
 /* Offline.js cacher la div qui affiche l'état de la connection */
 .offline-ui {
+    /*display: none !important;*/
+}
+.offline-ui .offline-ui-retry {
     display: none !important;
 }
 

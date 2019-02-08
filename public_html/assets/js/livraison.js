@@ -312,7 +312,7 @@ function validateForm() {
         $('#tbDestinataire').removeClass('control-error');
         //error = false;
     }
-    
+    /* Commenté car demande faite que le nom de signataire soit optionnel le 07/02/2019
     if($('#tbNomSignataire').val() == '') {
         errorMessage+= '<li>Nom du signataire</li>';
         $('#tbNomSignataire').addClass('control-error');
@@ -322,7 +322,7 @@ function validateForm() {
         $('#tbNomSignataire').removeClass('control-error');
         //error = false;
     }
-    
+    */
     if($('.dumpSignature img').length == 0) {
         errorMessage+= '<li>Signature</li>';
         $('.module_signature').addClass('control-error');

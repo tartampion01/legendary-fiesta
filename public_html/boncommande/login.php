@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
-    require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
+    require_once(dirname(__DIR__).'/../_includes/commonIncludes.php');
 ?>
 
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
@@ -12,23 +12,24 @@
 
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
-    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="application/javascript" src="assets/js/dsTools/dsSwissKnife.js"></script>
-    <script type="application/javascript" src="assets/js/dsTools/dsAjaxCommunicator.js"></script>
-    <script type="application/javascript" src="assets/js/dsTools/dsAjaxV2.js"></script>
-    <script type="application/javascript" src="assets/js/dsTools/dsValueFormatter.js"></script>
-    <script type="application/javascript" src="assets/js/container.js"></script>
-    <script type="application/javascript" src="assets/js/animator.js"></script>
-    <script type="application/javascript" src="assets/js/popup.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande.css" />
     
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/animator.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/utilisateurs.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/login.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/popup.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/menu.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/layout_normal.css" />
+    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="application/javascript" src="../assets/js/dsTools/dsSwissKnife.js"></script>
+    <script type="application/javascript" src="../assets/js/dsTools/dsAjaxCommunicator.js"></script>
+    <script type="application/javascript" src="../assets/js/dsTools/dsAjaxV2.js"></script>
+    <script type="application/javascript" src="../assets/js/dsTools/dsValueFormatter.js"></script>
+    <script type="application/javascript" src="../assets/js/container.js"></script>
+    <script type="application/javascript" src="../assets/js/animator.js"></script>
+    <script type="application/javascript" src="../assets/js/popup.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/animator.css" />
+    
+    <link rel="stylesheet" type="text/css" href="../assets/css/utilisateurs.css" />    
+    <link rel="stylesheet" type="text/css" href="../assets/css/popup.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/menu.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/layout_normal.css" />
     
     <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
 </head>
@@ -65,7 +66,7 @@
 //                    echo password_hash(mysqli_real_escape_string($conn, 'phil'),PASSWORD_DEFAULT);
 //                    echo password_hash(mysqli_real_escape_string($conn, '999'),PASSWORD_DEFAULT);
                     
-                    $sql = "SELECT username, password FROM users WHERE username = ?";
+                    $sql = "SELECT username, password FROM UsersBonCommande WHERE username = ?";
 
                     if($stmt = mysqli_prepare($conn, $sql)){
                         // Bind variables to the prepared statement as parameters
@@ -92,7 +93,7 @@
                                         session_start();
 
                                         $user = new IL_Users();
-                                        $user->load(0,'',$username,0);
+                                        $user->load(0,'',$username,1);
                                         IL_Session::w(IL_SessionVariables::USERNAME,$user->username);
                                         IL_Session::w(IL_SessionVariables::ID_USER,$user->id);
                                         IL_Session::w(IL_SessionVariables::LEVEL,$user->level);
@@ -100,7 +101,7 @@
                                         
                                         setcookie('username', $user->username, time() + (86400 * 30), "/");
                                         
-                                        header('Location: ' . "default.php");
+                                        header('Location: ' . "boncommande.php?succ=" . $user->succursale);
                                         
                                     } else{
                                         // Display an error message if password is not valid
@@ -127,22 +128,24 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
-                <br/>
-                <img src="assets/images/reseaudynamique_logo.png" alt=""/>
+                <img src="../assets/images/reseaudynamique_logo.png" alt=""/>                
+            </div>
+            <div class="col-xs-12">
+                <label class="h1bonCommande">Bons de commande</label>
             </div>
         </div>
         <div class="row login">
-            <div class="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 loginBox">
-                <form name="form" role="form" method="POST" action="/login.php">
+            <div class="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 loginBox">                
+                <form name="form" role="form" method="POST" action="login.php">                    
                     <div class="row">
-                        <div class="col-xs-6 label">Nom d'utilisateur</div>
+                        <div class="col-xs-6 label_boncommande">Nom d'utilisateur</div>
                         <div class="col-xs-6 field">
                             <input type="text" id="username" name="username" class="input" value="<?php echo $username;?>"/>
                             <span class="error"><?php echo $username_err;?></span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-6 label">Mot de passe</div>
+                        <div class="col-xs-6 label_boncommande">Mot de passe</div>
                         <div class="col-xs-6 field">
                             <input type="password" id="password" name="password" class="input" value=""/>
                             <span class="error"><?php echo $password_err ;?></span>

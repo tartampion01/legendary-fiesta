@@ -17,7 +17,6 @@ $conn = IL_Database::getConn();
 
 // initialize object
 $livraison = new IL_Livraison($conn);
- 
 $results = $livraison->readTest($_GET['params']);
 
 if(mysqli_num_rows($results) > 0){

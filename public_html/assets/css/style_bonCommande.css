@@ -25,23 +25,29 @@ body {
 }
 body {
   text-align: center;
-  background-color: white;
+  background-color: #ABABAB;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Droid Sans', sans-serif;
 }
 a {
-  color: white;
+  
 }
 .fa {
   font-family: "FontAwesome" !important;
+}
+.h1bonCommande{
+    font-size: 50px;
+    text-align: center;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;    
 }
 .base_page {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   font-size: 12px;
-  background-image: url("../images/reseau-dynamique-background-mobile.jpg");
+  background-image: url("../images/international-workstar.jpg");
   background-size: cover;
   background-color: black;
 }
@@ -51,7 +57,7 @@ a {
   text-align: center;
   font-size: 12px;
   background-size: cover;
-  background-color: white;
+  background-color: #BABABA;
 }
 .buttonStyleNonClickable {
   background: #000000;
@@ -353,16 +359,34 @@ a {
   font-family: 'Droid Sans', sans-serif;
 }
 .input {
-  height: 23px;
-  padding-left: 4px;
+  height: 16px;
+  padding-left: 0px;
   vertical-align: middle;
-  border-radius: 8px;
+  border-radius: 1px;
   background-color: #eeeeee;
 }
-.input[type=checkbox] {
+.inputCombo {
   height: 20px;
+  padding-left: 0px;
+  vertical-align: middle;
+  border-radius: 1px;
+  background-color: #eeeeee;
+}
+
+.input[type=checkbox] {
+  height: 16px;
+}
+
+.av
+{
+    width:20px;
 }
 .input[type=checkboxlist] {
+  display: table;
+  margin: 0px;
+  float: right;
+}
+.input[type=datalist] {
   display: table;
   margin: 0px;
   float: right;
@@ -1285,3 +1309,140 @@ i.fa {
   color: #D2FFD2;
 }
 /* Button Sync localForage */
+.page_login {
+  height: 100%;
+  width: 100%;
+}
+.page_login .logo {
+  margin-top: 50px;
+}
+.page_login .login {
+  margin-top: 100px;
+  color: white;
+  line-height: 2em;
+}
+.page_login .login .row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.page_login .login .label {
+  text-align: right;
+}
+.label_boncommande {
+  text-align: right;
+  color: #FFF;
+}
+.page_login .login .field {
+  text-align: left;
+}
+.page_login .input {
+  width: 100%;
+  color: black;
+}
+.page_login .buttons button {
+  width: 100%;
+}
+.page_login .loginBox {
+  border-radius: 12px;
+  padding: 15px;
+  background-color: rgba(50, 50, 50, 0.8);
+}
+
+.tableHaut{
+    border: 1px solid black;
+    width: 100%;
+}
+.tableData{
+    border: 1px solid #EDEDED;
+    width: 100%;
+}
+
+.trHeader{
+    border: 1px solid #EDEDED;
+    width: 100%;
+    background-color: #b4afb8;
+}
+
+table.tableHaut tr td.bonCommande { width: 8%; }
+table.tableHaut tr td.fournisseur { width: 12%; }
+table.tableHaut tr td.av { width: 3%; }
+table.tableHaut tr td.heure { width: 5%; }
+table.tableHaut tr td.date { width: 5%; }
+table.tableHaut tr td.chauffeur { width: 12%; }
+table.tableHaut tr td.statut { width: 10%; }
+table.tableHaut tr td.commentaire { width: 20%; }
+table.tableHaut tr td.ajouter { width: 10%;}
+
+table.tableData tr.trHeader td { font-size: 11px; font-family: verdana;font-weight: bold;}
+table.tableData tr td { font-size: 11px; font-family: verdana;}
+table.tableData tr td.bonCommande { width: 8%; border-width:2px; border-color:black; }
+table.tableData tr td.fournisseur { width: 12%; border-width:2px; border-color:black; }
+table.tableData tr td.av { width: 3%; border-width:2px; border-color:black; }
+table.tableData tr td.heure { width: 5%; border-width:2px; border-color:black; }
+table.tableData tr td.date { width: 5%; border-width:2px; border-color:black; }
+table.tableData tr td.chauffeur { width: 12%; border-width:2px; border-color:black; }
+table.tableData tr td.statut { width: 10%; border-width:2px; border-color:black; }
+table.tableData tr td.commentaire { width: 20%; border-width:2px; border-color:black; }
+table.tableData tr td.ajouter { width: 10%; border-width:2px; border-color:black; }
+
+table.tableData tr{border-bottom: 2px; border-bottom-color: black;}
+.boutonAjout
+{
+    background:url("../images/iconeAjout2.png") no-repeat;
+    cursor: pointer;
+    border:none;
+    width:32px;
+    height:32px;
+}
+
+.boutonDelete
+{
+    background:url("../images/iconeDelete.png") no-repeat;
+    cursor: pointer;
+    border:none;
+    width:32px;
+    height:32px;
+}
+
+.boutonArchiver
+{
+    background:url("../images/iconeRefresh.png") no-repeat;
+    cursor: pointer;
+    border:none;
+    width:32px;
+    height:32px;
+}
+
+.boutonApprouver
+{
+    background:url("../images/iconeApprouver.png") no-repeat;
+    cursor: pointer;
+    border:none;
+    width:32px;
+    height:32px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgba(50, 50, 50, 0.8);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

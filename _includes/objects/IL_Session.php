@@ -4,6 +4,7 @@ interface IL_SessionVariables
     const USERNAME = 1;
     const ID_USER = 2;
     const LEVEL = 3;
+    const SUCCURSALE = 4;
 }
 
 /**
@@ -115,6 +116,8 @@ class IL_Session
                 break;
             case IL_SessionVariables::ID_USER:$key = "ID_USER";
                 break;
+            case IL_SessionVariables::SUCCURSALE:$key = "SUCCURSALE";
+                break;            
             default: throw new InvalidArgumentTypeException('Parameter must be defined by IL_SessionVariables interface');
         }
         return self::write($key, $value);
@@ -171,6 +174,8 @@ class IL_Session
             case IL_SessionVariables::LEVEL:$key = "LEVEL";
                 break;
             case IL_SessionVariables::ID_USER:$key = "ID_USER";
+                break;
+            case IL_SessionVariables::SUCCURSALE:$key = "SUCCURSALE";
                 break;
             default: throw new InvalidArgumentTypeException('Parameter must be defined by IL_SessionVariables interface');
         }

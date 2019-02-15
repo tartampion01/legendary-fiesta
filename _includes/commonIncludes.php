@@ -1,9 +1,9 @@
 <?php
 
 // Don't show errors on webpage
-//error_reporting(0);
+error_reporting(0);
 // Show errors on webpage
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
     
 $applicationConfig = parse_ini_file(dirname(__DIR__).'/_configs/application.ini');
 

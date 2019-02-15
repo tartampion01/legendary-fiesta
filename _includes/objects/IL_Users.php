@@ -8,10 +8,15 @@ class IL_Users{
     public $password = '';
     public $hash_key = '';
     
-    public function load($id = 0, $hash_key = '', $username){
+    public function load($id = 0, $hash_key = '', $username, $bonCommande = 0){
         $conn = IL_Database::getConn();
         
-        if($id>0){
+        if( $bonCommande == 1 )
+        {
+            $id = mysqli_real_escape_string($conn, $id);
+            $sql = "SELECT * FROM UsersBonCommande WHERE username='$username'";
+        }
+        elseif($id>0){
             $id = mysqli_real_escape_string($conn, $id);
             $sql = "SELECT * FROM users WHERE id_user=$id";
         }

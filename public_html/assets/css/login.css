@@ -17,6 +17,10 @@
 .page_login .login .label {
   text-align: right;
 }
+.label_boncommande {
+  text-align: right;
+  color: #FFF;
+}
 .page_login .login .field {
   text-align: left;
 }

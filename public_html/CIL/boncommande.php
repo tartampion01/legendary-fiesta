@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande.php');?>
+<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CIL.php');?>
 <script type="text/javascript">
     
     // WRITE JS VARIABLE WITH PHP SESSION VALUE
@@ -60,13 +60,12 @@
     function saveRow(rowId){
         
         
+        var endroitPickup = document.getElementById('tbEndroitPickup_' + rowId).value;
         var bonCommande = document.getElementById('tbBonCommande_' + rowId).value;
+        var noConfirmation = document.getElementById('tbNoConfirmation_' + rowId).value;
+        var commandePar = document.getElementById('tbCommandePar_' + rowId).value;
         var fournisseur = document.getElementById('tbFournisseur_' + rowId).value;
-        var av = document.getElementById('tbAV_' + rowId).value;
-        var heure = document.getElementById('tbHeure_' + rowId).value;
-        var date = document.getElementById('tbDate_' + rowId).value;
-        var chauffeur = document.getElementById('tbChauffeur_' + rowId).value;
-        var commentaire = document.getElementById('tbCommentaire_' + rowId).value;
+        var directiveSpeciale = document.getElementById('tbDirectiveSpeciale_' + rowId).value;
         
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -76,7 +75,7 @@
             }
         };
 
-        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + bonCommande + "&3=" + fournisseur + "&4=" + av + "&5=" + heure + "&6=" + date + "&7=" + chauffeur + "&8=" + commentaire;
+        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + endroitPickup + "&3=" + bonCommande + "&4=" + noConfirmation + "&5=" + commandePar + "&6=" + fournisseur + "&7=" + directiveSpeciale;
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
@@ -85,14 +84,13 @@
     }    
     
     function ClearTopData()
-    {
+    {        
+        document.getElementById('tbEndroitPickup').value = '';
         document.getElementById('tbBonCommande').value = '';
-        document.getElementById('tbFournisseur').value = '';
-        document.getElementById('tbAV').value = '';
-        document.getElementById('tbHeure').value = '';
-        document.getElementById('tbDate').value = '';
-        //document.getElementById('cbStatut').value = '';
-        document.getElementById('tbCommentaire').value = '';
+        document.getElementById('tbNoConfirmation').value = '';
+        document.getElementById('tbCommandePar').value = '';
+        document.getElementById('tbContactFournisseur').value = '';
+        document.getElementById('tbDirectiveSpeciale').value = '';
     }
     
     function updateStatut(dropDown, pkBonCommande){
@@ -150,7 +148,7 @@
     }
     
     function ajouterBonCommande() {
-        
+
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -158,17 +156,15 @@
             }
         };
         
+        var endroitPickup = document.getElementById('tbEndroitPickup').value;
         var bonCommande = document.getElementById('tbBonCommande').value;
-        var fournisseur = document.getElementById('tbFournisseur').value;
-        var av = document.getElementById('tbAV').value;
-        var heure = document.getElementById('tbHeure').value;
-        var date = document.getElementById('tbDate').value;
-        var chauffeur = document.getElementById('tbChauffeur').value;
-        //var chauffeur = document.getElementById('ddChauffeur').value;
+        var noConfirmation = document.getElementById('tbNoConfirmation').value;
+        var commandePar = document.getElementById('tbCommandePar').value;
+        var contactFournisseur = document.getElementById('tbContactFournisseur').value;
+        var directiveSpeciale = document.getElementById('tbDirectiveSpeciale').value;
         var statut = document.getElementById('cbStatut').value;
-        var commentaire = document.getElementById('tbCommentaire').value;
         
-        var dataToAdd = "&oper=add&1=" + bonCommande + "&2=" + fournisseur + "&3=" + av + "&4=" + heure + "&5=" + date + "&6=" + chauffeur + "&7=" + statut + "&8=" + commentaire;
+        var dataToAdd = "&oper=add&1=" + endroitPickup + "&2=" + bonCommande + "&3=" + noConfirmation + "&4=" + commandePar + "&5=" + contactFournisseur + "&6=" + directiveSpeciale + "&7=" + statut;
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
@@ -226,7 +222,7 @@
     <form id="frm" name="frm" action=""> 
         <table>
             <tr>
-                <td style="width:33%;text-align:center;"><img style="width: 388px; height: 81px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
+                <td style="width:33%;text-align:center;"><img alt='LOGO JOLIETTE' style="width: 262px; height: 110px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>
                 <td style="width:33%;text-align:center;">
                     <label class="h1bonCommande">Bons de commande</label>
                 </td>
@@ -241,61 +237,43 @@
                     <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Reload" onclick="location.reload();"/>
                 </td>
         </table>        
-        <datalist id="dl" name="dl"><?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?></datalist>         
         <hr>
         <table id="tbEntrerBonCommande" class="tableHaut">
             <tr>            
-                <td class="bonCommande"># de commande</td>
-                <td class="fournisseur">Fournisseur</td>
-                <td class="av">AV</td>
-                <td class="heure">Heure</td>
-                <td class="date">Date</td>
-                <td class="chauffeur">Chauffeur</td>
-                <td class="statut">Statut</td>
-                <td class="commentaire">Commentaire</td>
+                <td class="endroitPickup">Endroit de P/UP</td>
+                <td class="bonCommande">No. Commande</td>
+                <td class="noConfirmation">No. Confirmation</td>
+                <td class="commandePar">Commandé par</td>
+                <td class="contactFournisseur">Contact Fournisseur</td>
+                <td class="directiveSpeciale">Directive spéciale</td>
                 <td class="ajouter"></td>
             </tr>
             <tr>
+                <td class="endroitPickup">
+                    <input type="text" class="input" id="tbEndroitPickup" name="tbEndroitPickup" list="dlEndroitPickup">
+                    <datalist id="dlEndroitPickup" name="dlEndroitPickup">
+                        <?php echo IL_Utils::getAutoComplete('endroitPickup', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                    </datalist>
+                </td>            
                 <td class="bonCommande"><input type="text" class="input" id="tbBonCommande" name="tbBonCommande"></td>
-                <td class="fournisseur">
-                    <input type="text" class="input" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
-                    <datalist class="input" id="dlFournisseur" name="dlFournisseur">
-                        <?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                <td class="noConfirmation"><input type="text" class="input" id="tbNoConfirmation" name="tbNoConfirmation"></td>
+                <td class="commandePar"><input type="text" class="input" id="tbCommandePar" name="tbCommandePar"></td>
+                <td class="contactFournisseur">
+                    <input type="text" class="input" id="tbContactFournisseur" name="tbContactFournisseur" list="dlFournisseur">
+                    <datalist id="dlFournisseur" name="dlFournisseur">
+                        <?php echo IL_Utils::getAutoComplete('fournisseur', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                 </td>
-                <td class="av">
-                    <input type="text" class="input av" id="tbAV" name="tbAV" list="dlAV">
-                    <datalist id="dlAV" name="dlAV">
-                        <?php echo IL_Utils::getAutoComplete('aviseur', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>
-                </td>
-                <td class="heure"><input type="text" class="input" id="tbHeure" onfocus="getHeure(this);" name="tbHeure"></td>
-                <td class="date"><input type="text" class="input" id="tbDate" onfocus="getDate(this);" name="tbDate"></td>
-                <td class="chauffeur">
-                    <input type="text" class="input chauffeur" id="tbChauffeur" name="tbChauffeur" list="dlChauffeur">
-                    <datalist id="dlChauffeur" name="dlChauffeur">
-                        <?php echo IL_Utils::getAutoComplete('chauffeur', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>
-                    <!--
-                    <select id="ddChauffeur" class="inputCombo">
-                        <option value="https://my31.geotab.com/">Jean-Guy</option>
-                        <option value="https://my31.geotab.com/">Claude</option>
-                        <option value="https://my31.geotab.com/">Daniel</option>
-                        <option value="https://my31.geotab.com/">René</option>
-                        <option value="https://my31.geotab.com/">Sylvain</option>
-                        <option value="https://my31.geotab.com/">Benoit</option>
-                        <option value="https://my31.geotab.com/">Éric</option>
-                    </select>
-                    -->
+                <td class="directiveSpeciale"><input type="text" class="input tbCommentaire" id="tbDirectiveSpeciale" name="tbDirectiveSpeciale"><td>
                 <td class="statut">
                     <!--DATALIST
                     <input type="text" class="input" id="tbStatut" name="tbStatut" list="dlStatut">                    
                     <datalist id="dlStatut" name="dlStatut">
                         <?php //echo IL_Utils::getAutoComplete('statutBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>-->
-                    <select class="inputCombo" id="cbStatut"><option>En cours</option><option>Attribué</option><option>Reçu</option></select>
+                    <select class="inputCombo" id="cbStatut"><option>-</option><option>Ramassée</option><option>Annulée</option><option>Remise</option></select>
                 </td>
-                <td class="commentaire"><textarea rows="1" cols="40" type="text" class="input" id="tbCommentaire" name="tbCommentaire"></textarea></td>
+                
                 <td class="ajouter">
                     <div class="tooltip">
                         <input class="boutonAjout" type="button" alt="Ajouter" onclick="ajouterBonCommande();">
@@ -305,7 +283,7 @@
             </tr>
         </table>
         <hr>
-        <table id="tbBonCommandes" class="tableData" cellspacing="0" cellpadding="2"></table>
+        <table id="tbBonCommandes" class="tableData" cellspacing="0" cellpadding="0"></table>
     </form>
 
     <!--<a href='https://interlivraison.reseaudynamique.com/boncommande/boncommande.php?succ=CIB'>CIB</a>-->

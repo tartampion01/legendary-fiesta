@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
-    require_once(dirname(__DIR__).'/../_includes/commonIncludes.php');
+    require_once(dirname(__DIR__).'/../_includes/commonIncludes_CIL.php');
+    
 ?>
 
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
@@ -101,7 +102,10 @@
                                         
                                         setcookie('username', $user->username, time() + (86400 * 30), "/");
                                         
-                                        header('Location: ' . "boncommande.php?succ=" . $user->succursale);
+                                        if( $user->succursale == "CIL" )
+                                            header('Location: ' . "boncommande.php?succ=" . $user->succursale);
+                                        else
+                                            header('Location: ' . "login.php");
                                         
                                     } else{
                                         // Display an error message if password is not valid
@@ -134,13 +138,7 @@
                 <label class="h1bonCommande">Bons de commande</label>
             </div>
         </div>
-        <span style='background-color: black; font-size: 24px;'>
-            <p style='color: white; background-color: black;'>
-                Merci d'utiliser le lien suivant pour la page de Bons de travail:
-            </p>
-            <a href='https://interlivraison.reseaudynamique.com/CIL/login.php'>&nbsp;https://interlivraison.reseaudynamique.com/CIL/login.php&nbsp;</a>
-        </span>
-        <div class="row login" style='visibility: hidden;'>
+        <div class="row login">
             <div class="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 loginBox">                
                 <form name="form" role="form" method="POST" action="login.php">                    
                     <div class="row">

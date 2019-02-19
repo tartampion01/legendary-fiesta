@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande.php');?>
+<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CIB.php');?>
 <script type="text/javascript">
     
     // WRITE JS VARIABLE WITH PHP SESSION VALUE
@@ -91,6 +91,7 @@
         document.getElementById('tbAV').value = '';
         document.getElementById('tbHeure').value = '';
         document.getElementById('tbDate').value = '';
+        document.getElementById('tbChauffeur').value = '';
         //document.getElementById('cbStatut').value = '';
         document.getElementById('tbCommentaire').value = '';
     }
@@ -305,7 +306,7 @@
             </tr>
         </table>
         <hr>
-        <table id="tbBonCommandes" class="tableData" cellspacing="0" cellpadding="2"></table>
+        <table id="tbBonCommandes" class="tableData" cellspacing="0" cellpadding="0"></table>
     </form>
 
     <!--<a href='https://interlivraison.reseaudynamique.com/boncommande/boncommande.php?succ=CIB'>CIB</a>-->

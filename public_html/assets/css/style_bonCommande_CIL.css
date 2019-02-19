@@ -1364,35 +1364,29 @@ i.fa {
 
 /* CIB */
 table.tableHaut tr td.edit { width:1%; }
-table.tableHaut tr td.bonCommande { width: 8%; }
-table.tableHaut tr td.fournisseur { width: 12%; }
-table.tableHaut tr td.av { width: 3%; }
-table.tableHaut tr td.heure { width: 5%; }
-table.tableHaut tr td.date { width: 5%; }
-table.tableHaut tr td.chauffeur { width: 15%; }
-table.tableHaut tr td.lienChauffeur { width: 30px; text-align: left;}
-table.tableHaut tr td.statut { width: 12%; }
-table.tableHaut tr td.commentaire { width: 26%; }
-table.tableHaut tr td.ajouter { width: 7%;}
+table.tableHaut tr td.bonCommande { width: 13%; }
+table.tableHaut tr td.endroitPickup { width: 13%; }
+table.tableHaut tr td.noConfirmation { width: 13%; }
+table.tableHaut tr td.commandePar { width: 13%; }
+table.tableHaut tr td.contactFournisseur { width: 13%; }
+table.tableHaut tr td.directiveSpeciale { width: 20%; }
 
 table.tableData tr.trHeader td { font-size: 13px; font-family: verdana;font-weight: bold;background-color: gray;}
 table.tableData tr td { font-size: 11px; font-weight: bold; font-family: verdana;}
 
+                
 table.tableData tr td.edit{ width: 1%;}
-table.tableData tr td.bonCommande { width: 8%;}
-table.tableData tr td.fournisseur { width: 12%;}
-table.tableData tr td.av { width: 3%;}
-table.tableData tr td.heure { width: 5%;}
-table.tableData tr td.date { width: 5%;}
-table.tableData tr td.chauffeur { width: 15%;}
-table.tableData tr td.lienChauffeur { width: 30px; text-align: left;}
-table.tableData tr td.statut { width: 12%;}
-table.tableData tr td.commentaire { width: 26%;}
-table.tableData tr td.ajouter { width: 7%;padding-top: 5px;}
+table.tableData tr td.bonCommande { width: 13%;}
+table.tableData tr td.endroitPickup { width: 13%;}
+table.tableData tr td.noConfirmation { width: 13%;}
+table.tableData tr td.commandePar { width: 13%;}
+table.tableData tr td.contactFournisseur { width: 13%;}
+table.tableData tr td.directiveSpeciale { width: 20%;}
 
-table.tableData tr td select{background-color: #ff6666;}
-table.tableData tr td select.Attribué{background-color: #ffff66;}
-table.tableData tr td select.Reçu{background-color: #66ff66;}
+table.tableData tr td select{background-color: #C5C5C5;}
+table.tableData tr td select.Ramassée{background-color: #ff6666;}
+table.tableData tr td select.Annulée{background-color: #66ff66;}
+table.tableData tr td select.Remise{background-color: #3085d6;}
 
 table.tableData tr.rowEdit{
     background-color: #555;
@@ -1466,8 +1460,9 @@ table.tableData tr.rowEdit{
 
 .tbAffichage av{width: 20px;}
 .tbCommentaire{width:300px;}
+.tbDirectiveSpeciale{width:300px;}
 .tbHeure{width:45px;}
-.tbDate{width:px;}
+.tbDate{width:12px;}
 .tbChauffeur{width:180px;}
 
 .tbEdit{

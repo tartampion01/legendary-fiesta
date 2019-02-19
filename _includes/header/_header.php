@@ -76,6 +76,7 @@ if(isset($_COOKIE['username'])) {
     <link rel="stylesheet" type="text/css" href="assets/css/offline/offline-language-french-indicator.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/awesomplete/awesomplete.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/recherche.css" />
+        
     <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
     
     <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />

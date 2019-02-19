@@ -127,35 +127,21 @@ class IL_Utils
     
     public static function getBonCommande($succursale){
         
-        /*
-        $data = "<th># de commande</th>";
-        $data .= "<th>Fournisseur</th>";
-        $data .= "<th>AV</th>";
-        $data .= "<th>Heure</th>";
-        $data .= "<th>Date</th>";
-        $data .= "<th>Chauffeur</th>";
-        $data .= "<th>Statut</th>";
-        $data .= "<th>Commentaire</th>";
-        $data .= "<th>X</th>";
-         * 
-         */
         $data = '<tr class="trHeader">
                     <td class="edit"></td>
-                    <td class="bonCommande"># de commande</td>
-                    <td class="fournisseur">Fournisseur</td>
-                    <td class="av">AV</td>
-                    <td class="heure">Heure</td>
-                    <td class="date">Date</td>
-                    <td class="chauffeur">Chauffeur</td>
-                    <td class="lienChauffeur"></td>
-                    <td class="statut">Statut</td>
-                    <td class="commentaire">Commentaire</td>
+                    <td class="endroitPickup">Endroit de P/UP</td>
+                    <td class="bonCommande">No. Commande</td>
+                    <td class="noConfirmation">No. Confirmation</td>
+                    <td class="commandePar">Commandé par</td>
+                    <td class="contactFournisseur">Contact Fournisseur</td>
+                    <td class="directiveSpeciale">Directive spéciale</td>
+                    <td class="statut">statut</td>
                     <td class="ajouter"></td>
                 </tr>';
         $conn = IL_Database::getConn();
         
-        $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, heure, date, chauffeur, statut, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=0";
-        
+        $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale' AND archive=0";
+
         $result = mysqli_query($conn, $sql);
         
         try
@@ -166,40 +152,40 @@ class IL_Utils
                     
                     $data .= "<tr id='row_" . $pkBonCommande . "' class=''>";
                     $data .= "<td id='cbEdit_" . $pkBonCommande . "' class='edit'><input title='Modifier cette ligne' type='radio' id='radioEdit' name='radioEdit' class='chkEditRow' onclick='editMode(this," . $pkBonCommande . ");' value='" . $pkBonCommande . "' alt='Modifier'></td>";
+                    $data .= "<td class='endroitPickup'><input type='text' id='tbEndroitPickup_" . $pkBonCommande . "' class='tbAffichage' value='" . $row["endroitPickup"] . "'></input></td>";
                     $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbAffichage' value='" . $row["bonCommande"] . "'></input></td>";
-                    $data .= "<td class='fournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbAffichage' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
-                    $data .= "<td class='av'><input type='text' id='tbAV_" . $pkBonCommande . "' class='tbAffichage av' list='dlAV' value='" . $row["av"] . "'></input></td>";
-                    $data .= "<td class='heure'><input type='text' id='tbHeure_" . $pkBonCommande . "' class='tbHeure' value='" . $row["heure"] . "'></input></td>";
-                    $data .= "<td class='date'><input type='text' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . $row["date"] . "'></input></td>";
-                    $data .= "<td class='chauffeur'><input type='text' id='tbChauffeur_" . $pkBonCommande . "' class='tbChauffeur' list='dlChauffeur' value='" . $row["chauffeur"] . "'></td>";
-                    $data .= "<td class='lienChauffeur'><a href='https://my31.geotab.com/' target='_blank'><img src='../assets/images/iconePlanete.png' /></a></td>";
+                    $data .= "<td class='noConfirmation'><input type='text' id='tbNoConfirmation_" . $pkBonCommande . "' class='tbAffichage' value='" . $row["noConfirmation"] . "'></input></td>";
+                    $data .= "<td class='commandePar'><input type='text' id='tbCommandePar_" . $pkBonCommande . "' class='tbAffichage' value='" . $row["commandePar"] . "'></input></td>";
+                    $data .= "<td class='contactFournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbAffichage' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
+                    $data .= "<td class='directiveSpeciale'><input type='text' id='tbDirectiveSpeciale_" . $pkBonCommande . "' class='tbDirectiveSpeciale' value='" . $row["directiveSpeciale"] . "'></td>";
                     
                     $statut = '<select class="' . $row["statut"] . '" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
-                    if( $row['statut'] == 'En cours')
-                        $statut .= '<option selected>En cours</option><option>Attribué</option><option>Reçu</option></select>';
-                    elseif( $row['statut'] == 'Attribué' )
-                        $statut .= '<option>En cours</option><option selected>Attribué</option><option>Reçu</option></select>';
+                    if( $row['statut'] == '-')
+                        $statut .= '<option selected>-</option><option>Ramassée</option><option>Annulée</option><option>Remise</option></select>';
+                    elseif( $row['statut'] == 'Ramassée' )
+                        $statut .= '<option>-</option><option selected>Ramassée</option><option>Annulée</option><option>Remise</option></select>';
+                    elseif( $row['statut'] == 'Annulée' )
+                        $statut .= '<option>-</option><option>Ramassée</option><option selected>Annulée</option><option>Remise</option></select>';
                     else
-                        $statut .= '<option>En cours</option><option>Attribué</option><option selected>Reçu</option></select>';
+                        $statut .= '<option>-</option><option>Ramassée</option><option>Annulée</option><option selected>Remise</option></select>';
                     
-                    $data .= "<td class='statut'>$statut</td>";
-                    $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkBonCommande . '" class="tbCommentaire" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
+                    $data .= "<td class='statut'>$statut</td>";                    
                     $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkBonCommande . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkBonCommande"] . ");' alt='Sauvegarder'>";
                     $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='deleteRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td></tr>";
                 }
                 
                 $data .= '<tr><td class="edit">
                               <img id="btnDeselectionner" style="visibility:hidden;" onclick="deselectionner();" src="../assets/images/iconeRemove.png" alt=""/></td>
-                              <td class="bonCommande"></td>
-                              <td class="fournisseur"></td>
-                              <td class="av"></td>
-                              <td class="heure"></td>
-                              <td class="date"></td>
-                              <td class="chauffeur"></td>
-                              <td class="lienChauffeur"></td>
-                              <td class="statut"></td>
-                              <td class="commentaire"></td>
-                              <td class="ajouter"></td></tr>';
+                              <td class=""></td>
+                              <td class=""></td>
+                              <td class=""></td>
+                              <td class=""></td>
+                              <td class=""></td>
+                              <td class=""></td>
+                              <td class=""></td>
+                              <td class=""></td>
+                              <td class=""></td>
+                              <td class=""></td></tr>';
             }
         }
         catch (Exception $e) {
@@ -209,22 +195,21 @@ class IL_Utils
         return $data;
     }
     
-    public static function addBonCommande($bonCommande, $fournisseur, $av, $heure, $date, $chauffeur, $statut, $commentaire, $succursale){
+    public static function addBonCommande($endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $directiveSpeciale, $statut, $succursale){
         
         $conn = IL_Database::getConn();
         
+        $endroitPickup = mysqli_real_escape_string($conn, $endroitPickup);
         $bonCommande = mysqli_real_escape_string($conn, $bonCommande);
-        $fournisseur = mysqli_real_escape_string($conn, $fournisseur);
-        $av = mysqli_real_escape_string($conn, $av);
-        $heure = mysqli_real_escape_string($conn, $heure);
-        $date = mysqli_real_escape_string($conn, $date);
-        $chauffeur = mysqli_real_escape_string($conn, $chauffeur);
+        $noConfirmation = mysqli_real_escape_string($conn, $noConfirmation);
+        $commandePar = mysqli_real_escape_string($conn, $commandePar);
+        $contactFournisseur = mysqli_real_escape_string($conn, $contactFournisseur);
+        $directiveSpeciale = mysqli_real_escape_string($conn, $directiveSpeciale);
         $statut = mysqli_real_escape_string($conn, $statut);
-        $commentaire = mysqli_real_escape_string($conn, $commentaire);
         $succursale = mysqli_real_escape_string($conn, $succursale);
         
-        $sql = "INSERT INTO bon_commande(bonCommande,fournisseur,av,heure,date,chauffeur,statut,commentaire,succursale) ";
-        $sql .= "VALUES('$bonCommande','$fournisseur','$av','$heure','$date','$chauffeur','$statut','$commentaire','$succursale')";
+        $sql = "INSERT INTO bon_commande(endroitPickup,bonCommande,noConfirmation,commandePar,fournisseur,directiveSpeciale,statut,succursale) ";
+        $sql .= "VALUES('$endroitPickup','$bonCommande','$noConfirmation','$commandePar','$contactFournisseur','$directiveSpeciale','$statut','$succursale')";
 
         mysqli_query($conn, $sql);
         $this->id = $conn->insert_id;
@@ -250,20 +235,19 @@ class IL_Utils
         return "Bon de commande modifié";
     }
     
-    public static function updateLigne($pkBonCommande, $bonCommande, $fournisseur, $av, $heure, $date, $chauffeur, $commentaire, $succursale)
+    public static function updateLigne($pkBonCommande, $endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $directiveSpeciale, $succursale)
     {
         $conn = IL_Database::getConn();
         
+        $endroitPickup = mysqli_real_escape_string($conn, $endroitPickup);
         $bonCommande = mysqli_real_escape_string($conn, $bonCommande);
-        $fournisseur = mysqli_real_escape_string($conn, $fournisseur);
-        $av = mysqli_real_escape_string($conn, $av);
-        $heure = mysqli_real_escape_string($conn, $heure);
-        $date = mysqli_real_escape_string($conn, $date);
-        $chauffeur = mysqli_real_escape_string($conn, $chauffeur);
-        $commentaire = mysqli_real_escape_string($conn, $commentaire);
+        $noConfirmation = mysqli_real_escape_string($conn, $noConfirmation);
+        $commandePar = mysqli_real_escape_string($conn, $commandePar);
+        $contactFournisseur = mysqli_real_escape_string($conn, $contactFournisseur);
+        $directiveSpeciale = mysqli_real_escape_string($conn, $directiveSpeciale);
         $succursale = mysqli_real_escape_string($conn, $succursale);
         
-        $sql = "UPDATE bon_commande SET bonCommande='$bonCommande', fournisseur='$fournisseur', av='$av', heure='$heure', date='$date', chauffeur='$chauffeur', commentaire='$commentaire', succursale='$succursale' WHERE pkBonCommande='$pkBonCommande'";
+        $sql = "UPDATE bon_commande SET endroitPickup='$endroitPickup', bonCommande='$bonCommande', noConfirmation='$noConfirmation', commandePar='$commandePar', fournisseur='$contactFournisseur', directiveSpeciale='$directiveSpeciale' WHERE pkBonCommande='$pkBonCommande'";
 
         mysqli_query($conn, $sql );
         

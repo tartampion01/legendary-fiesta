@@ -4,7 +4,7 @@
     // WRITE JS VARIABLE WITH PHP SESSION VALUE
     <?php echo "var succ = '" . IL_Session::r(IL_SessionVariables::SUCCURSALE) . "';" ?>
         
-    var timerDelay = 5000;
+    var timerDelay = 60000;
 
     function editMode(ceci, rowId){
         
@@ -101,8 +101,7 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                //document.getElementById("divSauvegarde").innerHTML = this.responseText;
-                //ClearTopData();
+                showBonCommandes();
             }
         };
         
@@ -110,7 +109,6 @@
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
-        showBonCommandes();
     }
     
     function showBonCommandes() {
@@ -156,6 +154,7 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 ClearTopData();
+                showBonCommandes();
             }
         };
         
@@ -225,21 +224,21 @@
 <body onload="updateBonCommandes();">
     <div name='bonCommande' class='base_page_boncommande serializable'>
     <form id="frm" name="frm" action=""> 
-        <table>
+        <table style="width:100%;">
             <tr>
-                <td style="width:33%;text-align:center;"><img style="width: 388px; height: 81px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
-                <td style="width:33%;text-align:center;">
+                <td style="width:40%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
+                <td style="width:40%;text-align:center;">
                     <label class="h1bonCommande">Bons de commande</label>
                 </td>
-                <td style="width:33%;text-align:right;" valign="middle">                    
+                <td style="width:20%;text-align:right;" valign="middle">                    
                     <select title="Auto refresh" class="inputCombo" onchange="updateTimer(this);">
-                        <option value="5000">5 secondes</option>
                         <option value="60000">1min</option>
                         <option value="300000">5min</option>
                         <option value="600000">10min</option>
+                        <option value="3600000">1h</option>
                     </select>
                     &nbsp;
-                    <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Reload" onclick="location.reload();"/>
+                    <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Force refresh" onclick="location.reload();"/>
                 </td>
         </table>        
         <datalist id="dl" name="dl"><?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?></datalist>         
@@ -257,23 +256,23 @@
                 <td class="ajouter"></td>
             </tr>
             <tr>
-                <td class="bonCommande"><input type="text" class="input" id="tbBonCommande" name="tbBonCommande"></td>
+                <td class="bonCommande"><input type="text" class="tbBonCommande" maxlength="6" id="tbBonCommande" name="tbBonCommande"></td>
                 <td class="fournisseur">
-                    <input type="text" class="input" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
+                    <input type="text" class="tbFournisseur" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
                     <datalist class="input" id="dlFournisseur" name="dlFournisseur">
                         <?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                 </td>
                 <td class="av">
-                    <input type="text" class="input av" id="tbAV" name="tbAV" list="dlAV">
+                    <input type="text" class="tbAV" id="tbAV" name="tbAV" list="dlAV">
                     <datalist id="dlAV" name="dlAV">
                         <?php echo IL_Utils::getAutoComplete('aviseur', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                 </td>
-                <td class="heure"><input type="text" class="input" id="tbHeure" onfocus="getHeure(this);" name="tbHeure"></td>
-                <td class="date"><input type="text" class="input" id="tbDate" onfocus="getDate(this);" name="tbDate"></td>
+                <td class="heure"><input type="text" class="tbHeure" id="tbHeure" onfocus="getHeure(this);" name="tbHeure"></td>
+                <td class="date"><input type="text" class="tbDate" id="tbDate" onfocus="getDate(this);" name="tbDate"></td>
                 <td class="chauffeur">
-                    <input type="text" class="input chauffeur" id="tbChauffeur" name="tbChauffeur" list="dlChauffeur">
+                    <input type="text" class="tbChauffeur" id="tbChauffeur" name="tbChauffeur" list="dlChauffeur">
                     <datalist id="dlChauffeur" name="dlChauffeur">
                         <?php echo IL_Utils::getAutoComplete('chauffeur', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
@@ -294,9 +293,9 @@
                     <datalist id="dlStatut" name="dlStatut">
                         <?php //echo IL_Utils::getAutoComplete('statutBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>-->
-                    <select class="inputCombo" id="cbStatut"><option>En cours</option><option>Attribué</option><option>Reçu</option></select>
+                    <select class="inputCombo" id="cbStatut"><option>En cours</option><option>Attribue</option><option>Recu</option></select>
                 </td>
-                <td class="commentaire"><textarea rows="1" cols="40" type="text" class="input" id="tbCommentaire" name="tbCommentaire"></textarea></td>
+                <td class="commentaire"><textarea rows="1" class="tbCommentaire" cols="40" type="text" class="input" id="tbCommentaire" name="tbCommentaire"></textarea></td>
                 <td class="ajouter">
                     <div class="tooltip">
                         <input class="boutonAjout" type="button" alt="Ajouter" onclick="ajouterBonCommande();">

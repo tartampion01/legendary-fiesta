@@ -98,16 +98,13 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                //document.getElementById("divSauvegarde").innerHTML = this.responseText;
-                //ClearTopData();
+                showBonCommandes();
             }
         };
         
         var dataToAdd = "&oper=updateStatut&1=" + pkBonCommande + "&2=" + dropDown.value;
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
-        
-        showBonCommandes();
     }
     
     function showBonCommandes() {
@@ -153,6 +150,7 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 ClearTopData();
+                showBonCommandes();
             }
         };
         
@@ -250,21 +248,21 @@
             </tr>
             <tr>
                 <td class="endroitPickup">
-                    <input type="text" class="input" id="tbEndroitPickup" name="tbEndroitPickup" list="dlEndroitPickup">
+                    <input type="text" class="tbEndroitPickup" id="tbEndroitPickup" name="tbEndroitPickup" list="dlEndroitPickup">
                     <datalist id="dlEndroitPickup" name="dlEndroitPickup">
                         <?php echo IL_Utils::getAutoComplete('endroitPickup', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                 </td>            
-                <td class="bonCommande"><input type="text" class="input" id="tbBonCommande" name="tbBonCommande"></td>
-                <td class="noConfirmation"><input type="text" class="input" id="tbNoConfirmation" name="tbNoConfirmation"></td>
-                <td class="commandePar"><input type="text" class="input" id="tbCommandePar" name="tbCommandePar"></td>
+                <td class="bonCommande"><input type="text" class="tbBonCommande" id="tbBonCommande" name="tbBonCommande"></td>
+                <td class="noConfirmation"><input type="text" class="tbNoConfirmation" id="tbNoConfirmation" name="tbNoConfirmation"></td>
+                <td class="commandePar"><input type="text" class="tbCommandePar" id="tbCommandePar" name="tbCommandePar"></td>
                 <td class="contactFournisseur">
-                    <input type="text" class="input" id="tbContactFournisseur" name="tbContactFournisseur" list="dlFournisseur">
+                    <input type="text" class="tbFournisseur" id="tbContactFournisseur" name="tbContactFournisseur" list="dlFournisseur">
                     <datalist id="dlFournisseur" name="dlFournisseur">
                         <?php echo IL_Utils::getAutoComplete('fournisseur', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                 </td>
-                <td class="directiveSpeciale"><input type="text" class="input tbCommentaire" id="tbDirectiveSpeciale" name="tbDirectiveSpeciale"><td>
+                <td class="directiveSpeciale"><input type="text" class="tbCommentaire" id="tbDirectiveSpeciale" name="tbDirectiveSpeciale"><td>
                 <td class="statut">
                     <!--DATALIST
                     <input type="text" class="input" id="tbStatut" name="tbStatut" list="dlStatut">                    

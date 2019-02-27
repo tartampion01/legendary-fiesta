@@ -36,6 +36,7 @@ if(isset($_COOKIE['username'])) {
     <title>
         <?PHP IL_Header::getPageTitle($NOMPAGE); ?>
     </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
@@ -78,8 +79,6 @@ if(isset($_COOKIE['username'])) {
     <link rel="stylesheet" type="text/css" href="assets/css/recherche.css" />
         
     <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
-    
-    <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
     
     <script type="application/javascript">
         // Set listeClients in localStoage

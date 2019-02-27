@@ -36,6 +36,7 @@ if(isset($_COOKIE['username'])) {
         <?PHP IL_Header::getPageTitle($NOMPAGE); ?>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
     <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande_CIL.css" />
@@ -78,9 +79,6 @@ if(isset($_COOKIE['username'])) {
     <link rel="stylesheet" type="text/css" href="../../public_html/assets/css/awesomplete/awesomplete.css" />
     <link rel="stylesheet" type="text/css" href="../../public_html/assets/css/recherche.css" />-->
     <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
-    
-    <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
-    
 </head>
     
     <!--<div class="offline-ui"></div>-->

@@ -134,13 +134,15 @@ class IL_Utils
                     <td class="noConfirmation">No. Confirmation</td>
                     <td class="commandePar">Commandé par</td>
                     <td class="contactFournisseur">Contact Fournisseur</td>
+                    <td class="date">Date</td>
                     <td class="directiveSpeciale">Directive spéciale</td>
                     <td class="statut">statut</td>
                     <td class="ajouter"></td>
                 </tr>';
         $conn = IL_Database::getConn();
+        mysqli_set_charset($conn,"utf8");
         
-        $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale' AND archive=0";
+        $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, date, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale' AND archive=0";
 
         $result = mysqli_query($conn, $sql);
         
@@ -150,26 +152,60 @@ class IL_Utils
                 while($row = mysqli_fetch_assoc($result)) {
                     $pkBonCommande = $row["pkBonCommande"];
                     
-                    $data .= "<tr id='row_" . $pkBonCommande . "' class=''>";
+                    // CSS selon statut
+                    // À ramasser par défaut pas de couleur
+                    // Remise -> Jaune
+                    // Fait -> rouge
+                    $cssRow = "";
+                    $statut = $row['statut'];   // Pour éviter de lire l'objet plusieurs fois
+                    $dropdownSTATUT = "";       // html de la dropdown affichée dans le tableau selon statut de la ligne
+                    $disabled = "";             
+                    $faitADMIN = "";            // Pour enlever l'option FAIT a une dropdown qu'un commis pourrait modifier
+                    
+                    // si user level == 0 (user) pas droit de modifier cette dropdown si elle le statut fait car seulement admin peut mettre statut fait
+                    if( IL_Session::r(IL_SessionVariables::LEVEL) == 0 ){
+                        if( $statut == "Fait" )
+                        {
+                            $disabled = "disabled";
+                            $faitADMIN = "<option selected>Fait</option>";
+                        }
+                    }
+                    else{
+                        if( $statut == "Fait" )
+                        {
+                            $faitADMIN = "<option selected>Fait</option>";
+                        }
+                        else
+                        {
+                            $faitADMIN = "<option>Fait</option>";
+                        }
+                    }
+                    
+                    $dropdownSTATUT = '<select '. $disabled . ' onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                    if( $statut == 'Remise'){
+                        $dropdownSTATUT .= '<option>À ramasser</option><option selected>Remise</option>'.$faitADMIN.'</select>';
+                        $cssRow = "remise";
+                    }
+                    elseif( $statut == 'Fait' ){
+                        $dropdownSTATUT .= '<option>À ramasser</option><option>Remise</option>'.$faitADMIN.'</select>';
+                        $cssRow = "fait";
+                    }
+                    else{
+                        $dropdownSTATUT .= '<option selected>À ramasser</option><option>Remise</option>'.$faitADMIN.'</select>';
+                        $cssRow = "aramasser";
+                    }                    
+                    
+                    $data .= "<tr id='row_" . $pkBonCommande . "' class='$cssRow'>";
                     $data .= "<td id='cbEdit_" . $pkBonCommande . "' class='edit'><input title='Modifier cette ligne' type='radio' id='radioEdit' name='radioEdit' class='chkEditRow' onclick='editMode(this," . $pkBonCommande . ");' value='" . $pkBonCommande . "' alt='Modifier'></td>";
-                    $data .= "<td class='endroitPickup'><input type='text' id='tbEndroitPickup_" . $pkBonCommande . "' class='tbAffichage' value='" . $row["endroitPickup"] . "'></input></td>";
-                    $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbAffichage' value='" . $row["bonCommande"] . "'></input></td>";
-                    $data .= "<td class='noConfirmation'><input type='text' id='tbNoConfirmation_" . $pkBonCommande . "' class='tbAffichage' value='" . $row["noConfirmation"] . "'></input></td>";
-                    $data .= "<td class='commandePar'><input type='text' id='tbCommandePar_" . $pkBonCommande . "' class='tbAffichage' value='" . $row["commandePar"] . "'></input></td>";
-                    $data .= "<td class='contactFournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbAffichage' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
+                    $data .= "<td class='endroitPickup'><input type='text' id='tbEndroitPickup_" . $pkBonCommande . "' class='tbEndroitPickup' list='dlEndroitPickup' value='" . $row["endroitPickup"] . "'></input></td>";
+                    $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbBonCommande' value='" . $row["bonCommande"] . "'></input></td>";
+                    $data .= "<td class='noConfirmation'><input type='text' id='tbNoConfirmation_" . $pkBonCommande . "' class='tbNoConfirmation' value='" . $row["noConfirmation"] . "'></input></td>";
+                    $data .= "<td class='commandePar'><input type='text' id='tbCommandePar_" . $pkBonCommande . "' class='tbCommandePar' value='" . $row["commandePar"] . "'></input></td>";
+                    $data .= "<td class='contactFournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
+                    $data .= "<td class='date'><input type='date' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . $row["date"] . "'></input></td>";
                     $data .= "<td class='directiveSpeciale'><input type='text' id='tbDirectiveSpeciale_" . $pkBonCommande . "' class='tbDirectiveSpeciale' value='" . $row["directiveSpeciale"] . "'></td>";
                     
-                    $statut = '<select class="' . $row["statut"] . '" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
-                    if( $row['statut'] == '-')
-                        $statut .= '<option selected>-</option><option>Ramassée</option><option>Annulée</option><option>Remise</option></select>';
-                    elseif( $row['statut'] == 'Ramassée' )
-                        $statut .= '<option>-</option><option selected>Ramassée</option><option>Annulée</option><option>Remise</option></select>';
-                    elseif( $row['statut'] == 'Annulée' )
-                        $statut .= '<option>-</option><option>Ramassée</option><option selected>Annulée</option><option>Remise</option></select>';
-                    else
-                        $statut .= '<option>-</option><option>Ramassée</option><option>Annulée</option><option selected>Remise</option></select>';
-                    
-                    $data .= "<td class='statut'>$statut</td>";                    
+                    $data .= "<td class='statut'>$dropdownSTATUT</td>";                    
                     $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkBonCommande . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkBonCommande"] . ");' alt='Sauvegarder'>";
                     $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='deleteRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td></tr>";
                 }
@@ -195,7 +231,7 @@ class IL_Utils
         return $data;
     }
     
-    public static function addBonCommande($endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $directiveSpeciale, $statut, $succursale){
+    public static function addBonCommande($endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $date, $directiveSpeciale, $statut, $succursale){
         
         $conn = IL_Database::getConn();
         
@@ -204,12 +240,13 @@ class IL_Utils
         $noConfirmation = mysqli_real_escape_string($conn, $noConfirmation);
         $commandePar = mysqli_real_escape_string($conn, $commandePar);
         $contactFournisseur = mysqli_real_escape_string($conn, $contactFournisseur);
+        $date = mysqli_real_escape_string($conn, $date);
         $directiveSpeciale = mysqli_real_escape_string($conn, $directiveSpeciale);
         $statut = mysqli_real_escape_string($conn, $statut);
         $succursale = mysqli_real_escape_string($conn, $succursale);
         
-        $sql = "INSERT INTO bon_commande(endroitPickup,bonCommande,noConfirmation,commandePar,fournisseur,directiveSpeciale,statut,succursale) ";
-        $sql .= "VALUES('$endroitPickup','$bonCommande','$noConfirmation','$commandePar','$contactFournisseur','$directiveSpeciale','$statut','$succursale')";
+        $sql = "INSERT INTO bon_commande(endroitPickup,bonCommande,noConfirmation,commandePar,fournisseur,date,directiveSpeciale,statut,succursale) ";
+        $sql .= "VALUES('$endroitPickup','$bonCommande','$noConfirmation','$commandePar','$contactFournisseur','$date','$directiveSpeciale','$statut','$succursale')";
 
         mysqli_query($conn, $sql);
         $this->id = $conn->insert_id;
@@ -235,7 +272,7 @@ class IL_Utils
         return "Bon de commande modifié";
     }
     
-    public static function updateLigne($pkBonCommande, $endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $directiveSpeciale, $succursale)
+    public static function updateLigne($pkBonCommande, $endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $date, $directiveSpeciale, $succursale)
     {
         $conn = IL_Database::getConn();
         
@@ -244,10 +281,11 @@ class IL_Utils
         $noConfirmation = mysqli_real_escape_string($conn, $noConfirmation);
         $commandePar = mysqli_real_escape_string($conn, $commandePar);
         $contactFournisseur = mysqli_real_escape_string($conn, $contactFournisseur);
+        $date = mysqli_real_escape_string($conn, $date);
         $directiveSpeciale = mysqli_real_escape_string($conn, $directiveSpeciale);
         $succursale = mysqli_real_escape_string($conn, $succursale);
         
-        $sql = "UPDATE bon_commande SET endroitPickup='$endroitPickup', bonCommande='$bonCommande', noConfirmation='$noConfirmation', commandePar='$commandePar', fournisseur='$contactFournisseur', directiveSpeciale='$directiveSpeciale' WHERE pkBonCommande='$pkBonCommande'";
+        $sql = "UPDATE bon_commande SET endroitPickup='$endroitPickup', bonCommande='$bonCommande', noConfirmation='$noConfirmation', commandePar='$commandePar', fournisseur='$contactFournisseur', date='$date', directiveSpeciale='$directiveSpeciale' WHERE pkBonCommande='$pkBonCommande'";
 
         mysqli_query($conn, $sql );
         

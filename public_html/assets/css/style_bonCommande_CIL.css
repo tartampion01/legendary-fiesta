@@ -1348,45 +1348,60 @@ i.fa {
 }
 
 .tableHaut{
-    border: 0px solid black;
     width: 100%;
 }
 .tableData{
-    border: 0px solid #EDEDED;
     width: 100%;
 }
 
 .trHeader{
-    border: 0px solid #EDEDED;
     width: 100%;
     background-color: #b4afb8;
 }
 
-/* CIB */
+/* CIL */
 table.tableHaut tr td.edit { width:1%; }
-table.tableHaut tr td.bonCommande { width: 13%; }
-table.tableHaut tr td.endroitPickup { width: 13%; }
-table.tableHaut tr td.noConfirmation { width: 13%; }
-table.tableHaut tr td.commandePar { width: 13%; }
+table.tableHaut tr td.endroitPickup { width: 11%; }
+table.tableHaut tr td.bonCommande { width: 11%; }
+table.tableHaut tr td.noConfirmation { width: 11%; }
+table.tableHaut tr td.commandePar { width: 11%; }
 table.tableHaut tr td.contactFournisseur { width: 13%; }
+table.tableHaut tr td.date { width: 6%; }
 table.tableHaut tr td.directiveSpeciale { width: 20%; }
+table.tableHaut tr td.statut { width: 10%; }
+table.tableHaut tr td.ajouter { width: 5%; }
 
 table.tableData tr.trHeader td { font-size: 13px; font-family: verdana;font-weight: bold;background-color: gray;}
 table.tableData tr td { font-size: 11px; font-weight: bold; font-family: verdana;}
 
                 
 table.tableData tr td.edit{ width: 1%;}
-table.tableData tr td.bonCommande { width: 13%;}
-table.tableData tr td.endroitPickup { width: 13%;}
-table.tableData tr td.noConfirmation { width: 13%;}
-table.tableData tr td.commandePar { width: 13%;}
+table.tableData tr td.endroitPickup { width: 11%;}
+table.tableData tr td.bonCommande { width: 11%;}
+table.tableData tr td.noConfirmation { width: 11%;}
+table.tableData tr td.commandePar { width: 11%;}
 table.tableData tr td.contactFournisseur { width: 13%;}
+table.tableData tr td.date { width: 6%;}
 table.tableData tr td.directiveSpeciale { width: 20%;}
+table.tableData tr td.statut { width: 10%; }
+table.tableData tr td.ajouter { width: 5%; }
 
 table.tableData tr td select{background-color: #C5C5C5;}
+
+/* DROP DOWN DE COULEUR remplacée par ROW de couleur *//*
 table.tableData tr td select.Ramassée{background-color: #ff6666;}
 table.tableData tr td select.Annulée{background-color: #66ff66;}
 table.tableData tr td select.Remise{background-color: #3085d6;}
+                          */
+table.tableData tr.aramasser{background-color: #C5C5C5;}                          
+table.tableData tr.remise{background-color: #ffff66;}
+table.tableData tr.fait{background-color: #ff6666;}
+                          
+table.tableMenuTop {width:100%;}
+table.tableMenuTop td {text-align: right; width:20%;color:#413d3e;}
+table.tableMenuTop td.tableMenuTopRefresh{border-style: inset;border-color: #b4afb8; border-width: 1px;}
+table.tableMenuTop td.tableMenuTopReload{border-style: inset;border-color: #b4afb8; border-width: 1px;}
+table.tableMenuTop td.tableMenuTopLogout{border-style: inset;border-color: #b4afb8; border-width: 1px;}
 
 table.tableData tr.rowEdit{
     background-color: #555;
@@ -1399,7 +1414,14 @@ table.tableData tr.rowEdit{
     width:32px;
     height:32px;
 }
-
+.boutonLogout
+{
+    background:url("../images/iconeLogout.png") no-repeat;
+    cursor: pointer;
+    border:none;
+    width:24px;
+    height:24px;
+}
 .boutonDelete
 {
     background:url("../images/iconeDelete.png") no-repeat;
@@ -1458,12 +1480,13 @@ table.tableData tr.rowEdit{
   visibility: visible;
 }
 
-.tbAffichage av{width: 20px;}
-.tbCommentaire{width:300px;}
-.tbDirectiveSpeciale{width:300px;}
-.tbHeure{width:45px;}
-.tbDate{width:12px;}
-.tbChauffeur{width:180px;}
+.tbEndroitPickup{}
+.tbBonCommande{}
+.tbNoConfirmation{}
+.tbCommandePar{}
+.tbFournisseur{}
+.tbDate{}
+.tbCommentaire{}
 
 .tbEdit{
     

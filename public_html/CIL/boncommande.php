@@ -4,7 +4,7 @@
     // WRITE JS VARIABLE WITH PHP SESSION VALUE
     <?php echo "var succ = '" . IL_Session::r(IL_SessionVariables::SUCCURSALE) . "';" ?>
         
-    var timerDelay = 5000;
+    var timerDelay = 60000;
 
     function editMode(ceci, rowId){
         
@@ -159,14 +159,15 @@
         var noConfirmation = document.getElementById('tbNoConfirmation').value;
         var commandePar = document.getElementById('tbCommandePar').value;
         var contactFournisseur = document.getElementById('tbContactFournisseur').value;
+        var date = document.getElementById('tbDate').value;
         var directiveSpeciale = document.getElementById('tbDirectiveSpeciale').value;
         var statut = document.getElementById('cbStatut').value;
         
-        var dataToAdd = "&oper=add&1=" + endroitPickup + "&2=" + bonCommande + "&3=" + noConfirmation + "&4=" + commandePar + "&5=" + contactFournisseur + "&6=" + directiveSpeciale + "&7=" + statut;
+        var dataToAdd = "&oper=add&1=" + endroitPickup + "&2=" + bonCommande + "&3=" + noConfirmation + "&4=" + commandePar + "&5=" + contactFournisseur + "&6=" + date + "&7=" + directiveSpeciale + "&8=" + statut;
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
-        showBonCommandes();
+        //showBonCommandes();
     }    
     
     function addZero(i) {
@@ -201,6 +202,11 @@
         updateBonCommandes();
     }
     
+    function getDateJour()
+    {
+        return new Date().toDateInputValue();
+    }
+    
     function clearTimer()
     {
         clearTimeout(TIMER);
@@ -224,15 +230,29 @@
                 <td style="width:33%;text-align:center;">
                     <label class="h1bonCommande">Bons de commande</label>
                 </td>
-                <td style="width:33%;text-align:right;" valign="middle">                    
-                    <select title="Auto refresh" class="inputCombo" onchange="updateTimer(this);">
-                        <option value="5000">5 secondes</option>
-                        <option value="60000">1min</option>
-                        <option value="300000">5min</option>
-                        <option value="600000">10min</option>
-                    </select>
-                    &nbsp;
-                    <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Reload" onclick="location.reload();"/>
+                <td style="width:33%;text-align:right;" valign="middle">
+                    <table class="tableMenuTop">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td class="tableMenuTopRefresh">Auto refresh:
+                                </br>
+                                <select title="Auto refresh" class="inputCombo" onchange="updateTimer(this);">
+                                    <option value="60000">1min</option>
+                                    <option value="300000">5min</option>
+                                    <option value="600000">10min</option>
+                                </select>
+                            </td>
+                            <td class="tableMenuTopReload">Reload
+                                </br>
+                                    <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Reload" onclick="javascript:location.reload();"/>
+                            </td>
+                            <td class="tableMenuTopLogout">Logout
+                                </br>
+                                    <input class="boutonLogout" type="button" alt="Ajouter" onclick="javascript:window.location.replace('logout.php');" Title="Logout" alt="Logout">
+                            </td>                            
+                        </tr>
+                    </table>
                 </td>
         </table>        
         <hr>
@@ -243,7 +263,9 @@
                 <td class="noConfirmation">No. Confirmation</td>
                 <td class="commandePar">Commandé par</td>
                 <td class="contactFournisseur">Contact Fournisseur</td>
+                <td class="date">Date</td>
                 <td class="directiveSpeciale">Directive spéciale</td>
+                <td class="statut">Statut</td>
                 <td class="ajouter"></td>
             </tr>
             <tr>
@@ -262,14 +284,17 @@
                         <?php echo IL_Utils::getAutoComplete('fournisseur', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                 </td>
-                <td class="directiveSpeciale"><input type="text" class="tbCommentaire" id="tbDirectiveSpeciale" name="tbDirectiveSpeciale"><td>
+                <td class="date"><input type="date" class="tbDate" id="tbDate" name="tbDate" value="<?php echo date('Y-m-d'); ?>"></td>
+                <td class="directiveSpeciale"><input type="text" class="tbCommentaire" id="tbDirectiveSpeciale" name="tbDirectiveSpeciale"></td>
                 <td class="statut">
                     <!--DATALIST
                     <input type="text" class="input" id="tbStatut" name="tbStatut" list="dlStatut">                    
                     <datalist id="dlStatut" name="dlStatut">
                         <?php //echo IL_Utils::getAutoComplete('statutBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>-->
-                    <select class="inputCombo" id="cbStatut"><option>-</option><option>Ramassée</option><option>Annulée</option><option>Remise</option></select>
+                    <select class="inputCombo" id="cbStatut"><option>À ramasser</option><option>Remise</option>
+                    <?php if( IL_Session::r(IL_SessionVariables::LEVEL) > 0 ) echo "<option>Fait</option>"; ?>
+                    </select>
                 </td>
                 
                 <td class="ajouter">

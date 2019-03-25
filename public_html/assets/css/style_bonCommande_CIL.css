@@ -1337,6 +1337,7 @@ i.fa {
 .page_login .input {
   width: 100%;
   color: black;
+  height: 20px;
 }
 .page_login .buttons button {
   width: 100%;

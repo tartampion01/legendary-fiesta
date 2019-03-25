@@ -32,10 +32,10 @@ class IL_Database{
     public static function getConn()
     {
         $db = new IL_Database();
-        $db->conn = null;
- 
+        $db->conn = null;        
+        
         try{
-            $db->conn = mysqli_connect($db->host, $db->username, $db->password, $db->db_name);
+            $db->conn = mysqli_connect($db->host, $db->username, $db->password, $db->db_name);            
         }catch(Exception $exception){
             echo "Connection error: " . $exception->getMessage();
         }

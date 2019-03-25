@@ -132,7 +132,8 @@ class IL_Livraison{
             //$query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
             $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND id_livraison>0 $where GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
         }
- //echo $query;
+//echo $succursale;
+//echo $query;
  
         $conn = IL_Database::getConn();
         
@@ -164,7 +165,8 @@ class IL_Livraison{
             //$queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY dateLivraison DESC";
             $queryCount = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND id_livraison>0 $where GROUP BY id_livraison ORDER BY dateLivraison DESC";
         }
-        
+//echo "SUCC=>$succursale query=" . $queryCount;
+
         $conn = IL_Database::getConn();
         
         $results = mysqli_query($conn, $queryCount);

@@ -42,24 +42,24 @@ class IL_Utils
         switch($level)
         {
             // USER
-            case 0: echo '<a href="livraison.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+            case 0: echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
                           //<a href="horsligne.php" class="menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
                           //<a href="horsligne.html" class="menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
+                          '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
                           <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
             // ADMIN
-            case 1: echo '<a href="livraison.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+            case 1: echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
                           //<a href="horsligne.php" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
                           //<a href="horsligne.html" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
-                          <a href="utilisateurs.php" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>
+                          '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
+                          <a href="utilisateurs.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>
                           <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
-            default:echo '<a href="livraison.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+            default:echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '"" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
                           //<a href="horsligne.php" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
                           //<a href="horsligne.html" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
+                          '<a href="rechercher.php?r='.mt_rand(0, 999999999). '"" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
                           <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
         }
@@ -153,6 +153,7 @@ class IL_Utils
                     <td class="ajouter"></td>
                 </tr>';
         $conn = IL_Database::getConn();
+        mysqli_set_charset($conn,"utf8");
         
         $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, heure, date, chauffeur, statut, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=0";
         
@@ -166,21 +167,30 @@ class IL_Utils
                     
                     $data .= "<tr id='row_" . $pkBonCommande . "' class=''>";
                     $data .= "<td id='cbEdit_" . $pkBonCommande . "' class='edit'><input title='Modifier cette ligne' type='radio' id='radioEdit' name='radioEdit' class='chkEditRow' onclick='editMode(this," . $pkBonCommande . ");' value='" . $pkBonCommande . "' alt='Modifier'></td>";
-                    $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbAffichage' value='" . $row["bonCommande"] . "'></input></td>";
-                    $data .= "<td class='fournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbAffichage' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
+                    $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbBonCommande' maxlength='6' value='" . $row["bonCommande"] . "'></input></td>";
+                    $data .= "<td class='fournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
                     $data .= "<td class='av'><input type='text' id='tbAV_" . $pkBonCommande . "' class='tbAffichage av' list='dlAV' value='" . $row["av"] . "'></input></td>";
                     $data .= "<td class='heure'><input type='text' id='tbHeure_" . $pkBonCommande . "' class='tbHeure' value='" . $row["heure"] . "'></input></td>";
                     $data .= "<td class='date'><input type='text' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . $row["date"] . "'></input></td>";
                     $data .= "<td class='chauffeur'><input type='text' id='tbChauffeur_" . $pkBonCommande . "' class='tbChauffeur' list='dlChauffeur' value='" . $row["chauffeur"] . "'></td>";
                     $data .= "<td class='lienChauffeur'><a href='https://my31.geotab.com/' target='_blank'><img src='../assets/images/iconePlanete.png' /></a></td>";
                     
-                    $statut = '<select class="' . $row["statut"] . '" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                    $statut = "";
                     if( $row['statut'] == 'En cours')
-                        $statut .= '<option selected>En cours</option><option>Attribué</option><option>Reçu</option></select>';
-                    elseif( $row['statut'] == 'Attribué' )
-                        $statut .= '<option>En cours</option><option selected>Attribué</option><option>Reçu</option></select>';
+                    {
+                        $statut = '<select class="En cours" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option selected>En cours</option><option>Attribue</option><option>Recu</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Attribue' )
+                    {
+                        $statut = '<select class="Attribue" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option>En cours</option><option selected>Attribue</option><option>Recu</option></select>';
+                    }
                     else
-                        $statut .= '<option>En cours</option><option>Attribué</option><option selected>Reçu</option></select>';
+                    {
+                        $statut = '<select class="Recu" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option>En cours</option><option>Attribue</option><option selected>Recu</option></select>';
+                    }
                     
                     $data .= "<td class='statut'>$statut</td>";
                     $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkBonCommande . '" class="tbCommentaire" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
@@ -222,7 +232,7 @@ class IL_Utils
         $statut = mysqli_real_escape_string($conn, $statut);
         $commentaire = mysqli_real_escape_string($conn, $commentaire);
         $succursale = mysqli_real_escape_string($conn, $succursale);
-        
+
         $sql = "INSERT INTO bon_commande(bonCommande,fournisseur,av,heure,date,chauffeur,statut,commentaire,succursale) ";
         $sql .= "VALUES('$bonCommande','$fournisseur','$av','$heure','$date','$chauffeur','$statut','$commentaire','$succursale')";
 

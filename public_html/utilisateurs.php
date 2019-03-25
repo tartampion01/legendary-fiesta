@@ -5,13 +5,15 @@
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row">
         <div id="menu" class="col-xs-3 col-sm-2">
-            <a href="default.php">
+            <a href="<?php echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>
         <div id="titre" class="col-xs-6 col-sm-8">UTILISATEURS</div>
         <div id="user" class="col-xs-3 col-sm-2">
-            <div><?php echo IL_Session::r(IL_SessionVariables::USERNAME); ?></div>
+            <div><?php echo IL_Session::r(IL_SessionVariables::USERNAME); ?>
+                [<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>]
+            </div>
            <a href="#" class="offline_hide">
                 <div id="logout" class="hyperlien" onclick="window.location.href='logout.php'">Déconnexion</div>
             </a>

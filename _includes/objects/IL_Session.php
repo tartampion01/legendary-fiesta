@@ -75,8 +75,8 @@ class IL_Session
      * 
      * @var integer
      */
-    //protected static $SESSION_AGE = 86400; // 1 jour
-    protected static $SESSION_AGE = 592200; // 1 semaine
+    protected static $SESSION_AGE = 86400; // 1 jour
+    //protected static $SESSION_AGE = 592200; // 1 semaine
     
     /**
      * Writes a value to the current session data.
@@ -333,7 +333,7 @@ class IL_Session
         if ( '' === session_id() )
         {
             $secure = true;
-            $httponly = true;
+            $httponly = false;
             // Disallow session passing as a GET parameter.
             // Requires PHP 4.3.0
             if (ini_set('session.use_only_cookies', 1) === false) {

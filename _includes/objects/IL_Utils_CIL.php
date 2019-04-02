@@ -125,24 +125,53 @@ class IL_Utils
         return $data == "" ? $option_o . $option_c : $data;
     }
     
-    public static function getBonCommande($succursale){
+    public static function getBonCommande($succursale, $archive, $dateChoisie, $searchQuery=""){
         
-        $data = '<tr class="trHeader">
-                    <td class="edit"></td>
-                    <td class="endroitPickup">Endroit de P/UP</td>
-                    <td class="bonCommande">No. Commande</td>
-                    <td class="noConfirmation">No. Confirmation</td>
-                    <td class="commandePar">Commandé par</td>
-                    <td class="contactFournisseur">Contact Fournisseur</td>
-                    <td class="date">Date</td>
-                    <td class="directiveSpeciale">Directive spéciale</td>
-                    <td class="statut">statut</td>
-                    <td class="ajouter"></td>
-                </tr>';
+        $data = '<tr class="trHeader">';
+        if( $archive == 0 )
+            $data .= '<td class="edit"></td>
+                      <td class="endroitPickup">Endroit de P/UP</td>
+                      <td class="bonCommande">No. Commande</td>
+                      <td class="noConfirmation">No. Confirmation</td>
+                      <td class="commandePar">Commandé par</td>
+                      <td class="contactFournisseur">Contact Fournisseur</td>
+                      <td class="date">Date</td>
+                      <td class="directiveSpeciale">Directive spéciale</td>
+                      <td class="statut">Statut</td>
+                      <td class="ajouter"></td>
+                    </tr>';
+        else
+            $data .= '<td class="endroitPickup">Endroit de P/UP</td>
+                      <td class="bonCommande">No. Commande</td>
+                      <td class="noConfirmation">No. Confirmation</td>
+                      <td class="commandePar">Commandé par</td>
+                      <td class="contactFournisseur">Contact Fournisseur</td>
+                      <td class="date">Date</td>
+                      <td class="directiveSpeciale">Directive spéciale</td>
+                      <td class="statut">statut</td>
+                      <td class="ajouter">DELETE</td>
+                    </tr>';
+        
         $conn = IL_Database::getConn();
         mysqli_set_charset($conn,"utf8");
+
+        $dateQuery = ( $dateChoisie == 'null' ? "" : " AND DATE('$dateChoisie') = date");
+        $dateQuery .= ( $archive == 1 ) ? ' ORDER BY DATE(date) DESC' : "";
         
-        $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, date, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale' AND archive=0";
+        if( $searchQuery == "" )
+            $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, date, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale' AND archive=$archive " . $dateQuery;
+        else
+        {
+            $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, date, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale'";
+            $sql .= " AND archive=$archive ";
+            $sql .= " AND ( endroitPickup like '%$searchQuery%' ";
+            $sql .= " OR bonCommande like '%$searchQuery%' ";
+            $sql .= " OR noConfirmation like '%$searchQuery%' ";
+            $sql .= " OR commandePar like '%$searchQuery%' ";
+            $sql .= " OR fournisseur like '%$searchQuery%' ";
+            $sql .= " OR directiveSpeciale like '%$searchQuery%' ";
+            $sql .= " OR statut like '%$searchQuery%' )";
+        }
 
         $result = mysqli_query($conn, $sql);
         
@@ -180,6 +209,8 @@ class IL_Utils
                             $faitADMIN = "<option>Fait</option>";
                         }
                     }
+                    if( $archive == 1 )
+                        $disabled = "disabled";
                     
                     $dropdownSTATUT = '<select '. $disabled . ' onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
                     if( $statut == 'Remise'){
@@ -196,7 +227,10 @@ class IL_Utils
                     }                    
                     
                     $data .= "<tr id='row_" . $pkBonCommande . "' class='$cssRow'>";
-                    $data .= "<td id='cbEdit_" . $pkBonCommande . "' class='edit'><input title='Modifier cette ligne' type='radio' id='radioEdit' name='radioEdit' class='chkEditRow' onclick='editMode(this," . $pkBonCommande . ");' value='" . $pkBonCommande . "' alt='Modifier'></td>";
+                    
+                    if( $archive == 0 )
+                        $data .= "<td id='cbEdit_" . $pkBonCommande . "' class='edit'><input title='Modifier cette ligne' type='radio' id='radioEdit' name='radioEdit' class='chkEditRow' onclick='editMode(this," . $pkBonCommande . ");' value='" . $pkBonCommande . "' alt='Modifier'></td>";
+                    
                     $data .= "<td class='endroitPickup'><input type='text' id='tbEndroitPickup_" . $pkBonCommande . "' class='tbEndroitPickup' list='dlEndroitPickup' value='" . $row["endroitPickup"] . "'></input></td>";
                     $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbBonCommande' value='" . $row["bonCommande"] . "'></input></td>";
                     $data .= "<td class='noConfirmation'><input type='text' id='tbNoConfirmation_" . $pkBonCommande . "' class='tbNoConfirmation' value='" . $row["noConfirmation"] . "'></input></td>";
@@ -206,22 +240,28 @@ class IL_Utils
                     $data .= "<td class='directiveSpeciale'><input type='text' id='tbDirectiveSpeciale_" . $pkBonCommande . "' class='tbDirectiveSpeciale' value='" . $row["directiveSpeciale"] . "'></td>";
                     
                     $data .= "<td class='statut'>$dropdownSTATUT</td>";                    
-                    $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkBonCommande . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkBonCommande"] . ");' alt='Sauvegarder'>";
-                    $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='deleteRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td></tr>";
+                    
+                    if( $archive == 0 )
+                    {
+                        $data .= "<td class='ajouter'><input title='Sauvegarder la ligne' id='btnAjouter_" . $pkBonCommande . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkBonCommande"] . ");' alt='Sauvegarder'>";
+                        $data .= "<input type='button' title='Archiver la ligne' class='boutonDelete' onclick='archiveRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td>";
+                    }
+                    else
+                    {
+                        $data .= "<td class='ajouter'><input type='button' title='Supprimer la ligne' class='boutonDelete' onclick='deleteRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td>";
+                    }
+                    
+                    $data .= "</tr>";
                 }
                 
-                $data .= '<tr><td class="edit">
-                              <img id="btnDeselectionner" style="visibility:hidden;" onclick="deselectionner();" src="../assets/images/iconeRemove.png" alt=""/></td>
-                              <td class=""></td>
-                              <td class=""></td>
-                              <td class=""></td>
-                              <td class=""></td>
-                              <td class=""></td>
-                              <td class=""></td>
-                              <td class=""></td>
-                              <td class=""></td>
-                              <td class=""></td>
-                              <td class=""></td></tr>';
+                $data .= '<tr><td class="edit"><img id="btnDeselectionner" style="visibility:hidden;" onclick="deselectionner();" src="../assets/images/iconeRemove.png" alt=""/></td>';
+                
+                if( $archive == 0 )
+                    $data .= '<td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td>';
+                else
+                    $data .= '<td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td>';
+                
+                $data .= '</tr>';
             }
         }
         catch (Exception $e) {
@@ -254,11 +294,20 @@ class IL_Utils
         return "Bon de commande ajouté";
     }
     
-    public static function deleteBonCommande($pkBonCommande)
+    public static function archiveBonCommande($pkBonCommande)
     {
         $conn = IL_Database::getConn();
         
         mysqli_query($conn, "UPDATE bon_commande SET archive=1 WHERE pkBonCommande='$pkBonCommande'");
+        
+        return "Bon de commande archivé";
+    }
+    
+    public static function deleteBonCommande($pkBonCommande)
+    {
+        $conn = IL_Database::getConn();
+        
+        mysqli_query($conn, "DELETE FROM bon_commande WHERE pkBonCommande=$pkBonCommande");
         
         return "Bon de commande effacé";
     }
@@ -272,7 +321,7 @@ class IL_Utils
         return "Bon de commande modifié";
     }
     
-    public static function updateLigne($pkBonCommande, $endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $date, $directiveSpeciale, $succursale)
+    public static function updateLigne($pkBonCommande, $endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $date, $directiveSpeciale)
     {
         $conn = IL_Database::getConn();
         
@@ -283,9 +332,9 @@ class IL_Utils
         $contactFournisseur = mysqli_real_escape_string($conn, $contactFournisseur);
         $date = mysqli_real_escape_string($conn, $date);
         $directiveSpeciale = mysqli_real_escape_string($conn, $directiveSpeciale);
-        $succursale = mysqli_real_escape_string($conn, $succursale);
         
-        $sql = "UPDATE bon_commande SET endroitPickup='$endroitPickup', bonCommande='$bonCommande', noConfirmation='$noConfirmation', commandePar='$commandePar', fournisseur='$contactFournisseur', date='$date', directiveSpeciale='$directiveSpeciale' WHERE pkBonCommande='$pkBonCommande'";
+        $sql = "UPDATE bon_commande SET endroitPickup='$endroitPickup', bonCommande='$bonCommande', noConfirmation='$noConfirmation', commandePar='$commandePar', ";
+        $sql .= "fournisseur='$contactFournisseur', date='$date', directiveSpeciale='$directiveSpeciale' WHERE pkBonCommande='$pkBonCommande'";
 
         mysqli_query($conn, $sql );
         

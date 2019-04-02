@@ -37,32 +37,90 @@ class IL_Utils
         return $level;
     }
     
-    public static function getUserMenu($level)
+    public static function getUserMenu($level, $succursale)
     {
         switch($level)
         {
             // USER
             case 0: echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                          //<a href="horsligne.php" class="menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          //<a href="horsligne.html" class="menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
                           '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
                           <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
             // ADMIN
-            case 1: echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                          //<a href="horsligne.php" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          //<a href="horsligne.html" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
-                          <a href="utilisateurs.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>
-                          <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
+            case 1:                     
+                    switch($succursale)
+                    {
+                        case 'CIE': echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                                         '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
+                                          <a href="utilisateurs.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>
+                                          <a href="feuillederoute.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>
+                                          <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
+                        break;
+                        default: echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                                      '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
+                                       <a href="utilisateurs.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>
+                                       <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
+                        break;
+                    }
                     break;
             default:echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '"" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                          //<a href="horsligne.php" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
-                          //<a href="horsligne.html" class= "menuitem offline_hide"><button name="livraisons_offline" class=""><div class="label">Hors Ligne</div></button></a>
                           '<a href="rechercher.php?r='.mt_rand(0, 999999999). '"" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
                           <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
         }
+    }
+    
+    /***
+     * RETURNS OPTIONS WITH value=id_user and option text=username
+     */
+    public static function getUsersDropDownForSuccursale($succursale)
+    {
+        $sql = "SELECT id_user, username FROM users WHERE succursale='$succursale'";
+        $data = "";
+        $option_o = "<option value='";
+        $option_c = "</option>";
+        
+        $conn = IL_Database::getConn();
+
+        $result = mysqli_query($conn, $sql);
+
+        try
+        {
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_assoc($result)) {
+                    $data .= $option_o .  $row["id_user"] . ":" . $row["username"] . "'>" . $row["username"] . $option_c;
+                }
+            }
+        }
+        catch (Exception $e) {
+            //echo $e;
+        }
+
+        return $data == "" ? $option_o . $option_c : $data;
+    }
+    
+    /***
+     * 
+     */
+    public static function addFeuilleDeRoute($succursale, $employeId, $employe, $date, $client, $facture, $colis )
+    {
+        $conn = IL_Database::getConn();
+        
+        $succursale = mysqli_real_escape_string($conn, $succursale);
+        $employeId = mysqli_real_escape_string($conn, $employeId);
+        $employe = mysqli_real_escape_string($conn, $employe);
+        $date = mysqli_real_escape_string($conn, $date);
+        $client = mysqli_real_escape_string($conn, $client);
+        $facture = mysqli_real_escape_string($conn, $facture);
+        $colis = mysqli_real_escape_string($conn, $colis);
+
+        $sql = "INSERT INTO livraisons(succursale, id_user, noEmploye, dateLivraison, destinataire, facture, colis) ";
+        $sql .= "VALUES('$succursale','$employeId','$employe','$date','$client','$facture','$colis')";
+
+        //echo $sql;
+        mysqli_query($conn, $sql);
+        
+        return $conn->insert_id;
     }
     
     /***
@@ -277,7 +335,7 @@ class IL_Utils
 
         mysqli_query($conn, $sql );
         
-        return "Bon de commande modifié";
+        return $sql;//"Bon de commande modifié";
     }
 }
 ?>

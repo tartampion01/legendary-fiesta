@@ -36,7 +36,7 @@
     <div id="contenu">
         <div class="menufloat">
             <?php 
-                IL_Utils::getUserMenu(IL_Session::r(IL_SessionVariables::LEVEL)); ?>        
+                IL_Utils::getUserMenu(IL_Session::r(IL_SessionVariables::LEVEL),IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>        
         </div>
     </div>
         <!--<a href="sandbox.php">SANDBOX</a><br>-->

@@ -87,14 +87,14 @@
                                             $id_user = "new";
                                             $errorMessage = "Un utilisateur avec ce nom existe déjà";
                                         }
-                                        else {
+                                        else
+                                        {
                                             $errorMessage = "L'utilisateur à été crée";
                                             $id_user = "new";
                                             $utilisateurname = "";
                                             $admin = 0;
                                             $livreur = 0;
                                         }
-                                            
                                     }
                                     // UPDATE
                                     else
@@ -193,12 +193,12 @@
                                         <ul name="groupes" data-serializer="checkboxlist" class="input" type="checkboxlist">
                                             <li>
                                                 <input type="hidden" id="cbAdmin" name="cbAdmin" value="0">
-                                                <input type="checkbox" id="cbAdmin" name="cbAdmin" title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
+                                                <input type="radio" id="cbAdmin" name="cbGroupe" title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
                                                 <label>administrateurs</label>
                                             </li>
                                             <li>
                                                 <input type="hidden" id="cbLivreur" name="cbLivreur" value="0">
-                                                <input type="checkbox" id="cbLivreur" name="cbLivreur" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
+                                                <input type="radio" id="cbLivreur" name="cbGroupe" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
                                                 <label>livreurs</label>
                                             </li>
                                         </ul>
@@ -219,7 +219,6 @@
         }
         else
         {
-            ECHO "F5!!!";
             // EDIT OR NEW USER
             if( isset( $_GET["id_user"] ))
             {
@@ -333,12 +332,12 @@
                                         <ul name="groupes" data-serializer="checkboxlist" class="input" type="checkboxlist">
                                             <li>
                                                 <input type="hidden" id="cbAdmin" name="cbAdmin" value="0">
-                                                <input type="checkbox" id="cbAdmin" name="cbAdmin" title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
+                                                <input type="radio" id="cbAdmin" name="cbGroupe"  title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
                                                 <label> administrateurs</label>
                                             </li>
                                             <li>
                                                 <input type="hidden" id="cbLivreur" name="cbLivreur" value="0">
-                                                <input type="checkbox" id="cbLivreur" name="cbLivreur" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
+                                                <input type="radio" id="cbLivreur" name="cbGroupe" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
                                                 <label> livreurs</label>
                                             </li>
                                         </ul>
@@ -352,7 +351,7 @@
                     <?php if( $id_user != "new" ){ ?>
                     <a class="buttonStyle buttonMedium" href="utilisateurs?supprimer=<?php echo base64_encode($id_user); ?>" onclick="return confirm('Confirmer la suppression...?');">Supprimer</a>
                     <?php } ?>
-                    <a class="buttonStyle buttonLarge" href="utilisateurs.php">Retour</a>
+                    <a class="buttonStyle buttonLarge" href="utilisateurs.php?r=<?php echo mt_rand(0, 999999999) ?>">Retour</a>
                 </form>
                     
         <?php
@@ -406,19 +405,25 @@
                     <?php
                     
                         $conn = IL_Database::getConn();
+                        $succ = IL_Session::r(IL_SessionVariables::SUCCURSALE);
                         $sql = "SELECT * FROM users WHERE actif=1";
+                        
+                        // utilisateurs phil ou sinfo, succursale = 'MASTER'
+                        // donc si ce n'est pas le cas on affiche les utilisateurs de la succursale courante
+                        if( strcmp( $succ, 'MASTER' ) != 0 )
+                            $sql .= " and succursale='$succ'";
 
                         $utilisateurs = mysqli_query($conn, $sql);
 
                         if(mysqli_num_rows($utilisateurs) > 0){
                             while($row = mysqli_fetch_assoc($utilisateurs)) {
-                                echo '<tr name="0" onclick="window.location.href=\'utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '\'" class="serializable hoverable">';
+                                echo '<tr name="0" onclick="window.location.href=\'utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '&r='. mt_rand(0, 999999999) . '\'" class="serializable hoverable">';
                                 echo '<td>';
                                 echo '<input id="hidUserId" name="hidUserId" type="hidden" value="' . $row["id_user"] . '" />';
                                 echo '<input name="tbNomCompte" value="' . $row["username"] . '" readonly="" maxlength="100" class="input" type="text" />';
                                 echo '</td>';
                                 echo '<td>';
-                                echo '<a name="edit" class="" href="utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '"><img src="assets/images/pencil-edit-button.png" alt=""/></a>';
+                                echo '<a name="edit" class="" href="utilisateurs.php?id_user=' . base64_encode($row["id_user"]) . '&r='. mt_rand(0, 999999999) . '"><img src="assets/images/pencil-edit-button.png" alt=""/></a>';
                                 echo '</td>';
                                 echo '</tr>';
                             } ?>

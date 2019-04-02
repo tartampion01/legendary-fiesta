@@ -5,7 +5,10 @@
     <?php echo "var succ = '" . IL_Session::r(IL_SessionVariables::SUCCURSALE) . "';" ?>
         
     var timerDelay = 60000;
-
+    var TIMER;
+    var _dateChoisie = null;
+    var _recherche = null;
+    
     function editMode(ceci, rowId){
         
         clearTimer();
@@ -45,9 +48,7 @@
             }
         }
     }
-    
-    function deselectionner()
-    {
+    function deselectionner(){
         for (var i = 0; i < document.frm.radioEdit.length; i++) {
             document.frm.radioEdit[i].checked = false;
             document.getElementById('btnAjouter_' + document.frm.radioEdit[i].value).className = 'boutonSaveLigneHidden';
@@ -56,43 +57,32 @@
         
         updateBonCommandes();
     }
-    
     function saveRow(rowId){
-        
         
         var endroitPickup = document.getElementById('tbEndroitPickup_' + rowId).value;
         var bonCommande = document.getElementById('tbBonCommande_' + rowId).value;
         var noConfirmation = document.getElementById('tbNoConfirmation_' + rowId).value;
         var commandePar = document.getElementById('tbCommandePar_' + rowId).value;
         var fournisseur = document.getElementById('tbFournisseur_' + rowId).value;
+        var date = document.getElementById('tbDate_' + rowId).value;
         var directiveSpeciale = document.getElementById('tbDirectiveSpeciale_' + rowId).value;
         
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 //document.getElementById("divSauvegarde").innerHTML = this.responseText;
-                showBonCommandes();
+                //showBonCommandes();
+                _dateChoisie = null;
             }
         };
 
-        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + endroitPickup + "&3=" + bonCommande + "&4=" + noConfirmation + "&5=" + commandePar + "&6=" + fournisseur + "&7=" + directiveSpeciale;
+        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + endroitPickup + "&3=" + bonCommande + "&4=" + noConfirmation + "&5=" + commandePar + "&6=" + fournisseur + "&7=" + date + "&8=" + directiveSpeciale;
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
         showBonCommandes();
         
-    }    
-    
-    function ClearTopData()
-    {        
-        document.getElementById('tbEndroitPickup').value = '';
-        document.getElementById('tbBonCommande').value = '';
-        document.getElementById('tbNoConfirmation').value = '';
-        document.getElementById('tbCommandePar').value = '';
-        document.getElementById('tbContactFournisseur').value = '';
-        document.getElementById('tbDirectiveSpeciale').value = '';
-    }
-    
+    }        
     function updateStatut(dropDown, pkBonCommande){
         
         var xhttp = new XMLHttpRequest();
@@ -106,7 +96,6 @@
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
     }
-    
     function showBonCommandes() {
 
         var xhttp;
@@ -122,13 +111,28 @@
             }
         };
 
-        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=read", true);
+        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=read&archive=0&dateChoisie=" + _dateChoisie, true);
         xhttp.send();
     }
-    
-    function deleteRow(pkBonCommande)
-    {
-        clearTimeout(showBonCommandes);
+    function recherche(){
+        var xhttp;
+        if (succ == "") {
+            document.getElementById("tbBonCommandes").innerHTML = "";
+            return;
+        }
+        
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("tbBonCommandes").innerHTML = this.responseText;
+            }
+        };
+
+        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=search&archive=0&dateChoisie=null&search=" + _recherche, true);
+        xhttp.send();
+    }
+    function archiveRow(pkBonCommande){
+        clearTimer();
         
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -137,13 +141,12 @@
             }
         };
         
-        var dataToAdd = "&oper=del&pk=" + pkBonCommande;
+        var dataToAdd = "&oper=archive&pk=" + pkBonCommande;
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
         showBonCommandes();
     }
-    
     function ajouterBonCommande() {
 
         var xhttp = new XMLHttpRequest();
@@ -176,7 +179,6 @@
         }
         return i;
     }
-
     function getHeure(ceci){
        var d = new Date()
        //alert( d.getHours() );
@@ -186,33 +188,33 @@
 
        document.getElementById(ceci.id).value = heures + ':' + minutes;
     }
-    function getDate(ceci)
-    {
+    function getDate(ceci){
         var d = new Date();
         var vMois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
         var mois = vMois[d.getMonth()];
         var jour = d.getDate();
         document.getElementById(ceci.id).value = jour + ' ' + mois;
     }
-    
-    function updateTimer(ceci)
-    {
+    function updateTimer(ceci){
         timerDelay = ceci.value;
         clearTimer();
         updateBonCommandes();
     }
-    
-    function getDateJour()
-    {
+    function getDateJour(){
         return new Date().toDateInputValue();
     }
-    
-    function clearTimer()
-    {
+    function clearTimer(){
         clearTimeout(TIMER);
     }
+    function ClearTopData(){        
+        document.getElementById('tbEndroitPickup').value = '';
+        document.getElementById('tbBonCommande').value = '';
+        document.getElementById('tbNoConfirmation').value = '';
+        document.getElementById('tbCommandePar').value = '';
+        document.getElementById('tbContactFournisseur').value = '';
+        document.getElementById('tbDirectiveSpeciale').value = '';
+    }
     
-    var TIMER;
     var updateBonCommandes = function(){
         showBonCommandes();
         TIMER = setTimeout(updateBonCommandes, timerDelay);
@@ -221,14 +223,18 @@
     
 </script>
 
+<?php
+    
+?>
 <body onload="updateBonCommandes();">
     <div name='bonCommande' class='base_page_boncommande serializable'>
     <form id="frm" name="frm" action=""> 
-        <table>
+        <table style="border-width:12px;border-color:black;">
             <tr>
                 <td style="width:33%;text-align:center;"><img alt='LOGO JOLIETTE' style="width: 262px; height: 110px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>
                 <td style="width:33%;text-align:center;">
                     <label class="h1bonCommande">Bons de commande</label>
+                    <br/>
                 </td>
                 <td style="width:33%;text-align:right;" valign="middle">
                     <table class="tableMenuTop">
@@ -251,6 +257,25 @@
                                 </br>
                                     <input class="boutonLogout" type="button" alt="Ajouter" onclick="javascript:window.location.replace('logout.php');" Title="Logout" alt="Logout">
                             </td>                            
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="padding-top: 5px;text-align: left;" colspan="3">
+                                Afficher pour: 
+                                <input type='date' id='tbDateChoisie'/>
+                                <input type='button' value='go!' onclick='_dateChoisie=document.getElementById("tbDateChoisie").value;if(_dateChoisie != "" )updateBonCommandes();' id='btnAfficherPourDate' />
+                            </td>
+                            <td style="padding-top: 5px" colspan="1">
+                                <a href="boncommandearchives.php">Archivés</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="padding-top: 5px;text-align: left;" colspan="4">
+                                Rechercher : 
+                                <input type='text' id='tbRecherche' name='tbRecherche' />
+                                <input type='button' value='go!' onclick='_recherche = document.getElementById("tbRecherche").value; recherche();' id='btnAfficherPourDate' />
+                            </td>
                         </tr>
                     </table>
                 </td>

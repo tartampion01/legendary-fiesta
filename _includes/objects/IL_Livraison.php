@@ -97,6 +97,51 @@ class IL_Livraison{
         return $stmt;
     }
     
+    function feuilleDeRouteReadTest($params){
+        
+        // decode search parameters
+        $params = json_decode($params);
+        $noEmploye = $_GET("NOEMPLOYE");
+        
+        $sortBy = 'dateLivraison';
+        if(!is_null($params->sortBy)) {
+            $sortBy = $params->sortBy;
+        }
+        $orderBy = 'DESC';
+        if(!is_null($params->orderBy)) {
+            $orderBy = $params->orderBy;
+        }
+        
+        if(is_null($params->filterRows)) {
+            //$query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            //$query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND noEmploye='$noEmploye' AND id_livraison>0 GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+        }
+        else {
+            $where = '';
+            for($i=0; $i<count($params->filterRows); $i++) {
+                if($params->filterRows[$i]->comparator == 'like') {
+                    $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "%' . $params->filterRows[$i]->value . '%"';
+                }
+                else {
+                    $where .= 'AND ' . $params->filterRows[$i]->field . ' '.$params->filterRows[$i]->comparator.' "' . $params->filterRows[$i]->value . '"';
+                }
+            }
+            //echo $where;
+            //$query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            //$query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND noEmploye='$noEmploye' AND id_livraison>0 $where GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+        }
+//echo $succursale;
+//echo $query;
+ 
+        $conn = IL_Database::getConn();
+        
+        $results = mysqli_query($conn, $query);
+        
+        return $results;
+    }
+    
     function readTest($params){
         
         // decode search parameters

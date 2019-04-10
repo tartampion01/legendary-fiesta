@@ -101,17 +101,16 @@
             </section>
             <section>
                 <div class="row">
-                    <div style="display: none;"><input type="text" name="signature" value="" maxlength="1024"  class="input "></input>
+                    <div style="display: none;">
+                        <input type="text" name="signature" value="" maxlength="1024"  class="input "></input>
                     </div>
                     <div class="col-md-12">
                         <div name='mod_signature' class='module_signature base_module serializable' >
                             <div id="signature_mod_signature" class="signPad">
-                                <div style="padding:0 !important; margin:0 !important;width: 100% !important; height: 0 !important; -ms-touch-action: none; touch-action: none;margin-top:-1em !important; margin-bottom:1em !important;">
-                                </div>
+                                <div style="padding:0 !important; margin:0 !important;width: 100% !important; height: 0 !important; -ms-touch-action: none; touch-action: none;margin-top:-1em !important; margin-bottom:1em !important;"></div>
                                 <div id="jSignature" style="margin: 0px; padding: 0px; border: medium none; height: 150px; width: 100%; touch-action: none;" class="jSignature disabled" width="600" height="150"></div>
-                                <div style="padding:0 !important; margin:0 !important;width: 100% !important; height: 0 !important; -ms-touch-action: none; touch-action: none;margin-top:-1.5em !important; margin-bottom:1.5em !important; position: relative;">
-                                </div>
-                        </div>
+                                <div style="padding:0 !important; margin:0 !important;width: 100% !important; height: 0 !important; -ms-touch-action: none; touch-action: none;margin-top:-1.5em !important; margin-bottom:1.5em !important; position: relative;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

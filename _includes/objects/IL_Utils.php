@@ -42,25 +42,36 @@ class IL_Utils
         switch($level)
         {
             // USER
-            case 0: echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                          '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
-                          <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
+            case 0: 
+                    switch($succursale)
+                    {   // Succursale CIE (Québec) Utilisation de la feuille de route
+                        case "CIE": echo '<a href="livraisonElite.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Elite</div></button></a>' .
+                                         '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                                         '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
+                                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
+                                    break;
+                        default:echo     '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                                         '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
+                                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
+                                    break;
+                    }
                     break;
             // ADMIN
             case 1:                     
                     switch($succursale)
                     {
+                        // Succursale CIE (Québec) Utilisation de la feuille de route
                         case 'CIE': echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                                         '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
-                                          <a href="utilisateurs.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>
-                                          <a href="feuillederoute.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>
-                                          <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
-                        break;
-                        default: echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                                      '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>
-                                       <a href="utilisateurs.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>
-                                       <button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
-                        break;
+                                         '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
+                                         '<a href="utilisateurs.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>' .
+                                         '<a href="feuillederoute.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>' .
+                                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
+                                    break;
+                        default:    echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                                         '<a href="rechercher.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
+                                         '<a href="utilisateurs.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>' .
+                                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
+                                    break;
                     }
                     break;
             default:echo '<a href="livraison.php?r='.mt_rand(0, 999999999). '"" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .

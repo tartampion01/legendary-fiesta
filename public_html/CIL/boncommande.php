@@ -302,7 +302,12 @@
                 </td>            
                 <td class="bonCommande"><input type="text" class="tbBonCommande" id="tbBonCommande" name="tbBonCommande"></td>
                 <td class="noConfirmation"><input type="text" class="tbNoConfirmation" id="tbNoConfirmation" name="tbNoConfirmation"></td>
-                <td class="commandePar"><input type="text" class="tbCommandePar" id="tbCommandePar" name="tbCommandePar"></td>
+                <td class="commandePar">
+                    <input type="text" class="tbCommandePar" id="tbCommandePar" name="tbCommandePar" list="dlCommandePar">
+                    <datalist id="dlCommandePar" name="dlCommandePar">
+                        <?php echo IL_Utils::getAutoComplete('commandePar', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                    </datalist>
+                </td>
                 <td class="contactFournisseur">
                     <input type="text" class="tbFournisseur" id="tbContactFournisseur" name="tbContactFournisseur" list="dlFournisseur">
                     <datalist id="dlFournisseur" name="dlFournisseur">

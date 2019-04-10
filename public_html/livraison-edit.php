@@ -5,7 +5,7 @@
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row" style="margin-top: 0px;">
         <div id="menu" class="col-xs-3 col-sm-2">
-            <a href="default.php">
+            <a href="<?php echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>

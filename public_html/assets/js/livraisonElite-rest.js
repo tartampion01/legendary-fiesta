@@ -5,6 +5,8 @@ $( document ).ready(function() {
     postData.sortBy = null;
     postData.orderBy = null;
     
+    var $sigdiv = $('.jSignature');
+    
     fetchRecords(postData);
     
     // Bind click on add an item row (filters)
@@ -49,35 +51,36 @@ $( document ).ready(function() {
         fetchRecords(postData);
     });
     
-    // Bind click on search button
-    $('.btnSearch').on('click', function() {
-        
-        //var postData = {};
-        var filterRows = [];
-        $('.cloneDestination .clonable').each(function() {
-            var field = $(this).find('select[name^="field"]').val();
-            var comparator = $(this).find('select[name^="comparator"]').val();
-            var value = $(this).find('input[name^="value"]').val();
-            
-            tmpfilter = {
-                field: field,
-                comparator: comparator,
-                value: value,
-                whereString: '(' + ''+field+'' + ' '+comparator+' ' + ' '+value+' ' + ')'
-            };
-            filterRows.push(tmpfilter);
-        });
-        postData.filterRows = filterRows;
-        
-        
+    // Bind click on search button    
+    //$('.btnSearch').on('click', function() {
+    $(window).load(function() {
         fetchRecords(postData);
+        //console.log(postData);
     });
     
     // Bind click on result rows (to edit page)
     $('body').on('click', '.results-container tr', function() {
+
         var row = $(this);
         var id_livraison = row.find('.isHidden').find('span').html();
-        window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
+        
+        $('#tbNomSignataire').val('');
+        $sigdiv.jSignature('reset');
+        
+        // Afficher la div avec le canvas
+        $('#divCentreeSignature').attr('style','visibility:visible;background-color: white; width: 50%; height: 260px;margin:auto;padding:3px;border-width:2px;border-color:black;');
+        
+        //console.log($('.jSignature').jSignature());
+        // Destroy the signature plugin instance
+        $sigdiv.jSignature('enable');
+        
+        //window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
+        
+    });
+    
+    $('#btnSignatureOK').click(function(){
+        // TODO Récupérer signature data et mettre dans Bonne cellule 'signature'...
+        $('#divCentreeSignature').attr('style','visibility:hidden;');
     });
     
 });
@@ -96,14 +99,14 @@ function fetchRecords(postData) {
     
     var params = {
         currentPage : currentPage,
-        limitPerPage : 20,
+        limitPerPage : 50,
         filterRows: postData.filterRows,
         sortBy: postData.sortBy,
         orderBy: postData.orderBy
     };
     
     $.ajax({
-        url: 'api/read.php',
+        url: 'api/read.php?succursale=' + SUCCURSALE + '&NOEMPLOYE=' + NOEMPLOYE,
         type: "GET",
         data: 'params='+JSON.stringify(params),
         dataType: 'json',
@@ -118,7 +121,7 @@ function fetchRecords(postData) {
                     
                     // Append data to template
                     $("#resultsTemplate").tmpl( data.records ).appendTo(".results-container");
-                    
+                    //console.log(data.records);
                     // Setup sortable table
                     //$(".results-table").stupidtable();
                     
@@ -137,47 +140,12 @@ function fetchRecords(postData) {
                         }
                         catch(error) {
                             //alert('Error found');
-                            html = '<div style="font-size:14px; color: #cc0000;">Erreur de signature</div>';
+                            html = '<span>Purée il n\'y a rien ici...</span>';
                             $(this).empty();
                             $(html).appendTo(this);
-                            console.log(this);
+                            //console.log(this);
                         }
                     });
-                    
-                    // Get total page count
-                    var totalPages = Math.ceil(data.countRows / 20);
-                    
-                    $('.pageNo').html('page ' + currentPage + ' / ' + totalPages);
-                    
-                    // Set paginator control
-                    $pagination = $('.pagination')
-                    $pagination.twbsPagination('destroy');
-                    $pagination.twbsPagination($.extend({}, {
-                        startPage: currentPage,
-                        totalPages: totalPages,
-                        visiblePages: 0,
-                        first: ' ',
-                        prev: ' ',
-                        next: ' ',
-                        last: ' ',
-                        initiateStartPageClick: false,
-                        firstClass: 'col buttonStyle align-center pull-left fas fa-fast-backward',
-                        prevClass: 'col buttonStyle align-center pull-left fas fa-backward',
-                        nextClass: 'col buttonStyle align-center fas fa-forward',
-                        lastClass: 'col buttonStyle align-center pull-right fas fa-fast-forward',
-                        onPageClick: function (event, page) {
-                            
-                            fetchRecords(postData);
-                            
-                            // Scroll page to top of search results
-                            /*var scrollTo = '.GpcMenuWrapper';
-                            if(maxwidth == '640px')
-                                scrollTo = '.GpcPagedResultCount';
-                            $('html, body').animate({
-                                scrollTop: $(scrollTo).offset().top
-                            }, 750);*/
-                        }
-                    }));
                     
                     
                     $('.loading').hide();

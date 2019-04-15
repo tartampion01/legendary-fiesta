@@ -129,27 +129,27 @@ class IL_Utils
         
         $data = '<tr class="trHeader">';
         if( $archive == 0 )
-            $data .= '<td class="edit"></td>
-                      <td class="endroitPickup">Endroit de P/UP</td>
-                      <td class="bonCommande">No. Commande</td>
-                      <td class="noConfirmation">No. Confirmation</td>
-                      <td class="commandePar">Commandé par</td>
-                      <td class="contactFournisseur">Contact Fournisseur</td>
-                      <td class="date">Date</td>
-                      <td class="directiveSpeciale">Directive spéciale</td>
-                      <td class="statut">Statut</td>
-                      <td class="ajouter"></td>
+            $data .= '<th class="edit"></td>
+                      <th class="endroitPickup" onclick="sortTable(1)";>Endroit de P/UP&nbsp;<img class="sortableArrows"  src="../assets/images/sortable.png"></img></td>
+                      <th class="bonCommande" onclick="sortTable(2)";>No. Commande&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                      <th class="noConfirmation" onclick="sortTable(3)";>No. Confirmation&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                      <th class="commandePar" onclick="sortTable(4)";>Commandé par&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                      <th class="contactFournisseur" onclick="sortTable(5);">Contact Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                      <th class="date">Date</td>
+                      <th class="directiveSpeciale" onclick="sortTable(7)";>Directive spéciale&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                      <th class="statut">Statut</td>
+                      <th class="ajouter"></td>
                     </tr>';
         else
-            $data .= '<td class="endroitPickup">Endroit de P/UP</td>
-                      <td class="bonCommande">No. Commande</td>
-                      <td class="noConfirmation">No. Confirmation</td>
-                      <td class="commandePar">Commandé par</td>
-                      <td class="contactFournisseur">Contact Fournisseur</td>
-                      <td class="date">Date</td>
-                      <td class="directiveSpeciale">Directive spéciale</td>
-                      <td class="statut">statut</td>
-                      <td class="ajouter">DELETE</td>
+            $data .= '<th class="endroitPickup">Endroit de P/UP</td>
+                      <th class="bonCommande">No. Commande</td>
+                      <th class="noConfirmation">No. Confirmation</td>
+                      <th class="commandePar">Commandé par</td>
+                      <th class="contactFournisseur">Contact Fournisseur</td>
+                      <th class="date">Date</td>
+                      <th class="directiveSpeciale">Directive spéciale</td>
+                      <th class="statut">statut</td>
+                      <th class="ajouter">DELETE</td>
                     </tr>';
         
         $conn = IL_Database::getConn();

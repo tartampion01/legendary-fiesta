@@ -1431,7 +1431,6 @@ table.tableData tr.rowEdit{
     width:24px;
     height:24px;
 }
-
 .boutonArchiver
 {
     background:url("../images/iconeRefresh.png") no-repeat;
@@ -1491,4 +1490,11 @@ table.tableData tr.rowEdit{
 
 .tbEdit{
     
+}
+
+.sortableArrows
+{
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
 }

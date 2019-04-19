@@ -230,15 +230,29 @@
                 <td style="width:40%;text-align:center;">
                     <label class="h1bonCommande">Bons de commande</label>
                 </td>
-                <td style="width:20%;text-align:right;" valign="middle">                    
-                    <select title="Auto refresh" class="inputCombo" onchange="updateTimer(this);">
-                        <option value="60000">1min</option>
-                        <option value="300000">5min</option>
-                        <option value="600000">10min</option>
-                        <option value="3600000">1h</option>
-                    </select>
-                    &nbsp;
-                    <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Force refresh" onclick="location.reload();"/>
+                <td style="width:20%;text-align:right;" valign="middle">    
+                    
+                    <table class="tableMenuTop">
+                        <tr>
+                            <td class="tableMenuTopRefresh">Auto refresh:
+                                </br>
+                                <select title="Auto refresh" class="inputCombo" onchange="updateTimer(this);">
+                                    <option value="60000">1min</option>
+                                    <option value="300000">5min</option>
+                                    <option value="600000">10min</option>
+                                    <option value="3600000">1h</option>
+                                </select>
+                            </td>
+                            <td class="tableMenuTopReload">Reload
+                                </br>
+                                    <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Reload" onclick="javascript:location.reload();"/>
+                            </td>
+                            <td class="tableMenuTopLogout">Logout
+                                </br>
+                                    <input class="boutonLogout" type="button" alt="Ajouter" onclick="javascript:window.location.replace('logout.php');" Title="Logout" alt="Logout">
+                            </td>                            
+                        </tr>                        
+                    </table>                    
                 </td>
         </table>        
         <datalist id="dl" name="dl"><?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?></datalist>         

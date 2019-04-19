@@ -50,7 +50,7 @@
     </div>       
 </div>
 
-    <div id="divCentreeSignature" style="visibility: hidden;">
+    <div id="divCentreeSignature" style="visibility: hidden;position:relative;">
         Nom&nbsp;:&nbsp;<input id="tbNomSignataire" type="text" maxlength="50" style="width:250px;"></br>
             <div name='mod_signature' class='module_signature base_module serializable' >
                 <div id="signature_mod_signature" class="signPad">
@@ -61,6 +61,7 @@
             </div>
         </br>
         <input type="button" id="btnSignatureOK" value="Accepter"/>
+        <div class="dumpSignature" style="display: none; margin: 0px; padding: 0px; border: medium none; height: 150px; width: 100%; touch-action: none; background-color: transparent;"></div>
     </div>
     
 <footer id="pied">
@@ -91,8 +92,6 @@
             <td class="destinataire"><span name="destinataire" class="input ">${destinataire}</span></td>
             <td class="noColis"><span name="colis" class="input ">${colis}</span></td>
             <td class="nomSignataire"><span name="nomSignataire" class="input ">${nomSignataire}</span></td>
-            <td class="signature">
-                <span class="input svgSignature jSignature" style="display: none;">${signature}</span>
-            </td>            
+            <td class="signature"><span class="input svgSignature jSignature" style="display: none;">${signature}</span></td>            
         </tr>
     </script>

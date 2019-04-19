@@ -333,6 +333,25 @@ class IL_Livraison{
         return false;
     }
     
+    function save_Elite($livraison) {
+        
+        $conn = IL_Database::getConn();
+        $sql = "UPDATE livraisons SET dateLivraison=?," . 
+                " nomSignataire=?,".
+                " signature=?".
+                " WHERE id_livraison=$livraison->id_livraison";
+      
+        //echo $sql;
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("sss", $livraison->dateLivraison, $livraison->nomSignataire, $livraison->signature);
+        
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
+    }
+    
     function saveColis()
     {
         $conn = IL_Database::getConn();

@@ -5,7 +5,8 @@
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row" style="margin-top: 0px;">
         <div id="menu" class="col-xs-3 col-sm-2">
-            <a href="<?php echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">
+            <!--<a href="<?php //echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">-->
+            <a href="default.php" class="home-link">
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>
@@ -27,7 +28,7 @@
                         <div class="row">
                             <div class=col-xs-12>Date de livraison</div>
                             <div class="col-xs-12">
-                                <input type="text" name="tbDate" id="tbDate" value="<?php echo $date; ?>" readonly="" maxlength="200"  class="input "></input>
+                                <input type="text" name="tbDate" id="tbDate" value="<?php //echo $date; ?>" readonly="" maxlength="200"  class="input "></input>
                             </div>
                         </div>
                     </div>

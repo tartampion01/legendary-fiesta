@@ -5,7 +5,13 @@ $( document ).ready(function() {
     postData.sortBy = null;
     postData.orderBy = null;
     
-    fetchRecords(postData);
+    if(navigator.onLine) {
+        fetchRecords(postData);
+    }
+    else
+    {
+        showLocalForageAsSearch();
+    }
     
     // Bind click on add an item row (filters)
     $('.addItemFilter').on('click', function() {
@@ -74,13 +80,60 @@ $( document ).ready(function() {
     });
     
     // Bind click on result rows (to edit page)
-    $('body').on('click', '.results-container tr', function() {
-        var row = $(this);
-        var id_livraison = row.find('.isHidden').find('span').html();
-        window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
-    });
-    
+    if(navigator.onLine) {
+        $('body').on('click', '.results-container tr', function() {
+            var row = $(this);
+            var id_livraison = row.find('.isHidden').find('span').html();
+            window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
+        });
+    }
 });
+
+function showLocalForageAsSearch()
+{
+    localforage.length().then(function(numberOfKeys) {
+        // Outputs the length of the database.
+        if(numberOfKeys == 0) {
+            $('.nodata').show();
+        }
+        else {
+            $('.nodata').hide();
+            
+            // Empty out the div that will hold the generated content
+            $(".results-container-offline").empty();
+            
+            // Iterate over localForage
+            localforage.iterate(function(value, key, iterationNumber) {
+                // Append data to template
+                $("#resultsTemplate-offline").tmpl( value ).appendTo(".results-container-offline");
+                
+//                $("#resultsTemplate-offline").tmpl("tbDate").appendTo(".results-container-offline");
+//                $("#resultsTemplate-offline").tmpl("tbDestinataire").appendTo(".results-container-offline");
+//                $("#resultsTemplate-offline").tmpl("tbEmploye").appendTo(".results-container-offline");
+//                $("#resultsTemplate-offline").tmpl("tbNomSignataire").appendTo(".results-container-offline");
+                                
+            }).then(function() {
+                // Setup jSignature
+                var fakeSignature = $('.converter');
+                $('td.signature').each(function() {
+                    var _data = $(this).find('.jSignature').html();
+                    fakeSignature.jSignature();
+                    fakeSignature.jSignature("importData", _data);
+                    svg = fakeSignature.jSignature("getData","svg")[1];
+                    var html = '<div class="svgSignature"><svg viewBox="0 0 600 150">' + svg + '</svg></div>';
+                    $(html).appendTo(this);
+                });
+                
+            }).catch(function(err) {
+                // This code runs if there were any errors
+                console.log(err);
+            });
+        }
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log(err);
+    });
+}
 
 function fetchRecords(postData) {
     

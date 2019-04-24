@@ -22,7 +22,12 @@ $(function(){
         });*/
         
         // Hide some menu items
-        $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
+        //$('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
+        $('.menuitem.utilisateurs, .menuitem.logout').hide();
+        
+        // hide search
+        $('#contenu.hideSearchWhenOffline').hide();
+        $('#contenuOffline.showSearchFromLocalForage').show();
         
         //$('#logout').attr('onclick', 'return false');
         $('#logout').hide();
@@ -41,6 +46,10 @@ $(function(){
         
         // Show previously hidden menu items
         $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').show();
+        
+        // show search
+        $('#contenu.hideSearchWhenOffline').show();
+        $('#contenuOffline.showSearchFromLocalForage').hide();
         
         $('#logout').show();
         
@@ -136,6 +145,10 @@ window.addEventListener('load', function() {
         // Show previously hidden menu items
         $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').show();
         
+        // show search
+        $('#contenu.hideSearchWhenOffline').show();
+        $('#contenuOffline.showSearchFromLocalForage').hide();
+        
         // Afficher le bouton de synchronisation des données
         $('.btn-check-localforage-sync').show();
         
@@ -145,7 +158,12 @@ window.addEventListener('load', function() {
         console.log('Connection is DOWN!!');
         
         // Hide some menu items
-        $('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
+        //$('.menuitem.recherche, .menuitem.utilisateurs, .menuitem.logout').hide();
+        $('.menuitem.utilisateurs, .menuitem.logout').hide();
+        
+        // hide search
+        $('#contenu.hideSearchWhenOffline').hide();
+        $('#contenuOffline.showSearchFromLocalForage').show();
         
         // Cacher le bouton de synchronisation des données
         $('.btn-check-localforage-sync').hide();

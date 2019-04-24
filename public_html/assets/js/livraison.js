@@ -16,7 +16,7 @@ $( document ).ready(function() {
     
     //Update date when click in textbox
     $('#tbDate').on('click', function() {
-        tbDate: $('#tbDate').val(dsSwissKnife.prettyPrint('date',new Date()));
+        //tbDate: $('#tbDate').val(dsSwissKnife.prettyPrint('date',new Date()));
     });
     
     // Bind click on "Faire signer le client" button
@@ -97,7 +97,8 @@ $( document ).ready(function() {
         if(validForm) {
             // Grabbing form data
             var postData = {
-                tbDate: $('#tbDate').val(),
+                //tbDate: $('#tbDate').val(),
+                tbDate: dsSwissKnife.prettyPrint('date',new Date()),
                 tbEmploye: $('#tbEmploye').val(),
                 succursale: $('#succursale').val(),
                 tbDestinataire: $('#tbDestinataire').val(),

@@ -1,11 +1,5 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
 <script type="application/javascript" src="assets/js/recherche-rest.js"></script>
-<script>
-    function showOfflineSearchResults()
-    {
-        
-    }
-</script>
 <body>
     <div name='menu' class='page_menu layout_normal base_layout base_page page_recherche serializable'>
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">

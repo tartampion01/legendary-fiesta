@@ -1,11 +1,18 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
 <script type="application/javascript" src="assets/js/recherche-rest.js"></script>
+<script>
+    function showOfflineSearchResults()
+    {
+        
+    }
+</script>
 <body>
     <div name='menu' class='page_menu layout_normal base_layout base_page page_recherche serializable'>
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row">
         <div id="menu" class="col-xs-3 col-sm-2">
-            <a href="<?php echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">
+            <!--<a href="<?php //echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">-->
+            <a href="default.php" class="home-link">
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>
@@ -19,7 +26,7 @@
             </a>
         </div>
     </div>
-<div id="contenu">
+<div id="contenu" class="hideSearchWhenOffline">
     
     <!-- Search header -->
     <div class="row section">
@@ -118,6 +125,33 @@
     </div>
 
 </div>
+
+<div id="contenuOffline" class="showSearchFromLocalForage">
+    <div class="row section">
+        <div class="col-xs-12">
+            <div name="mod_liste" class="module_liste base_module serializable">
+                <table class="results-table-offline">
+                    <thead>
+                        <tr>
+                            <th class="ID isHidden">ID</th>
+                            <th class="dateLivraison">Date de livraison</th>
+                            <th class="destinataire">Destinataire</th>
+                            <th class="noFacture"># facture</th>
+                            <th class="noColis"># colis</th>
+                            <th class="nomSignataire">Signataire</th>
+                            <th class="signature">Signature</th>
+                            <th class="noEmploye"># employé</th>
+                            <th class="succursale">Succursale</th>
+                        </tr>
+                    </thead>
+                    <tbody class="results-container-offline">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
     
 <footer id="pied">
     <div class="bottomBanner">
@@ -152,7 +186,22 @@
             <td class="succursale"><span name="succursale" class="input ">${succursale}</span></td>
         </tr>
     </script>
-    
+    <!-- Start : Javascript template -->
+    <script id="resultsTemplate-offline" type="text/x-jquery-tmpl">
+        {{each array_colis}}
+        <tr name="0" class="serializable hoverable">
+            <td class="ID isHidden"><span name="ID" class="input ">${id_livraison}</span></td>
+            <td class="dateLivraison"><span name="dateLivraison" class="input ">${tbDate}</span></td>            
+            <td class="destinataire"><span name="destinataire" class="input ">${tbDestinataire}</span></td>
+            <td class="facture"><span name="facture" class="input ">${facture}</span></td>
+            <td class="noColis"><span name="colis" class="input ">${colis}</span></td>
+            <td class="nomSignataire"><span name="nomSignataire" class="input ">${tbNomSignataire}</span></td>
+            <td class="signature"><span class="input svgSignature jSignature" style="display: none;">${signature}</span></td>
+            <td class="noEmploye"><span name="noEmploye" class="input ">${tbEmploye}</span></td>
+            <td class="succursale"><span name="succursale" class="input ">${succursale}</span></td>
+        </tr>
+        {{/each}}
+    </script>
     <script id="filtersTemplate" type="text/x-jquery-tmpl">
         <div class="row clonable cloned serializable itemRow${counter}">
             <div class="col-xs-4">

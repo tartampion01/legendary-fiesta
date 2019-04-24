@@ -10,11 +10,14 @@ var urlsToCache = [
     '/',
     '/livraison.html',
     '/default.html',
+    '/rechercher.html',
     '/assets/js/utilities.js'
 ];
 
+
 self.addEventListener('install', function(event) {
     // Perform install steps
+    
     event.waitUntil(
         caches.open(CACHE_NAME)
         .then(function(cache) {
@@ -22,6 +25,7 @@ self.addEventListener('install', function(event) {
             return cache.addAll(urlsToCache);
         })
     );
+    
 });
 
 self.addEventListener('activate', function(event) {

@@ -280,15 +280,16 @@ class IL_Livraison{
     function create($livraison) {
         
         $error = false;
-        $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye, colis, facture, succursale) VALUES (?,?,?,?,?,?,?,?)";
-
+        $sql = "INSERT INTO livraisons (dateLivraison, destinataire, nomSignataire, signature, noEmploye, colis, facture, succursale, username) VALUES (?,?,?,?,?,?,?,?,?)";
+        $username = IL_Session::r(IL_SessionVariables::USERNAME);
+        
         $conn = IL_Database::getConn();
         $stmt = $conn->prepare($sql);
         
         foreach ($this->colis as $postedColis) {
             $colis = (array)$postedColis; // pour convertr de stdClass
             
-            $stmt->bind_param("ssssssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye, $colis["colis"], $colis["facture"], $livraison->succursale);
+            $stmt->bind_param("sssssssss", $livraison->dateLivraison, $livraison->destinataire, $livraison->nomSignataire, $livraison->signature, $livraison->noEmploye, $colis["colis"], $colis["facture"], $livraison->succursale, $username);
         
             // execute query
             if($stmt->execute()){

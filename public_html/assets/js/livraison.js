@@ -14,6 +14,11 @@ $( document ).ready(function() {
         edit_page = true;
     }
     
+    //Update date when click in textbox
+    $('#tbDate').on('click', function() {
+        tbDate: $('#tbDate').val(dsSwissKnife.prettyPrint('date',new Date()));
+    });
+    
     // Bind click on "Faire signer le client" button
     $('.btnSign').on('click', function() {
         var btn = $(this);
@@ -160,6 +165,9 @@ $( document ).ready(function() {
             if(edit_page == false) {
                 tbEmploye: $('#tbEmploye').val('');
                 //succursale: $('#succursale').val(''); On ne clear pas la succursale
+                // reste la date on click
+                tbDate: $('#tbDate').val(dsSwissKnife.prettyPrint('date',new Date()));
+                
                 tbDestinataire: $('#tbDestinataire').val('');
                 tbNomSignataire: $('#tbNomSignataire').val('');
                 $('.clonable').find('input[name^="tbNoFacture"]').val('');
@@ -172,6 +180,11 @@ $( document ).ready(function() {
                 // *** TO BE REMOVED ***
                 $('.dumpSignature').empty();
             }
+        }
+        else
+        {
+            // reset la date même si formulaire n'est pas valide
+            tbDate: $('#tbDate').val(dsSwissKnife.prettyPrint('date',new Date()));
         }
     });
     

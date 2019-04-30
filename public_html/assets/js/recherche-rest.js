@@ -5,6 +5,17 @@ $( document ).ready(function() {
     postData.sortBy = null;
     postData.orderBy = null;
     
+    // Pour cacher la div avec les resultats du local forage offline si on connecte/déconnecte
+    window.addEventListener('offline', function() {
+        if(!navigator.onLine) {
+            localforage.length().then(function(numberOfKeys) {
+                if(numberOfKeys == 0) {
+                    $(".results-container-offline").empty();
+                }
+            })
+        }
+    });
+
     if(navigator.onLine) {
         fetchRecords(postData);
     }
@@ -75,7 +86,6 @@ $( document ).ready(function() {
         });
         postData.filterRows = filterRows;
         
-        
         fetchRecords(postData);
     });
     
@@ -91,6 +101,8 @@ $( document ).ready(function() {
 
 function showLocalForageAsSearch()
 {
+    $(".results-container-offline").empty();
+    
     localforage.length().then(function(numberOfKeys) {
         // Outputs the length of the database.
         if(numberOfKeys == 0) {
@@ -190,7 +202,7 @@ function fetchRecords(postData) {
                         }
                         catch(error) {
                             //alert('Error found');
-                            html = '<div style="font-size:14px; color: #cc0000;">Erreur de signature</div>';
+                            html = '<div style="font-size:14px; color: #cc0000;"></div>';
                             $(this).empty();
                             $(html).appendTo(this);
                             console.log(this);
@@ -236,12 +248,13 @@ function fetchRecords(postData) {
                     $('.loading').hide();
                 }
                 else {
-                    alert('Aucune livraison');
+                    $(".results-container").empty().html('<tr><td colspan="7">Pas de résultats</td></tr>');
+                    $('.loading').hide();
                 }
             }
             else {
                 //$(".results-container").empty().html(data.error);
-                $(".results-container").empty().html('<tr><td colspan="7">Il y a une erreur dans les données!</td></tr>');
+                $(".results-container").empty().html('<tr><td colspan="7">Pas de résultats</td></tr>');
                 $('.loading').hide();
             }
             console.log(data);

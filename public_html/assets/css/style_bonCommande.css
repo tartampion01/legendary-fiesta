@@ -1423,7 +1423,14 @@ table.tableData tr.rowEdit{
     width:32px;
     height:32px;
 }
-
+.boutonLogout
+{
+    background:url("../images/iconeLogout.png") no-repeat;
+    cursor: pointer;
+    border:none;
+    width:24px;
+    height:24px;
+}
 .boutonSaveLigneHidden
 {
     visibility: hidden;
@@ -1475,3 +1482,9 @@ table.tableData tr.rowEdit{
 .tbEdit{
     
 }
+
+table.tableMenuTop {width:100%;}
+table.tableMenuTop td {text-align: right; width:20%;color:#413d3e;}
+table.tableMenuTop td.tableMenuTopRefresh{border-style: inset;border-color: #b4afb8; border-width: 1px;}
+table.tableMenuTop td.tableMenuTopReload{border-style: inset;border-color: #b4afb8; border-width: 1px;}
+table.tableMenuTop td.tableMenuTopLogout{border-style: inset;border-color: #b4afb8; border-width: 1px;}

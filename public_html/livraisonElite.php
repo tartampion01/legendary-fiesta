@@ -2,6 +2,8 @@
 <script type="text/javascript">
     var NOEMPLOYE = '<?php echo IL_Session::r(IL_SessionVariables::USERNAME); ?>';
     var SUCCURSALE = '<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>';
+    var _recherche = null;
+    var _dir = "asc";
 </script>
 <script type="application/javascript" src="assets/js/livraisonElite-rest.js"></script>
 <body>
@@ -9,7 +11,8 @@
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row">
         <div id="menu" class="col-xs-3 col-sm-2">
-            <a href="<?php echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">
+            <!--<a href="<?php //echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">-->
+            <a href="default.php" class="home-link">
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>
@@ -27,16 +30,16 @@
     <div class="row section">
         <div class="col-xs-12">
             <div name="mod_liste" class="module_liste base_module serializable">
-                <table class="results-table">
+                <table id="tbLivraisons" class="results-table">
                     <thead>
                         <tr>
                             <th class="ID isHidden">ID</th>
-                            <th class="dateLivraison">Date de livraison</th>
-                            <th class="noFacture"># facture</th>
-                            <th class="destinataire">Destinataire</th>
-                            <th class="noColis"># colis</th>
-                            <th class="nomSignataire">Nom du signataire</th>
-                            <th class="signature">Signature</th>                            
+                            <th class="dateLivraison" onclick="sortTable(1);">Date de livraison&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>                            
+                            <th class="destinataire" onclick="sortTable(2);">Destinataire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>
+                            <th class="noFacture" onclick="sortTable(3);"># facture&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>
+                            <th class="noColis" onclick="sortTable(4);"># colis&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>
+                            <th class="nomSignataire">Nom du signataire&nbsp;</th>
+                            <th class="signature">Signature</th>
                         </tr>
                     </thead>
                     <tbody class="results-container">
@@ -51,7 +54,7 @@
 </div>
 
     <div id="divCentreeSignature" style="visibility: hidden;position:relative;">
-        Nom&nbsp;:&nbsp;<input id="tbNomSignataire" type="text" maxlength="50" style="width:250px;"></br>
+        Nom&nbsp;:&nbsp;<input id="tbNomSignataire" type="text" maxlength="50" style="width:450px;height:40px;font-size: 28px;"></br>
             <div name='mod_signature' class='module_signature base_module serializable' >
                 <div id="signature_mod_signature" class="signPad">
                     <div style="padding:0 !important; margin:0 !important;width: 100% !important; height: 0 !important; -ms-touch-action: none; touch-action: none;margin-top:-1em !important; margin-bottom:1em !important;"></div>
@@ -60,7 +63,9 @@
                 </div>
             </div>
         </br>
-        <input type="button" id="btnSignatureOK" value="Accepter"/>
+        <input type="button" id="btnSignatureAnnule" value="Annuler" style="width: 150px;height: 60px;font-size: 24px;color: red;" />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" id="btnSignatureOK" value="Accepter"  style="width: 150px;height: 60px;font-size: 24px;color: green;" />
         <div class="dumpSignature" style="display: none; margin: 0px; padding: 0px; border: medium none; height: 150px; width: 100%; touch-action: none; background-color: transparent;"></div>
     </div>
     
@@ -88,8 +93,8 @@
         <tr name="0" class="serializable hoverable">
             <td class="ID isHidden"><span name="ID" class="input ">${id_livraison}</span></td>
             <td class="dateLivraison"><span name="dateLivraison" class="input " data-sort-value="${dateTimestamp}">${dateLivraison}</span></td>
-            <td class="facture"><span name="facture" class="input ">${facture}</span></td>
             <td class="destinataire"><span name="destinataire" class="input ">${destinataire}</span></td>
+            <td class="facture"><span name="facture" class="input ">${facture}</span></td>
             <td class="noColis"><span name="colis" class="input ">${colis}</span></td>
             <td class="nomSignataire"><span name="nomSignataire" class="input ">${nomSignataire}</span></td>
             <td class="signature"><span class="input svgSignature jSignature" style="display: none;">${signature}</span></td>            

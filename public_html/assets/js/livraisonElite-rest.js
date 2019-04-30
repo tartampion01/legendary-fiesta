@@ -13,7 +13,26 @@ $( document ).ready(function() {
     
     var $sigdiv = $('.jSignature');
     
-    fetchRecords(postData);
+    window.addEventListener('load', function() {
+        if(!navigator.onLine) {
+            loadOfflineData();
+        }
+        else
+        {
+            fetchRecords(postData);
+        }
+    });
+    
+    window.addEventListener('offline', function() {
+        loadOfflineData();
+    });
+    
+    window.addEventListener('online', function() {
+        if(navigator.onLine) {
+            if( JSON.parse(window.localStorage.getItem('ELITE_DAY_DATA')) == null )
+                fetchRecords(postData);
+        }
+    });
     
     // Bind click on add an item row (filters)
     $('.addItemFilter').on('click', function() {
@@ -40,6 +59,7 @@ $( document ).ready(function() {
     });
     
     // Bind click on order by column headers
+    /*
     $('.sortable').on('click', function() {
         var self = $(this);
         
@@ -56,13 +76,7 @@ $( document ).ready(function() {
         
         fetchRecords(postData);
     });
-    
-    // Bind click on search button    
-    //$('.btnSearch').on('click', function() {
-    $(window).load(function() {
-        fetchRecords(postData);
-        //console.log(postData);
-    });
+    */
     
     // Bind click on result rows (to edit page)
     $('body').on('click', '.results-container tr', function() {
@@ -84,7 +98,8 @@ $( document ).ready(function() {
         $sigdiv.jSignature('reset');
         
         // Afficher la div avec le canvas
-        $('#divCentreeSignature').attr('style','visibility:visible;background-color: white; width: 50%; height: 260px;margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:relative;');
+        //$('#divCentreeSignature').attr('style','visibility:visible;background-color: white; width: 50%; height: 260px;margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:relative;');
+        $('#divCentreeSignature').attr('style','visibility:visible;background-color: white; margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:fixed;left:50%;transform: translate(-50%, 0);top:75px;');
        
         //console.log($('.jSignature').jSignature());
         // Destroy the signature plugin instance
@@ -92,6 +107,11 @@ $( document ).ready(function() {
         
         //window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
         
+    });
+    
+    $('#btnSignatureAnnule').click(function(){
+        overlay(false);
+        $('#divCentreeSignature').attr('style','visibility:hidden;');
     });
     
     $('#btnSignatureOK').click(function(){
@@ -184,6 +204,11 @@ $( document ).ready(function() {
                             });
 
                             //location.reload();
+                            var pData = {};
+                            pData.filterRows = null;
+                            pData.sortBy = null;
+                            pData.orderBy = null;
+                            fetchRecords(pData);
                         },
                         error: function(errMsg) {
                             console.log(errMsg);
@@ -196,6 +221,18 @@ $( document ).ready(function() {
                     //alert('Connection is DOWN');
                     // Store de query into localForage
                     insertQueryIntoLocalForage(postData);
+                    
+                    //update localStorage with Signature data
+                    json = JSON.parse(window.localStorage.getItem('ELITE_DAY_DATA'));
+                    
+                    for(var i = 0; i < json.length; i++) {
+                        if( json[i].id_livraison == id ){
+                            json[i].nomSignataire = nomSignataire;
+                            json[i].signature     = signature;
+                        }
+                    }
+                    
+                    window.localStorage.setItem('ELITE_DAY_DATA', JSON.stringify(json));
                 }
             }
         })
@@ -248,7 +285,7 @@ function fetchRecords(postData) {
     };
     
     $.ajax({
-        url: 'api/read.php?succursale=' + SUCCURSALE + '&NOEMPLOYE=' + NOEMPLOYE,
+        url: 'api/read.php?SUCCURSALE=' + SUCCURSALE + '&NOEMPLOYE=' + NOEMPLOYE,
         type: "GET",
         data: 'params='+JSON.stringify(params),
         dataType: 'json',
@@ -258,14 +295,14 @@ function fetchRecords(postData) {
             if(data.records != null) {
                 if(data.records.length > 0) {
                     
+                    window.localStorage.setItem("ELITE_DAY_DATA",JSON.stringify(data.records));
+                    
                     // Empty out the div that will hold the generated content
                     $(".results-container").empty();
                     
                     // Append data to template
                     $("#resultsTemplate").tmpl( data.records ).appendTo(".results-container");
                     //console.log(data.records);
-                    // Setup sortable table
-                    //$(".results-table").stupidtable();
                     
                     // Setup jSignature
                     var fakeSignature = $('.converter');
@@ -291,16 +328,17 @@ function fetchRecords(postData) {
                         }
                     });
                     
-                    
                     $('.loading').hide();
+                    
                 }
                 else {
-                    alert('Aucune livraison');
+                    $(".results-container").empty().html('<tr><td colspan="6">Feuille de route vide</td></tr>');
+                    $('.loading').hide();
                 }
             }
             else {
                 //$(".results-container").empty().html(data.error);
-                $(".results-container").empty().html('<tr><td colspan="7">Il y a une erreur dans les données!</td></tr>');
+                $(".results-container").empty().html('<tr><td colspan="6">Feuille de route vide</td></tr>');
                 $('.loading').hide();
             }
             console.log(data);
@@ -331,4 +369,183 @@ function insertQueryIntoLocalForage(postData) {
         // This code runs if there were any errors
         console.log(err);
     });
+}
+
+function loadOfflineData()
+{
+    // If offline AND we have loaded data
+    if( JSON.parse(window.localStorage.getItem('ELITE_DAY_DATA')) !== null )
+    {
+        // Empty out the div that will hold the generated content
+        $(".results-container").empty();
+
+        // Append data to template
+        $("#resultsTemplate").tmpl( JSON.parse(window.localStorage.getItem('ELITE_DAY_DATA')) ).appendTo(".results-container");
+        //console.log(data.records);
+
+        // Setup jSignature
+        var fakeSignature = $('.converter');
+        $('td.signature').each(function() {
+
+            var _data = $(this).find('.jSignature').html();
+
+            var html;
+            fakeSignature.jSignature();
+            try {
+                fakeSignature.jSignature("importData", _data);
+                svg = fakeSignature.jSignature("getData","svg")[1];
+
+                html = '<div class="svgSignature"><svg viewBox="0 0 600 150">' + svg + '</svg></div>';
+                $(html).appendTo(this);
+            }
+            catch(error) {
+                //alert('Error found');
+                html = '<span class="puree"></span>';
+                $(this).empty();
+                $(html).appendTo(this);
+                //console.log(this);
+            }
+        });
+
+        $('.loading').hide();
+    }
+    else
+    {
+    }
+}
+
+function pushQueriesFromLocalForage() {
+    
+    var defer = $.Deferred();
+    
+    $('.loading').show();
+    
+    // If there is somethings in the localForage DB
+    localforage.length().then(function(numberOfKeys) {
+        
+        if(numberOfKeys > 0) {
+            localforage.iterate(function(value, key, iterationNumber) {
+                // Resulting key/value pair -- this callback
+                // will be executed for every item in the
+                // database.
+
+                // Create livraison over ajax
+                $.ajax({
+                    type: "GET",
+                    url: "api/update-livraisonElite.php",
+                    data: {'postData': JSON.stringify(value)},
+                    //contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,
+                    success: function(data){
+
+                        // Remove item from localForage
+                        localforage.removeItem(key).then(function() {
+                            // Run this code once the key has been removed.
+                            console.log('Key is cleared!');
+                        }).catch(function(err) {
+                            // This code runs if there were any errors
+                            console.log(err);
+                        });
+                    },
+                    error: function(errMsg) {
+                        console.log(errMsg);
+                    }
+                });
+
+                console.log([key, value]);
+                
+            }, function(err) {
+                if (!err) {
+                    console.log('Iteration has completed');
+
+                    defer.resolve('DONE');
+                }
+                else
+                    defer.resolve('ERROR');
+            });
+            
+            // ONCE DATA IS SYNCHRONISED WE EMPTY ELITE_DAY_DATA
+            // AND WE FETCH RECORDS TO REFRESH LIST
+            window.localStorage.removeItem('ELITE_DAY_DATA');
+            
+            var pData = {};
+            pData.filterRows = null;
+            pData.sortBy = null;
+            pData.orderBy = null;
+            fetchRecords(pData);
+        }
+        else {
+            defer.resolve('NO_DATA_TO_SYNC');
+        }
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log(err);
+        
+        defer.resolve('ERROR');
+    });
+    
+    return defer.promise();
+}
+
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("tbLivraisons");
+    switching = true;
+    // Set the sorting direction to ascending:
+
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      // -1 because of empty row at bottom  
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        //x = rows[i].getElementsByTagName("TD")[n];
+        x = rows[i].cells[n].getElementsByTagName('span')[0].innerHTML;
+        //y = rows[i + 1].getElementsByTagName("TD")[n];
+        y = rows[i + 1].cells[n].getElementsByTagName('span')[0].innerHTML;
+
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (_dir == "asc") {
+          if (x.toLowerCase() > y.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (_dir == "desc") {
+          if (x.toLowerCase() < y.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && _dir == "asc") {
+          _dir = "desc";
+          switching = true;
+        } else if( switchcount == 0 && _dir == "desc") {
+            _dir = "asc";
+            switching = true;
+        }
+      }
+    }        
 }

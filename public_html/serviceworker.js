@@ -11,7 +11,6 @@ var urlsToCache = [
     '/livraison.html',
     '/default.html',
     '/rechercher.html',
-    '/assets/js/utilities.js'
 ];
 
 

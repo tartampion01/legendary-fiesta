@@ -33,7 +33,8 @@
         <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
         <div id="entete" class="row">
             <div id="menu" class="col-xs-3 col-sm-2">
-                <a href="<?php echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">
+                <!--<a href="<?php //echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">-->
+                <a href="default.php" class="home-link">
                     <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
                 </a>
             </div>
@@ -143,10 +144,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-3 center">
+                        <div class="col-xs-3">
                             <div class="row">
                                 <div class="label">
                                     Nb Colis
+                                </div>
+                                <div class="">
                                     <input type="text" name="tbColis[]" id="tbColis1" value="" maxlength="50" class="input"></input>
                                 </div>
                             </div>

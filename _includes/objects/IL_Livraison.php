@@ -97,11 +97,10 @@ class IL_Livraison{
         return $stmt;
     }
     
-    function feuilleDeRouteReadTest($params){
-        
+    function feuilleDeRouteReadTest($params, $succursale, $noEmploye){
+
         // decode search parameters
         $params = json_decode($params);
-        $noEmploye = $_GET("NOEMPLOYE");
         
         $sortBy = 'dateLivraison';
         if(!is_null($params->sortBy)) {
@@ -115,7 +114,8 @@ class IL_Livraison{
         if(is_null($params->filterRows)) {
             //$query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
             //$query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
-            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND noEmploye='$noEmploye' AND id_livraison>0 GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            //$query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND noEmploye='$noEmploye' AND id_livraison>0 GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND noEmploye='$noEmploye' AND id_livraison>0 AND ( nomSignataire IS NULL OR signature IS NULL ) GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
         }
         else {
             $where = '';
@@ -130,15 +130,14 @@ class IL_Livraison{
             //echo $where;
             //$query = "SELECT COUNT(dateLivraison) AS COUNT, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons WHERE id_livraison>0 $where GROUP BY dateLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
             //$query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye FROM livraisons INNER JOIN colisLivraison ON livraisons.id_livraison = colisLivraison.fkLivraison WHERE id_livraison>0 $where GROUP BY colisLivraison.fkLivraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
-            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND noEmploye='$noEmploye' AND id_livraison>0 $where GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            //$query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND noEmploye='$noEmploye' AND id_livraison>0 $where GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
+            $query = "SELECT colis, facture, id_livraison, dateLivraison, dateHumain, destinataire, nomSignataire, signature, noEmploye, succursale FROM livraisons WHERE succursale='$succursale' AND noEmploye='$noEmploye' AND id_livraison>0 $where AND ( nomSignataire IS NULL OR signature IS NULL ) GROUP BY id_livraison ORDER BY $sortBy $orderBy LIMIT ". ( ( $params->currentPage - 1 ) * $params->limitPerPage ) . ", $params->limitPerPage";
         }
-//echo $succursale;
-//echo $query;
  
         $conn = IL_Database::getConn();
         
         $results = mysqli_query($conn, $query);
-        
+        //echo $query;
         return $results;
     }
     

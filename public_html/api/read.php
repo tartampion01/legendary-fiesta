@@ -19,10 +19,14 @@ $conn = IL_Database::getConn();
 $livraison = new IL_Livraison($conn);
 
 // Pour CIE nous avons une feuille de route pour un utilisateur et une succursale
-if( isset($_GET["SUCCURSALE"]) && isset($_GET["SUCCURSALE"] ))
-    $results = $livraison->feuilleDeRouteReadTest($_GET['params']);
+if( isset($_GET["SUCCURSALE"]) && isset($_GET["NOEMPLOYE"]))
+{
+    $results = $livraison->feuilleDeRouteReadTest($_GET['params'], $_GET["SUCCURSALE"],$_GET["NOEMPLOYE"]);
+}
 else
+{
     $results = $livraison->readTest($_GET['params']);
+}
 
 
 if(mysqli_num_rows($results) > 0){

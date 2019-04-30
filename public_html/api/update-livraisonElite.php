@@ -22,10 +22,10 @@ $livraison = new IL_Livraison($conn);
 $data = json_decode($_GET['postData']);
 
 // set product property values
-$livraison->id_livraison = (isset($data->id_livraison) ? $data->id_livraison : '');
+$livraison->id_livraison  = (isset($data->id_livraison)  ? $data->id_livraison  : '');
 $livraison->dateLivraison = (isset($data->dateLivraison) ? $data->dateLivraison : '');
 $livraison->nomSignataire = (isset($data->nomSignataire) ? $data->nomSignataire : '');
-$livraison->signature = (isset($data->signature) ? $data->signature : '');
+$livraison->signature     = (isset($data->signature)     ? $data->signature     : '');
 
 //var_dump($livraison);
 

@@ -68,3 +68,9 @@
     border: solid 1px #cc0000;
     background-color: #eeeeee;
 }
+.sortableArrows
+{
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
+}

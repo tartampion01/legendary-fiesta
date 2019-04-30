@@ -87,8 +87,8 @@
                         <tr>
                             <th class="ID isHidden">ID</th>
                             <th class="dateLivraison sortable" data-order-by="dateLivraison">Date de livraison<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
-                            <th class="noFacture sortable" data-order-by="facture"># facture<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="destinataire sortable" data-order-by="destinataire">Destinataire<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
+                            <th class="noFacture sortable" data-order-by="facture"># facture<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="noColis sortable" data-order-by="colis"># colis<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="nomSignataire sortable" data-order-by="nomSignataire">Nom du signataire<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="signature">Signature</th>
@@ -134,8 +134,6 @@
                             <th class="noColis"># colis</th>
                             <th class="nomSignataire">Signataire</th>
                             <th class="signature">Signature</th>
-                            <th class="noEmploye"># employé</th>
-                            <th class="succursale">Succursale</th>
                         </tr>
                     </thead>
                     <tbody class="results-container-offline">
@@ -191,8 +189,6 @@
             <td class="noColis"><span name="colis" class="input ">${colis}</span></td>
             <td class="nomSignataire"><span name="nomSignataire" class="input ">${tbNomSignataire}</span></td>
             <td class="signature"><span class="input svgSignature jSignature" style="display: none;">${signature}</span></td>
-            <td class="noEmploye"><span name="noEmploye" class="input ">${tbEmploye}</span></td>
-            <td class="succursale"><span name="succursale" class="input ">${succursale}</span></td>
         </tr>
         {{/each}}
     </script>

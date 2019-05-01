@@ -414,6 +414,43 @@ function loadOfflineData()
     }
 }
 
+function callPushQueriesFromLocalForage() {
+    pushQueriesFromLocalForage().done(function(data) {
+            
+        var message, type;
+
+        if(data == 'DONE') {
+            console.log('DONE');
+            $('.loading').hide();
+            message = 'Les données ont été synchronisées avec succès!';
+            type = 'success';
+            
+            // ONCE DATA IS SYNCHRONISED WE EMPTY ELITE_DAY_DATA
+            // AND WE FETCH RECORDS TO REFRESH LIST
+            window.localStorage.removeItem('ELITE_DAY_DATA');
+            
+            var pData = {};
+            pData.filterRows = null;
+            pData.sortBy = null;
+            pData.orderBy = null;
+            fetchRecords(pData);
+        }
+        else if(data == 'NO_DATA_TO_SYNC') {
+            $('.loading').hide();
+            message = 'Il n\'y avait aucune donnée à synchroniser!';
+            type = 'info';
+        }
+
+        swal({
+            position: 'top-end',
+            type: type,
+            title: message,
+            showConfirmButton: false,
+            timer: 3500
+        });
+    });
+}
+
 function pushQueriesFromLocalForage() {
     
     var defer = $.Deferred();
@@ -464,16 +501,6 @@ function pushQueriesFromLocalForage() {
                 else
                     defer.resolve('ERROR');
             });
-            
-            // ONCE DATA IS SYNCHRONISED WE EMPTY ELITE_DAY_DATA
-            // AND WE FETCH RECORDS TO REFRESH LIST
-            window.localStorage.removeItem('ELITE_DAY_DATA');
-            
-            var pData = {};
-            pData.filterRows = null;
-            pData.sortBy = null;
-            pData.orderBy = null;
-            fetchRecords(pData);
         }
         else {
             defer.resolve('NO_DATA_TO_SYNC');

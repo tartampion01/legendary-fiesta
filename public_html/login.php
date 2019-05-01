@@ -91,6 +91,11 @@
                                         save the username to the session */
                                         session_start();
 
+                                        IL_Session::w(IL_SessionVariables::USERNAME,false);
+                                        IL_Session::w(IL_SessionVariables::ID_USER,false);
+                                        IL_Session::w(IL_SessionVariables::LEVEL,false);
+                                        IL_Session::w(IL_SessionVariables::SUCCURSALE,false);
+
                                         $user = new IL_Users();
                                         $user->load(0,'',$username,0);
                                         IL_Session::w(IL_SessionVariables::USERNAME,$user->username);

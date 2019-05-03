@@ -229,6 +229,7 @@ $( document ).ready(function() {
                         if( json[i].id_livraison == id ){
                             json[i].nomSignataire = nomSignataire;
                             json[i].signature     = signature;
+                            json[i].dateLivraison = date;
                         }
                     }
                     
@@ -351,26 +352,6 @@ function fetchRecords(postData) {
     });
 }
 
-function insertQueryIntoLocalForage(postData) {
-    
-    var timestamp = new Date().valueOf();
-    localforage.setItem('query-'+timestamp, postData).then(function (value) {
-        // Do other things once the value has been saved.
-        console.log(value);
-        
-        swal({
-            position: 'top-end',
-            type: 'success',
-            title: 'Livraison enregistrée!',
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }).catch(function(err) {
-        // This code runs if there were any errors
-        console.log(err);
-    });
-}
-
 function loadOfflineData()
 {
     // If offline AND we have loaded data
@@ -412,107 +393,6 @@ function loadOfflineData()
     else
     {
     }
-}
-
-function callPushQueriesFromLocalForage() {
-    pushQueriesFromLocalForage().done(function(data) {
-            
-        var message, type;
-
-        if(data == 'DONE') {
-            console.log('DONE');
-            $('.loading').hide();
-            message = 'Les données ont été synchronisées avec succès!';
-            type = 'success';
-            
-            // ONCE DATA IS SYNCHRONISED WE EMPTY ELITE_DAY_DATA
-            // AND WE FETCH RECORDS TO REFRESH LIST
-            window.localStorage.removeItem('ELITE_DAY_DATA');
-            
-            var pData = {};
-            pData.filterRows = null;
-            pData.sortBy = null;
-            pData.orderBy = null;
-            fetchRecords(pData);
-        }
-        else if(data == 'NO_DATA_TO_SYNC') {
-            $('.loading').hide();
-            message = 'Il n\'y avait aucune donnée à synchroniser!';
-            type = 'info';
-        }
-
-        swal({
-            position: 'top-end',
-            type: type,
-            title: message,
-            showConfirmButton: false,
-            timer: 3500
-        });
-    });
-}
-
-function pushQueriesFromLocalForage() {
-    
-    var defer = $.Deferred();
-    
-    $('.loading').show();
-    
-    // If there is somethings in the localForage DB
-    localforage.length().then(function(numberOfKeys) {
-        
-        if(numberOfKeys > 0) {
-            localforage.iterate(function(value, key, iterationNumber) {
-                // Resulting key/value pair -- this callback
-                // will be executed for every item in the
-                // database.
-
-                // Create livraison over ajax
-                $.ajax({
-                    type: "GET",
-                    url: "api/update-livraisonElite.php",
-                    data: {'postData': JSON.stringify(value)},
-                    //contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: true,
-                    success: function(data){
-
-                        // Remove item from localForage
-                        localforage.removeItem(key).then(function() {
-                            // Run this code once the key has been removed.
-                            console.log('Key is cleared!');
-                        }).catch(function(err) {
-                            // This code runs if there were any errors
-                            console.log(err);
-                        });
-                    },
-                    error: function(errMsg) {
-                        console.log(errMsg);
-                    }
-                });
-
-                console.log([key, value]);
-                
-            }, function(err) {
-                if (!err) {
-                    console.log('Iteration has completed');
-
-                    defer.resolve('DONE');
-                }
-                else
-                    defer.resolve('ERROR');
-            });
-        }
-        else {
-            defer.resolve('NO_DATA_TO_SYNC');
-        }
-    }).catch(function(err) {
-        // This code runs if there were any errors
-        console.log(err);
-        
-        defer.resolve('ERROR');
-    });
-    
-    return defer.promise();
 }
 
 function sortTable(n) {

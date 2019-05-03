@@ -25,12 +25,11 @@
         //$user->load(0, '', $_COOKIE['username'],0);
         $user->load(0, '', IL_Session::r(IL_SessionVariables::USERNAME),0);
     }
-    else{}
     
     // Don't show errors on webpage
-    //error_reporting(0);
+    error_reporting(0);
     // Show errors on webpage
-    error_reporting(E_ALL);
+    //error_reporting(E_ALL);
 
     $NOMPAGE = htmlspecialchars(basename($_SERVER['PHP_SELF']));
     // REQUIRED BY ALL PAGES

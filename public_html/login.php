@@ -89,13 +89,16 @@
 
                                         /* Password is correct, so start a new session and
                                         save the username to the session */
+                                        
+//                                        session_destroy();
+//                                        IL_Session::w(IL_SessionVariables::USERNAME,false);
+//                                        IL_Session::w(IL_SessionVariables::ID_USER,false);
+//                                        IL_Session::w(IL_SessionVariables::LEVEL,false);
+//                                        IL_Session::w(IL_SessionVariables::SUCCURSALE,false);
+
                                         session_start();
-
-                                        IL_Session::w(IL_SessionVariables::USERNAME,false);
-                                        IL_Session::w(IL_SessionVariables::ID_USER,false);
-                                        IL_Session::w(IL_SessionVariables::LEVEL,false);
-                                        IL_Session::w(IL_SessionVariables::SUCCURSALE,false);
-
+                                        $_SESSION = array();
+                                        
                                         $user = new IL_Users();
                                         $user->load(0,'',$username,0);
                                         IL_Session::w(IL_SessionVariables::USERNAME,$user->username);
@@ -104,6 +107,7 @@
                                         IL_Session::w(IL_SessionVariables::SUCCURSALE,$user->succursale);
                                         
                                         setcookie('username', $user->username, time() + (86400 * 30), "/");
+                                        setcookie('succursale', $user->succursale, time() + (86400 * 30), "/");
                                         
                                         header('Location: ' . "default.php");
                                         

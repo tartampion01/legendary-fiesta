@@ -29,7 +29,7 @@
             {
                 $errorMessage = "";
                 $utilisateurname = $password = $passwordconfirmation = "";
-                $admin = $livreur = 0;
+                $admin = $livreur = $comptoir = 0;
                 $utilisateur = new IL_Users();
 
                 if( isset($_POST["hidID"]))
@@ -40,30 +40,23 @@
                     $passwordconfirmation = $_POST["tbPasswordConfirmation"];
                     $succursale = $_POST["cboSuccursale"];
                     
-                    echo "SUCC  " . $succursale;
+                    $level = $_POST["cbGroupe"];
                     
-                    $admin = $_POST["cbAdmin"];
-                    $livreur = $_POST["cbLivreur"];
-                    $level = -1;
-                    
-//                    echo $utilisateurname . "<br>";
-//                    echo $password . "<br>";
-//                    echo $passwordconfirmation . "<br>";
-//                    echo $admin . "<br>";
-//                    echo $livreur . "<br>";
-//                    echo $_POST["hidID"] . "<br>";
-                    
-                    // LEVEL
-                    if( $admin == 0 && $livreur == 0 )
-                        $errorMessage = "Veuillez choisir un groupe";
-                    else
+                    /* LEVEL
+                         * 0 = USER normal, livreur
+                         * 1 = ADMIN
+                         * 2 = COMPTOIR
+                         */
+                    switch($level)
                     {
-                        if( $admin == 0 && $livreur == 1 )
-                            $level = 0;
-                        if( $admin == 1 && $livreur == 0 )
-                            $level = 1;
-                        if( $admin == 1 && $livreur == 1 )
-                            $level = 2;
+                        case 0:  $livreur = 1;
+                                 break;
+                        case 1:  $admin = 1;
+                                 break;
+                        case 2:  $comptoir = 1;
+                                 break;
+                        default: $level = -1;
+                                 break;
                     }
                     
                     if( $level != -1 ){
@@ -114,6 +107,8 @@
                         else
                             $errorMessage = "Veuillez entrer un nom d'utilisateur";
                     }
+                    else
+                        $errorMessage = "Veuillez choisir un groupe";
                 }?>
                 <form action="utilisateurs.php" method="POST">
                     <div class="userInfo module_liste base_module">
@@ -187,19 +182,24 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <div class="fieldLabel">Groupes</div>
+                                        <div class="fieldLabel">Groupe</div>
                                     </td>
                                     <td class="field">
                                         <ul name="groupes" data-serializer="checkboxlist" class="input" type="checkboxlist">
                                             <li>
                                                 <input type="hidden" id="cbAdmin" name="cbAdmin" value="0">
-                                                <input type="radio" id="cbAdmin" name="cbGroupe" title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
-                                                <label>administrateurs</label>
+                                                <input type="radio" id="cbAdmin" name="cbGroupe" title="" value="0" <?php if( $admin == 1 ) {echo " checked";} ?>>
+                                                <label>&nbsp;Administrateurs</label>
                                             </li>
                                             <li>
                                                 <input type="hidden" id="cbLivreur" name="cbLivreur" value="0">
                                                 <input type="radio" id="cbLivreur" name="cbGroupe" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
-                                                <label>livreurs</label>
+                                                <label>&nbsp;Livreurs</label>
+                                            </li>
+                                            <li>
+                                                <input type="hidden" id="cbComptoir" name="cbComptoir" value="0">
+                                                <input type="radio" id="cbComptoir" name="cbGroupe" title="" value="2" <?php if( $comptoir == 1 ) {echo " checked";} ?>>
+                                                <label>&nbsp;Comptoir</label>
                                             </li>
                                         </ul>
                                     </td>
@@ -224,7 +224,7 @@
             {
                 $errorMessage = "";
                 $utilisateurname = $password = $passwordconfirmation = "";
-                $admin = $livreur = 0;
+                $admin = $livreur = $comptoir = 0;
                 
                 $id_user = $_REQUEST["id_user"];
                 
@@ -239,17 +239,23 @@
                     $utilisateur = new IL_Users();
                     $utilisateur->load($id_user,'','');
                     $utilisateurname = $utilisateur->username;
-//echo "SUCCURSALE-->" . $utilisateur->succursale;
+
                     switch( $utilisateur->level )
                     {
+                        // LIVREUR
                         case 0: $admin = 0;
                                 $livreur = 1;
+                                $comptoir = 0;
                             break;
+                        // ADMIN
                         case 1: $admin = 1;
                                 $livreur = 0;
+                                $comptoir = 0;
                             break;
-                        case 2: $admin = 1;
-                                $livreur = 1;
+                        // COMPTOIR
+                        case 2: $admin = 0;
+                                $livreur = 0;
+                                $comptoir = 1;
                             break;
                     }
                 }
@@ -326,19 +332,24 @@
                                 </tr>
                                 <tr>
                                     <td class="label">
-                                        <div class="fieldLabel">Groupes</div>
+                                        <div class="fieldLabel">Groupe</div>
                                     </td>
                                     <td class="field">
                                         <ul name="groupes" data-serializer="checkboxlist" class="input" type="checkboxlist">
                                             <li>
                                                 <input type="hidden" id="cbAdmin" name="cbAdmin" value="0">
-                                                <input type="radio" id="cbAdmin" name="cbGroupe"  title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
-                                                <label> administrateurs</label>
+                                                <input type="radio" id="cbAdmin" name="cbGroupe"  title="" value="0" <?php if( $admin == 1 ) {echo " checked";} ?>>
+                                                <label>&nbsp;Administrateurs</label>
                                             </li>
                                             <li>
                                                 <input type="hidden" id="cbLivreur" name="cbLivreur" value="0">
                                                 <input type="radio" id="cbLivreur" name="cbGroupe" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
-                                                <label> livreurs</label>
+                                                <label>&nbsp;Livreurs</label>
+                                            </li>
+                                            <li>
+                                                <input type="hidden" id="cbComptoir" name="cbComptoir" value="0">
+                                                <input type="radio" id="cbComptoir" name="cbGroupe" title="" value="2" <?php if( $comptoir == 1 ) {echo " checked";} ?>>
+                                                <label>&nbsp;Comptoir</label>
                                             </li>
                                         </ul>
                                     </td>

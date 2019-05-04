@@ -1,4 +1,12 @@
 <?php
+
+interface iUserLEvel
+{
+    const LIVREUR  = 0;
+    const ADMIN    = 1;
+    const COMPTOIR = 2;
+}
+
 class IL_Utils
 {
     public static function test_input($data) {
@@ -60,10 +68,10 @@ class IL_Utils
                     switch($succursale)
                     {
                         // Succursale CIE (Québec) Utilisation de la feuille de route
-                        case 'CIE': echo '<a href="livraisonElite.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                        case 'CIE': echo '<a href="feuillederoute.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>' .
                                          '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
                                          '<a href="utilisateurs.php" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>' .
-                                         '<a href="feuillederoute.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>' .
+                                         '<a href="livraisonElite.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
                                          '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                                     break;
                         default:    echo '<a href="livraison.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
@@ -88,9 +96,9 @@ class IL_Utils
     /***
      * RETURNS OPTIONS WITH value=id_user and option text=username
      */
-    public static function getUsersDropDownForSuccursale($succursale)
+    public static function getUsersDropDownForSuccursale($succursale, $level)
     {
-        $sql = "SELECT id_user, username FROM users WHERE succursale='$succursale'";
+        $sql = "SELECT id_user, username FROM users WHERE succursale='$succursale' AND level='$level'";
         $data = "";
         $option_o = "<option value='";
         $option_c = "</option>";

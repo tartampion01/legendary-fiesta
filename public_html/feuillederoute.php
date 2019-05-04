@@ -111,10 +111,10 @@
                         </div>
                         <div class="col-xs-6">
                             <div class="row label">
-                                <div class="col-xs-12 label">Employé :&nbsp;
+                                <div class="col-xs-12 label">Livreur :&nbsp;
                                     <select id="cboUserNames" name="cboUserNames">
                                         <?php
-                                            echo IL_Utils::getUsersDropDownForSuccursale(IL_Session::r(IL_SessionVariables::SUCCURSALE));
+                                            echo IL_Utils::getUsersDropDownForSuccursale(IL_Session::r(IL_SessionVariables::SUCCURSALE), iUserLEvel::LIVREUR);
                                         ?>
                                     </select>
                                 </div>

@@ -100,6 +100,7 @@
                                         IL_Session::w(IL_SessionVariables::SUCCURSALE,$user->succursale);
                                         
                                         setcookie('username', $user->username, time() + (86400 * 30), "/");
+                                        setcookie('succursale', $user->succursale, time() + (86400 * 30), "/");
                                         
                                         if( $user->succursale == "CIB" )
                                             header('Location: ' . "boncommande.php?succ=" . $user->succursale);

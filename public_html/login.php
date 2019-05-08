@@ -31,8 +31,52 @@
     <link rel="stylesheet" type="text/css" href="assets/css/layout_normal.css" />
     
     <meta  http-equiv="Content-type"  content="text/html;charset=UTF-8" />
+    
+    <script type="application/javascript" src="assets/js/utilities.js"></script>
+    <script type='text/javascript' src="//wurfl.io/wurfl.js"></script>
+    <script>
+        function checkDevice()
+        {
+            var mess = "";
+            //alert( getCookie('username') );
+            mess = "TABLET OR SMARTPHONE";
+            if( getCookie('username') != "" )
+            {
+                mess += " USERNAME PRESENT";
+                if(!navigator.onLine)
+                {
+                    mess += " OFFLINE";
+                    
+                    var ua = navigator.userAgent.toLowerCase();
+                    var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+                    if(isAndroid) {
+                        // Redirect to Android-site?
+                        window.location = "/default.php";
+                    }
+                    //alert("0x98FF");
+                    window.location = "/default.php";
+                    //document.getElementById("divAgent").innerText = "DEVICE: " + WURFL.form_factor + "     USERAGENT: " + navigator.userAgent + "     USERNAME: " + getCookie('username');
+                    //window.location = "/default.php";
+                }
+                else
+                {
+                    //alert("0x98FF");
+                    mess += " ONLINE";
+                    window.location = "/default.php";
+                }
+            }
+            else
+            {
+                mess += " NO COOKIE";
+            }
+            
+            document.getElementById("divAgent").innerText = mess;
+            
+        }
+    </script>
 </head>
 <body>
+<div name='divAgent' id="divAgent"></div>
 <div name='login' class='page_login base_page serializable'>
     <?php
         // Define variables and initialize with empty values

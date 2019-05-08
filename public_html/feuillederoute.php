@@ -83,7 +83,15 @@
                     }
                     
                     if( $errNB == 0 )
+                    {
                         $message = "Feuille de route ajoutée avec succès";
+                        
+                        $string  = '<script type="text/javascript">';
+                        $string .= 'window.location="livraisonElite.php"';
+                        $string .= '</script>';
+
+                        echo $string;
+                    }                    
                     else
                         $message = "Erreur dans la création de la feuille de route";
                 }
@@ -114,7 +122,10 @@
                                 <div class="col-xs-12 label">Livreur :&nbsp;
                                     <select id="cboUserNames" name="cboUserNames">
                                         <?php
-                                            echo IL_Utils::getUsersDropDownForSuccursale(IL_Session::r(IL_SessionVariables::SUCCURSALE), iUserLEvel::LIVREUR);
+                                            if( IL_Session::r(IL_SessionVariables::LEVEL) == iUserLEvel::LIVREUR )
+                                                echo "<option value='" . IL_Session::r(IL_SessionVariables::ID_USER) . ":" . IL_Session::r(IL_SessionVariables::USERNAME) . "'>" . IL_Session::r(IL_SessionVariables::USERNAME) . "</option>";
+                                            else
+                                                echo IL_Utils::getUsersDropDownForSuccursale(IL_Session::r(IL_SessionVariables::SUCCURSALE), iUserLEvel::LIVREUR);
                                         ?>
                                     </select>
                                 </div>
@@ -130,7 +141,10 @@
                                     Client
                                 </div>
                                 <div class="">
-                                    <input type="text" name="tbClient[]" id="tbClient1" value="" maxlength="100" class="input"></input>
+                                    <input type="text" name="tbClient[]" id="tbClient1" value="" maxlength="100" class="input" list="dlClients"></input>
+                                    <datalist id="dlClients" name="dlClients">
+                                        <?php echo IL_Utils::GetClientsViewData(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                                    </datalist>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +154,7 @@
                                     #facture
                                 </div>
                                 <div class="">
-                                    <input type="text" name="tbFacture[]" id="tbFacture1" value="" maxlength="50" class="input"></input>
+                                    <input type="text" name="tbFacture[]" id="tbFacture1" value="" autocomplete="off" maxlength="50" class="input"></input>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +164,7 @@
                                     Nb Colis
                                 </div>
                                 <div class="">
-                                    <input type="text" name="tbColis[]" id="tbColis1" value="" maxlength="50" class="input"></input>
+                                    <input type="text" name="tbColis[]" id="tbColis1" value="" maxlength="50" autocomplete="off" class="input"></input>
                                 </div>
                             </div>
                         </div>

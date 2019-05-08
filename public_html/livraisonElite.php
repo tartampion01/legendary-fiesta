@@ -54,7 +54,7 @@
 </div>
 
     <div id="divCentreeSignature" style="visibility: hidden;position:relative;">
-        Nom&nbsp;:&nbsp;<input id="tbNomSignataire" type="text" maxlength="50" style="width:450px;height:40px;font-size: 28px;"></br>
+        Nom&nbsp;:&nbsp;<input id="tbNomSignataire" type="text" maxlength="50" autocomplete="off" style="width:450px;height:40px;font-size: 28px;"></br>
             <div name='mod_signature' class='module_signature base_module serializable' >
                 <div id="signature_mod_signature" class="signPad">
                     <div style="padding:0 !important; margin:0 !important;width: 100% !important; height: 0 !important; -ms-touch-action: none; touch-action: none;margin-top:-1em !important; margin-bottom:1em !important;"></div>

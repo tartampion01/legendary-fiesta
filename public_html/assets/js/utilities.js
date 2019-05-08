@@ -94,18 +94,13 @@ function callPushQueriesFromLocalForage() {
             message = 'Les données ont été synchronisées avec succès!';
             type = 'success';
             
-            // Seulement pour INTER ELITE
-            // ONCE DATA IS SYNCHRONISED WE EMPTY ELITE_DAY_DATA
-            // AND WE FETCH RECORDS TO REFRESH LIST
-            if( getCookie('succursale') == "CIE" ){
-                window.localStorage.removeItem('ELITE_DAY_DATA');
+            window.localStorage.removeItem('ELITE_DAY_DATA');
 
-                var pData = {};
-                pData.filterRows = null;
-                pData.sortBy = null;
-                pData.orderBy = null;
-                fetchRecords(pData);
-            }
+            var pData = {};
+            pData.filterRows = null;
+            pData.sortBy = null;
+            pData.orderBy = null;
+            fetchRecords(pData);
         }
         else if(data == 'NO_DATA_TO_SYNC') {
             $('.loading').hide();

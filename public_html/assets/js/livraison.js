@@ -229,7 +229,8 @@ function pushQueriesFromLocalForage() {
                 // Create livraison over ajax
                 $.ajax({
                     type: "GET",
-                    url: (getCookie("succursale")=="CIE")? "api/update-livraisonElite.php":"api/create-livraison.php",
+                    //url: (getCookie("succursale")=="CIE")? "api/update-livraisonElite.php":"api/create-livraison.php",
+                    url: "api/create-livraison.php",
                     data: {'postData': JSON.stringify(value)},
                     //contentType: "application/json; charset=utf-8",
                     dataType: "json",

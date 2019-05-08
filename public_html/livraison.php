@@ -96,7 +96,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <span class="label">Nom du signataire </span>
-                        <input type="text" name="tbNomSignataire" id="tbNomSignataire" value="" maxlength="200"  class="input "></input>
+                        <input type="text" name="tbNomSignataire" id="tbNomSignataire" value="" autocomplete="off" maxlength="200" class="input "></input>
                     </div>
                 </div>
             </section>

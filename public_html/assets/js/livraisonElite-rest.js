@@ -99,8 +99,9 @@ $( document ).ready(function() {
         
         // Afficher la div avec le canvas
         //$('#divCentreeSignature').attr('style','visibility:visible;background-color: white; width: 50%; height: 260px;margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:relative;');
-        $('#divCentreeSignature').attr('style','visibility:visible;background-color: white; margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:fixed;left:50%;transform: translate(-50%, 0);top:75px;');
-       
+        $('#divCentreeSignature').attr('style','visibility:visible;background-color: white; margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:fixed;left:50%;transform: translate(-50%, 0);top:1px;');
+        $('#tbNomSignataire').focus();
+        
         //console.log($('.jSignature').jSignature());
         // Destroy the signature plugin instance
         $sigdiv.jSignature('enable');

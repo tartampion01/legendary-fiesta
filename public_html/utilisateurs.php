@@ -41,7 +41,7 @@
                     $succursale = $_POST["cboSuccursale"];
                     
                     $level = $_POST["cbGroupe"];
-                    
+                    echo $level;
                     /* LEVEL
                          * 0 = USER normal, livreur
                          * 1 = ADMIN
@@ -188,12 +188,12 @@
                                         <ul name="groupes" data-serializer="checkboxlist" class="input" type="checkboxlist">
                                             <li>
                                                 <input type="hidden" id="cbAdmin" name="cbAdmin" value="0">
-                                                <input type="radio" id="cbAdmin" name="cbGroupe" title="" value="0" <?php if( $admin == 1 ) {echo " checked";} ?>>
+                                                <input type="radio" id="cbAdmin" name="cbGroupe" title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
                                                 <label>&nbsp;Administrateurs</label>
                                             </li>
                                             <li>
                                                 <input type="hidden" id="cbLivreur" name="cbLivreur" value="0">
-                                                <input type="radio" id="cbLivreur" name="cbGroupe" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
+                                                <input type="radio" id="cbLivreur" name="cbGroupe" title="" value="0" <?php if( $livreur == 1 ) {echo " checked";} ?>>
                                                 <label>&nbsp;Livreurs</label>
                                             </li>
                                             <li>
@@ -338,12 +338,12 @@
                                         <ul name="groupes" data-serializer="checkboxlist" class="input" type="checkboxlist">
                                             <li>
                                                 <input type="hidden" id="cbAdmin" name="cbAdmin" value="0">
-                                                <input type="radio" id="cbAdmin" name="cbGroupe"  title="" value="0" <?php if( $admin == 1 ) {echo " checked";} ?>>
+                                                <input type="radio" id="cbAdmin" name="cbGroupe"  title="" value="1" <?php if( $admin == 1 ) {echo " checked";} ?>>
                                                 <label>&nbsp;Administrateurs</label>
                                             </li>
                                             <li>
                                                 <input type="hidden" id="cbLivreur" name="cbLivreur" value="0">
-                                                <input type="radio" id="cbLivreur" name="cbGroupe" title="" value="1" <?php if( $livreur == 1 ) {echo " checked";} ?>>
+                                                <input type="radio" id="cbLivreur" name="cbGroupe" title="" value="0" <?php if( $livreur == 1 ) {echo " checked";} ?>>
                                                 <label>&nbsp;Livreurs</label>
                                             </li>
                                             <li>

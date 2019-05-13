@@ -50,36 +50,19 @@ class IL_Utils
         switch($level)
         {
             // USER
-            case 0: 
-                    switch($succursale)
-                    {   // Succursale CIE (Québec) Utilisation de la feuille de route
-                        case "CIE": echo '<a href="livraisonElite.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                                         '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
-                                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
-                                    break;
-                        default:echo     '<a href="livraison.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                                         '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
-                                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
-                                    break;
-                    }
+            case 0: echo '<a href="feuillederoute.php" class="menuitem offline_hide utilisateurs"><button name="feuillederoute" class=""><div class="label">Remplir feuille</div></button></a>' .
+                         '<a href="livraisonElite.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>' .
+                         '<a href="livraison.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                         '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
+                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
             // ADMIN
-            case 1:                     
-                    switch($succursale)
-                    {
-                        // Succursale CIE (Québec) Utilisation de la feuille de route
-                        case 'CIE': echo '<a href="feuillederoute.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>' .
-                                         '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
-                                         '<a href="utilisateurs.php" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>' .
-                                         '<a href="livraisonElite.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
-                                    break;
-                        default:    echo '<a href="livraison.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
-                                         '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
-                                         '<a href="utilisateurs.php" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>' .
-                                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
-                                    break;
-                    }
+            case 1: echo '<a href="feuillederoute.php" class="menuitem offline_hide utilisateurs"><button name="feuillederoute" class=""><div class="label">Remplir feuille</div></button></a>' .
+                         '<a href="livraisonElite.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>' .
+                         '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
+                         '<a href="utilisateurs.php" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>' .
+                         '<a href="livraisonElite.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                         '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
             // COMPTOIR -> Affiche la page de livraison normale + recherche
             case 2: echo '<a href="livraison.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
@@ -196,6 +179,34 @@ class IL_Utils
             if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_assoc($result)) {
                     $data .= $option_o .  $row["nomValeur"] . "'>" . $option_c;
+                }
+            }
+        }
+        catch (Exception $e) {
+            //echo $e;
+        }
+
+        return $data == "" ? $option_o . $option_c : $data;
+    }
+    
+    public static function GetClientsViewData($succursale){
+        
+        $data = "";
+        $sql = "";
+        $option_o = "<option value='";
+        $option_c = "</option>";
+        
+        $conn = IL_Database::getConn();
+        
+        $sql = "SELECT destinataire FROM vCLIENTS_" . strtoupper($succursale) . " ORDER BY destinataire ASC";
+        
+        $result = mysqli_query($conn, $sql);
+
+        try
+        {
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_assoc($result)) {
+                    $data .= $option_o .  $row["destinataire"] . "'>" . $option_c;
                 }
             }
         }

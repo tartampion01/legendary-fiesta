@@ -1367,7 +1367,8 @@ table.tableHaut tr td.bonCommande { width: 11%; }
 table.tableHaut tr td.noConfirmation { width: 11%; }
 table.tableHaut tr td.commandePar { width: 11%; }
 table.tableHaut tr td.contactFournisseur { width: 13%; }
-table.tableHaut tr td.date { width: 6%; }
+table.tableHaut tr td.date { width: 4%; }
+table.tableHaut tr td.heure { width: 2%; }
 table.tableHaut tr td.directiveSpeciale { width: 20%; }
 table.tableHaut tr td.statut { width: 10%; }
 table.tableHaut tr td.ajouter { width: 5%; }
@@ -1382,7 +1383,8 @@ table.tableData tr td.bonCommande { width: 11%;}
 table.tableData tr td.noConfirmation { width: 11%;}
 table.tableData tr td.commandePar { width: 11%;}
 table.tableData tr td.contactFournisseur { width: 13%;}
-table.tableData tr td.date { width: 6%;}
+table.tableData tr td.date { width: 4%;}
+table.tableData tr td.heure { width: 2%;}
 table.tableData tr td.directiveSpeciale { width: 20%;}
 table.tableData tr td.statut { width: 10%; }
 table.tableData tr td.ajouter { width: 5%; }
@@ -1486,6 +1488,7 @@ table.tableData tr.rowEdit{
 .tbCommandePar{}
 .tbFournisseur{}
 .tbDate{}
+.tbHeure{width:45px;}
 .tbCommentaire{}
 
 .tbEdit{

@@ -230,7 +230,8 @@
         var directiveSpeciale = document.getElementById('tbDirectiveSpeciale').value;
         var statut = document.getElementById('cbStatut').value;
         
-        var dataToAdd = "&oper=add&1=" + endroitPickup + "&2=" + bonCommande + "&3=" + noConfirmation + "&4=" + commandePar + "&5=" + contactFournisseur + "&6=" + date + "&7=" + directiveSpeciale + "&8=" + statut;
+        //var dataToAdd = "&oper=add&1=" + endroitPickup + "&2=" + bonCommande + "&3=" + noConfirmation + "&4=" + commandePar + "&5=" + contactFournisseur + "&6=" + date + ' ' + getHeure() + "&7=" + directiveSpeciale + "&8=" + statut;
+        var dataToAdd = "&oper=add&1=" + endroitPickup + "&2=" + bonCommande + "&3=" + noConfirmation + "&4=" + commandePar + "&5=" + contactFournisseur + "&6=" + date + "&7=" + directiveSpeciale + "&8=" + statut + "&9=" + getHeure();
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
@@ -243,14 +244,14 @@
         }
         return i;
     }
-    function getHeure(ceci){
+    function getHeure(){
        var d = new Date()
        //alert( d.getHours() );
        //alert( d.getHours() );
        var heures = addZero(d.getHours());
        var minutes = addZero(d.getMinutes());
 
-       document.getElementById(ceci.id).value = heures + ':' + minutes;
+       return heures + ':' + minutes;
     }
     function getDate(ceci){
         var d = new Date();

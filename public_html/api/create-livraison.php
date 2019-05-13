@@ -22,31 +22,59 @@ $livraison = new IL_Livraison($conn);
 $data = json_decode($_GET['postData']);
 //print_r($data);
 
-// set product property values
-$livraison->dateLivraison = (isset($data->tbDate) ? $data->tbDate : '');
-$livraison->destinataire = (isset($data->tbDestinataire) ? $data->tbDestinataire : '');
-$livraison->nomSignataire = (isset($data->tbNomSignataire) ? $data->tbNomSignataire : '');
-$livraison->signature = (isset($data->signature) ? $data->signature : '');
-$livraison->noEmploye = (isset($data->tbEmploye) ? $data->tbEmploye : '');
-$livraison->succursale = (isset($data->succursale) ? $data->succursale : '');
-//$livraison->colis = (isset($data->tbColis) ? $data->tbNoColis : '');
-$livraison->colis = (isset($data->array_colis) ? $data->array_colis : '');
-$livraison->facture = (isset($data->tbFacture) ? $data->tbNoFacture : '');
-//$livraison->colis = (isset($data->array_colis) ? $data->array_colis : '');
+// Si on a pas de ID de livraison on crée sinon on update
+if( isset($data->id_livraison) )
+{
+    // set product property values
+    $livraison->id_livraison  = (isset($data->id_livraison)  ? $data->id_livraison  : '');
+    $livraison->dateLivraison = (isset($data->dateLivraison) ? $data->dateLivraison : '');
+    $livraison->nomSignataire = (isset($data->nomSignataire) ? $data->nomSignataire : '');
+    $livraison->signature     = (isset($data->signature)     ? $data->signature     : '');
 
-//var_dump($livraison);
+    //var_dump($livraison);
 
-// create the livraison
-if($livraison->create($livraison)){
-    echo '{';
-        echo '"message": "La livraison a été créée."';
-    echo '}';
+    // create the livraison
+    if($livraison->save_Elite($livraison)){
+        echo '{';
+            echo '"message": "La livraison a été modifiée."';
+        echo '}';
+    }
+
+    // if unable to create the livraison, tell the user
+    else{
+        echo '{';
+            echo '"message": "Impossible de modifier de livraison."';
+        echo '}';
+    }
 }
- 
-// if unable to create the livraison, tell the user
-else{
-    echo '{';
-        echo '"message": "Impossible de créer de livraison."';
-    echo '}';
+else
+{    
+    // set product property values
+    $livraison->dateLivraison = (isset($data->tbDate) ? $data->tbDate : '');
+    $livraison->destinataire = (isset($data->tbDestinataire) ? $data->tbDestinataire : '');
+    $livraison->nomSignataire = (isset($data->tbNomSignataire) ? $data->tbNomSignataire : '');
+    $livraison->signature = (isset($data->signature) ? $data->signature : '');
+    $livraison->noEmploye = (isset($data->tbEmploye) ? $data->tbEmploye : '');
+    $livraison->succursale = (isset($data->succursale) ? $data->succursale : '');
+    //$livraison->colis = (isset($data->tbColis) ? $data->tbNoColis : '');
+    $livraison->colis = (isset($data->array_colis) ? $data->array_colis : '');
+    $livraison->facture = (isset($data->tbFacture) ? $data->tbNoFacture : '');
+    //$livraison->colis = (isset($data->array_colis) ? $data->array_colis : '');
+
+    //var_dump($livraison);
+
+    // create the livraison
+    if($livraison->create($livraison)){
+        echo '{';
+            echo '"message": "La livraison a été créée."';
+        echo '}';
+    }
+
+    // if unable to create the livraison, tell the user
+    else{
+        echo '{';
+            echo '"message": "Impossible de créer de livraison."';
+        echo '}';
+    }
 }
 ?>

@@ -16,7 +16,7 @@
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
         </div>
-        <div id="titre" class="col-xs-6 col-sm-8">Livraison</div>
+        <div id="titre" class="col-xs-6 col-sm-8">Feuille de route</div>
         <div id="user" class="col-xs-3 col-sm-2">
             <div><?php echo IL_Session::r(IL_SessionVariables::USERNAME); ?>
                 [<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>]

@@ -100,7 +100,13 @@ function callPushQueriesFromLocalForage() {
             pData.filterRows = null;
             pData.sortBy = null;
             pData.orderBy = null;
-            fetchRecords(pData);
+            try{
+                fetchRecords(pData);
+            }
+            catch(error) {
+                console.error(error);
+            }
+            
         }
         else if(data == 'NO_DATA_TO_SYNC') {
             $('.loading').hide();

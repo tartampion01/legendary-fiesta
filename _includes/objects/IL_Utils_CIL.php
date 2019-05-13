@@ -136,6 +136,7 @@ class IL_Utils
                       <th class="commandePar" onclick="sortTable(4)";>Commandé par&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                       <th class="contactFournisseur" onclick="sortTable(5);">Contact Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                       <th class="date">Date</td>
+                      <th class="heure">Heure</td>
                       <th class="directiveSpeciale" onclick="sortTable(7)";>Directive spéciale&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                       <th class="statut">Statut</td>
                       <th class="ajouter"></td>
@@ -147,6 +148,7 @@ class IL_Utils
                       <th class="commandePar">Commandé par</td>
                       <th class="contactFournisseur">Contact Fournisseur</td>
                       <th class="date">Date</td>
+                      <th class="heure">Heure</td>
                       <th class="directiveSpeciale">Directive spéciale</td>
                       <th class="statut">statut</td>
                       <th class="ajouter">DELETE</td>
@@ -159,10 +161,10 @@ class IL_Utils
         $dateQuery .= ( $archive == 1 ) ? ' ORDER BY DATE(date) DESC' : "";
         
         if( $searchQuery == "" )
-            $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, date, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale' AND archive=$archive " . $dateQuery;
+            $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, date, heure, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale' AND archive=$archive " . $dateQuery;
         else
         {
-            $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, date, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale'";
+            $sql = "SELECT pkBonCommande, endroitPickup, bonCommande, noConfirmation, commandePar, fournisseur, date, heure, directiveSpeciale, statut FROM bon_commande WHERE succursale='$succursale'";
             $sql .= " AND archive=$archive ";
             $sql .= " AND ( endroitPickup like '%$searchQuery%' ";
             $sql .= " OR bonCommande like '%$searchQuery%' ";
@@ -237,6 +239,7 @@ class IL_Utils
                     $data .= "<td class='commandePar'><input type='text' id='tbCommandePar_" . $pkBonCommande . "' class='tbCommandePar' value='" . $row["commandePar"] . "'></input></td>";
                     $data .= "<td class='contactFournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
                     $data .= "<td class='date'><input type='date' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . $row["date"] . "'></input></td>";
+                    $data .= "<td class='heure'><input type='text' disabled='disabled' id='tbHeure_" . $pkBonCommande . "' class='tbHeure' value='" . $row["heure"] . "'></input></td>";
                     $data .= "<td class='directiveSpeciale'><input type='text' id='tbDirectiveSpeciale_" . $pkBonCommande . "' class='tbDirectiveSpeciale' value='" . $row["directiveSpeciale"] . "'></td>";
                     
                     $data .= "<td class='statut'>$dropdownSTATUT</td>";                    
@@ -271,7 +274,7 @@ class IL_Utils
         return $data;
     }
     
-    public static function addBonCommande($endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $date, $directiveSpeciale, $statut, $succursale){
+    public static function addBonCommande($endroitPickup, $bonCommande, $noConfirmation, $commandePar, $contactFournisseur, $date, $directiveSpeciale, $statut, $heure, $succursale){
         
         $conn = IL_Database::getConn();
         
@@ -283,10 +286,11 @@ class IL_Utils
         $date = mysqli_real_escape_string($conn, $date);
         $directiveSpeciale = mysqli_real_escape_string($conn, $directiveSpeciale);
         $statut = mysqli_real_escape_string($conn, $statut);
+        $heure = mysqli_real_escape_string($conn, $heure);
         $succursale = mysqli_real_escape_string($conn, $succursale);
         
-        $sql = "INSERT INTO bon_commande(endroitPickup,bonCommande,noConfirmation,commandePar,fournisseur,date,directiveSpeciale,statut,succursale) ";
-        $sql .= "VALUES('$endroitPickup','$bonCommande','$noConfirmation','$commandePar','$contactFournisseur','$date','$directiveSpeciale','$statut','$succursale')";
+        $sql = "INSERT INTO bon_commande(endroitPickup,bonCommande,noConfirmation,commandePar,fournisseur,date,directiveSpeciale,statut,heure, succursale) ";
+        $sql .= "VALUES('$endroitPickup','$bonCommande','$noConfirmation','$commandePar','$contactFournisseur','$date','$directiveSpeciale','$statut','$heure','$succursale')";
 
         mysqli_query($conn, $sql);
         $this->id = $conn->insert_id;

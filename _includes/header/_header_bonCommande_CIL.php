@@ -8,7 +8,7 @@ require_once(dirname(__DIR__).'/commonIncludes_CIL.php');
 
 // Personne de 'loggé'
 if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
-    header('Location: ' . "../login.php");
+    header('Location: ' . "login.php");
 
 // Load logged user
 if(isset($_COOKIE['username'])) {

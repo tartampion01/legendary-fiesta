@@ -38,7 +38,7 @@
                     <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
                 </a>
             </div>
-            <div id="titre" class="col-xs-6 col-sm-8">menu</div>
+            <div id="titre" class="col-xs-6 col-sm-8">Remplir feuille de route</div>
             <div id="user" class="col-xs-3 col-sm-2">
                 <div><?php echo IL_Session::r(IL_SessionVariables::USERNAME); ?>
                     [<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>]
@@ -85,12 +85,7 @@
                     if( $errNB == 0 )
                     {
                         $message = "Feuille de route ajoutée avec succès";
-                        
-                        $string  = '<script type="text/javascript">';
-                        $string .= 'window.location="livraisonElite.php"';
-                        $string .= '</script>';
-
-                        echo $string;
+                        echo '<script type="text/javascript">window.location="livraisonElite.php";</script>';
                     }                    
                     else
                         $message = "Erreur dans la création de la feuille de route";
@@ -103,7 +98,7 @@
         
         ?>
     <div id="contenu">
-        <div name='mod_livraison' class='module_livraison base_module awesomplete col-lg-offset-2 col-lg-8 serializable' >
+        <div name='mod_livraison' class='module_livraison base_module col-lg-offset-2 col-lg-8 serializable' >
             <form method="POST" action="feuillederoute.php">
                 <span class="label error"><?php echo $message; ?></span>
                 <hr/>

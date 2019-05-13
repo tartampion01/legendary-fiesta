@@ -34,6 +34,15 @@
   background-color: #4c494a;
   color: white;
 }
+
+.page_menu button[name=feuillederoute] {
+  background-size: 90px;
+  background-position-x: 20px;
+  background-image: url("../images/ico-reseau-dynamique-livraison-orange-fdr70x70.png");
+}
+.page_menu button[name=feuillederoute]:hover {
+  background-image: url("../images/ico-reseau-dynamique-livraison-blanc-fdr70x70.png");
+}
 .page_menu button[name=livrer] {
   background-size: 90px;
   background-position-x: 20px;

@@ -294,14 +294,14 @@
 <body onload="updateBonCommandes();">
     <div name='bonCommande' class='base_page_boncommande serializable'>
     <form id="frm" name="frm" action=""> 
-        <table style="border-width:12px;border-color:black;">
+        <table style="border-width:12px;border-color:black;width: 100%;">
             <tr>
                 <td style="width:33%;text-align:center;"><img alt='LOGO JOLIETTE' style="width: 262px; height: 110px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>
                 <td style="width:33%;text-align:center;">
                     <label class="h1bonCommande">Bons de commande</label>
                     <br/>
                 </td>
-                <td style="width:33%;text-align:right;" valign="middle">
+                <td style="width:34%;text-align:right;" valign="middle">
                     <table class="tableMenuTop">
                         <tr>
                             <td></td>
@@ -325,18 +325,19 @@
                         </tr>
                         <tr>
                             <td></td>
+                            <td></td>
                             <td style="padding-top: 5px;text-align: left;" colspan="3">
                                 Afficher pour: 
                                 <input type='date' id='tbDateChoisie'/>
                                 <input type='button' value='go!' onclick='_dateChoisie=document.getElementById("tbDateChoisie").value;if(_dateChoisie == "" )_dateChoisie = "null";updateBonCommandes();' id='btnAfficherPourDate' />
-                            </td>
-                            <td style="padding-top: 5px" colspan="1">
+                                &nbsp;
                                 <a href="boncommandearchives.php">Archivés</a>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td style="padding-top: 5px;text-align: left;" colspan="4">
+                            <td></td>
+                            <td style="padding-top: 5px;text-align: left;" colspan="3">
                                 Rechercher : 
                                 <input type='text' id='tbRecherche' name='tbRecherche' />
                                 <input type='button' value='go!' onclick='_recherche = document.getElementById("tbRecherche").value; recherche();' id='btnAfficherPourDate' />

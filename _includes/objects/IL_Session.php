@@ -351,10 +351,8 @@ class IL_Session
             //    throw new SessionCookieSecureException();
             //}
             $params = session_get_cookie_params();
-            session_set_cookie_params($params['lifetime'],
-                $params['path'], $params['domain'],
-                $secure, $httponly
-            );
+            session_set_cookie_params(self::$SESSION_AGE,$params['path'], $params['domain'],$secure, $httponly);
+            
             return session_start();
         }
         // Helps prevent hijacking by resetting the session ID at every request.

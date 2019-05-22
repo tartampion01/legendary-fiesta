@@ -89,10 +89,12 @@ function callPushQueriesFromLocalForage() {
         var message, type;
 
         if(data == 'DONE') {
+            
             console.log('DONE');
             $('.loading').hide();
-            message = 'Les données ont été synchronisées avec succès!';
-            type = 'success';
+            //message = 'Les données ont été synchronisées avec succès!';
+            message = 'Les données sont en cours de synchronistaion...Merci de patienter';
+            type = 'info';
             
             window.localStorage.removeItem('ELITE_DAY_DATA');
 
@@ -101,7 +103,9 @@ function callPushQueriesFromLocalForage() {
             pData.sortBy = null;
             pData.orderBy = null;
             try{
-                fetchRecords(pData);
+                // attendre 5 secondes avant de rafraichir
+                window.setTimeout(function(){fetchRecords(pData);}, 5000);
+                //fetchRecords(pData);
             }
             catch(error) {
                 console.error(error);
@@ -119,8 +123,8 @@ function callPushQueriesFromLocalForage() {
             type: type,
             title: message,
             showConfirmButton: false,
-            timer: 3500
-        });
+            timer: 8000
+        });        
     });
 }
 

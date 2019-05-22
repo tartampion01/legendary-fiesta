@@ -138,7 +138,7 @@
                                 <div class="">
                                     <input type="text" name="tbClient[]" id="tbClient1" value="" maxlength="100" class="input" list="dlClients"></input>
                                     <datalist id="dlClients" name="dlClients">
-                                        <?php echo IL_Utils::GetClientsViewData(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                                        <?php echo IL_Utils::getDistinctDestinataires(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                                     </datalist>
                                 </div>
                             </div>

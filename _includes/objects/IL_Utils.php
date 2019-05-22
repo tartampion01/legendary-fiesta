@@ -189,34 +189,6 @@ class IL_Utils
         return $data == "" ? $option_o . $option_c : $data;
     }
     
-    public static function GetClientsViewData($succursale){
-        
-        $data = "";
-        $sql = "";
-        $option_o = "<option value='";
-        $option_c = "</option>";
-        
-        $conn = IL_Database::getConn();
-        
-        $sql = "SELECT destinataire FROM vCLIENTS_" . strtoupper($succursale) . " ORDER BY destinataire ASC";
-        
-        $result = mysqli_query($conn, $sql);
-
-        try
-        {
-            if(mysqli_num_rows($result) > 0){
-                while($row = mysqli_fetch_assoc($result)) {
-                    $data .= $option_o .  $row["destinataire"] . "'>" . $option_c;
-                }
-            }
-        }
-        catch (Exception $e) {
-            //echo $e;
-        }
-
-        return $data == "" ? $option_o . "'>" . $option_c : $data;
-    }
-    
     public static function getBonCommande($succursale){
         
         /*

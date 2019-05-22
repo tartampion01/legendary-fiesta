@@ -61,7 +61,7 @@ class IL_Utils
                          '<a href="livraisonElite.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>' .
                          '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
                          '<a href="utilisateurs.php" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>' .
-                         '<a href="livraisonElite.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
+                         '<a href="livraison.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
                          '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
             // COMPTOIR -> Affiche la page de livraison normale + recherche
@@ -132,14 +132,14 @@ class IL_Utils
     /***
      * For autocomplete
      */
-    public static function getDistinctDestinataires(){
+    public static function getDistinctDestinataires($succursale=null){
         
         $destinataires = "";
         $option_o = "<option>";
         $option_c = "</option>";
         
-        $conn = IL_Database::getConn();
-        $sql = "SELECT * FROM viewDestinataires";
+        $conn = IL_Database::getConn();            // Si on a une succursale on filtre selon
+        $sql = "SELECT * FROM viewDestinataires" . (is_null($succursale) ? "" : " WHERE succursale='$succursale'");
         
         $result = mysqli_query($conn, $sql);
         
@@ -214,7 +214,7 @@ class IL_Utils
             //echo $e;
         }
 
-        return $data == "" ? $option_o . $option_c : $data;
+        return $data == "" ? $option_o . "'>" . $option_c : $data;
     }
     
     public static function getBonCommande($succursale){

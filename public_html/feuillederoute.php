@@ -214,7 +214,7 @@
             <div class="col-xs-3">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input type="text" name="tbFacture[]" id="tbFacture${counter}" value="" maxlength="20"  class="input"></input><br>
+                        <input type="text" name="tbFacture[]" id="tbFacture${counter}" value="" maxlength="50"  class="input"></input><br>
                     </div>
                 </div>
             </div>

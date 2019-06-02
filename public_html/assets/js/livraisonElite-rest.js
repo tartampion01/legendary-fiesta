@@ -280,7 +280,7 @@ function fetchRecords(postData) {
     
     var params = {
         currentPage : currentPage,
-        limitPerPage : 50,
+        limitPerPage : 100,
         filterRows: postData.filterRows,
         sortBy: postData.sortBy,
         orderBy: postData.orderBy

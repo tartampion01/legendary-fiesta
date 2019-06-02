@@ -1,6 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
     require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
+    
+    ini_set('session.gc_maxlifetime', 2592000);
+    ini_set('session.cookie_lifetime', 2592000);
+    session_set_cookie_params(2592000);
+
+    session_start();
+    IL_Session::start();
 ?>
 
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
@@ -97,18 +104,26 @@
 //                                        IL_Session::w(IL_SessionVariables::LEVEL,false);
 //                                        IL_Session::w(IL_SessionVariables::SUCCURSALE,false);
 
-                                        session_start();
-                                        $_SESSION = array();
+//                                        ini_set('session.gc_maxlifetime', 604800);
+//                                        session_set_cookie_params(604800);
+//                                        
+//                                        session_start();
+//                                        IL_Session::start();
+                                        
+                                        //$_SESSION = array();
                                         
                                         $user = new IL_Users();
                                         $user->load(0,'',$username,0);
-                                        IL_Session::w(IL_SessionVariables::USERNAME,$user->username);
-                                        IL_Session::w(IL_SessionVariables::ID_USER,$user->id);
-                                        IL_Session::w(IL_SessionVariables::LEVEL,$user->level);
-                                        IL_Session::w(IL_SessionVariables::SUCCURSALE,$user->succursale);
                                         
-                                        setcookie('username', $user->username, time() + (86400 * 30), "/");
-                                        setcookie('succursale', $user->succursale, time() + (86400 * 30), "/");
+                                        IL_Session::w(IL_SessionVariables::USERNAME,  $user->username);
+                                        IL_Session::w(IL_SessionVariables::SUCCURSALE,$user->succursale);
+                                        IL_Session::w(IL_SessionVariables::ID_USER,   $user->id);
+                                        IL_Session::w(IL_SessionVariables::LEVEL,     $user->level);
+                                        
+                                        setcookie('USERNAME', $user->username, time() + (2592000), "/");
+                                        setcookie('SUCCURSALE', $user->succursale, time() + (2592000), "/");
+                                        setcookie('ID_USER', $user->id, time() + (2592000), "/");
+                                        setcookie('LEVEL', $user->level, time() + (2592000), "/");
                                         
                                         header('Location: ' . "default.php");
                                         
@@ -122,7 +137,7 @@
                                 $username_err = 'Ce compte n\'existe pas.';
                             }
                         } else{
-                            echo "Houla! Une grave erreur s'est produite";
+                            echo "Houla! Une grave erreur s'est produite [mysqli_stmt_execute($ stmt)]";
                         }
                     }
                     // Close statement

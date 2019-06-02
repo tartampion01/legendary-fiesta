@@ -1,4 +1,5 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php'); ?>
+
 <script type="text/javascript">
     function loadForm()
     {
@@ -33,7 +34,6 @@
         <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
         <div id="entete" class="row">
             <div id="menu" class="col-xs-3 col-sm-2">
-                <!--<a href="<?php //echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">-->
                 <a href="default.php" class="home-link">
                     <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
                 </a>
@@ -59,43 +59,56 @@
                     $i = 0;
                     $errNB = 0;
                     
-                    //print_r($_POST);
-                    
-                    // Loop dans les controles générés dynamiquement (ou pas!!)
-                    // Ajouter ligne de livraison pour chaque ligne
-                    foreach( $tbClients as $client )
-                    {
-                        $employeInfo = explode( ':', $_POST["cboUserNames"]); // --> id_user:username
-                        $employeId = $employeInfo[0];
-                        $employe = $employeInfo[1];
-                        
-                        $date = $_POST["tbDate"];
-                        $facture = $_POST["tbFacture"];
-                        $colis = $_POST["tbColis"];
-                        
-                        $new_id = IL_Utils::addFeuilleDeRoute($succ, $employeId, $employe, $date, $client, $facture[$i], $colis[$i]);
-                        
-                        $i++;
-                        
-                        if( $new_id == 0 )
-                            $errNB = $errNB + 1;
-                        
+                    try {
+                         // Loop dans les controles générés dynamiquement (ou pas!!)
+                        // Ajouter ligne de livraison pour chaque ligne
+                        foreach( $tbClients as $client )
+                        {
+                            $employeInfo = explode( ':', $_POST["cboUserNames"]); // --> id_user:username
+                            $employeId   = $employeInfo[0];
+                            $employe     = $employeInfo[1];
+
+                            $date = $_POST["tbDate"];
+                            $facture = $_POST["tbFacture"];
+                            $colis = $_POST["tbColis"];
+
+                            $new_id = IL_Utils::addFeuilleDeRoute($succ, $employeId, $employe, $date, $client, $facture[$i], $colis[$i]);
+
+                            $i++;
+
+                            if( $new_id == 0 )
+                                $errNB = $errNB + 1;
+                        }
+
+                        if( $errNB == 0 )
+                        {
+                            $message = "Feuille de route ajoutée avec succès";
+
+                            IL_Error::log("OK FEUILLE DE ROUTE USER=[".IL_Session::r(IL_SessionVariables::USERNAME) ."]" . " SUCC=[".IL_Session::r(IL_SessionVariables::SUCCURSALE) ."]");
+
+                            // On ne redirige pas si c'est un admin
+                            if( IL_Session::r(IL_SessionVariables::LEVEL) != iUserLevel::ADMIN )
+                                echo '<script type="text/javascript">window.location="livraisonElite.php";</script>';
+                        }                    
+                        else
+                        {
+                            $message = "Erreur dans la création de la feuille de route";
+                            IL_Error::log("ERREUR FEUILLE DE ROUTE errNB=[$errNB] USER=[".IL_Session::r(IL_SessionVariables::USERNAME) ."]" .
+                                                                  " SUCC=[".IL_Session::r(IL_SessionVariables::SUCCURSALE) ."]");
+                        }
                     }
-                    
-                    if( $errNB == 0 )
-                    {
-                        $message = "Feuille de route ajoutée avec succès";
-                        echo '<script type="text/javascript">window.location="livraisonElite.php";</script>';
-                    }                    
-                    else
-                        $message = "Erreur dans la création de la feuille de route";
+                    catch (Exception $e) {
+                        IL_Error::log($e->getMessage());
+                    }   
+                }
+                else
+                {
+                    //
                 }
             }
             else
             {
-                
             }
-        
         ?>
     <div id="contenu">
         <div name='mod_livraison' class='module_livraison base_module col-lg-offset-2 col-lg-8 serializable' >
@@ -117,10 +130,10 @@
                                 <div class="col-xs-12 label">Livreur :&nbsp;
                                     <select id="cboUserNames" name="cboUserNames">
                                         <?php
-                                            if( IL_Session::r(IL_SessionVariables::LEVEL) == iUserLEvel::LIVREUR )
+                                            if( IL_Session::r(IL_SessionVariables::LEVEL) == iUserLevel::LIVREUR )
                                                 echo "<option value='" . IL_Session::r(IL_SessionVariables::ID_USER) . ":" . IL_Session::r(IL_SessionVariables::USERNAME) . "'>" . IL_Session::r(IL_SessionVariables::USERNAME) . "</option>";
                                             else
-                                                echo IL_Utils::getUsersDropDownForSuccursale(IL_Session::r(IL_SessionVariables::SUCCURSALE), iUserLEvel::LIVREUR);
+                                                echo IL_Utils::getUsersDropDownForSuccursale(IL_Session::r(IL_SessionVariables::SUCCURSALE), iUserLevel::LIVREUR);
                                         ?>
                                     </select>
                                 </div>
@@ -149,7 +162,7 @@
                                     #facture
                                 </div>
                                 <div class="">
-                                    <input type="text" name="tbFacture[]" id="tbFacture1" value="" autocomplete="off" maxlength="50" class="input"></input>
+                                    <input type="text" name="tbFacture[]" id="tbFacture1" value="" maxlength="50" autocomplete="off" class="input"></input>
                                 </div>
                             </div>
                         </div>
@@ -207,21 +220,21 @@
             <div class="col-xs-3">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input type="text" name="tbClient[]" id="tbClient${counter}" value="" maxlength="20"  class="input"></input><br>
+                        <input type="text" name="tbClient[]" id="tbClient${counter}" value="" maxlength="20"  class="input" list="dlClients"></input><br>
                     </div>
                 </div>
             </div>
             <div class="col-xs-3">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input type="text" name="tbFacture[]" id="tbFacture${counter}" value="" maxlength="50"  class="input"></input><br>
+                        <input type="text" name="tbFacture[]" id="tbFacture${counter}" value="" maxlength="50" autocomplete="off" class="input"></input><br>
                     </div>
                 </div>
             </div>
             <div class="col-xs-3">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input type="text" name="tbColis[]" id="tbColis${counter}" value="" maxlength="20"  class="input"></input>
+                        <input type="text" name="tbColis[]" id="tbColis${counter}" value="" maxlength="50" autocomplete="off" class="input"></input>
                     </div>
                 </div>
             </div>

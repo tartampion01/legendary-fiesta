@@ -9,32 +9,56 @@
     header("Access-Control-Allow-Methods: PUT, GET, POST");
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
+    require_once(dirname(__DIR__).'/commonIncludes.php');
+
     if (session_status() == PHP_SESSION_NONE) {
+        //$username = isset($_COOKIE['username'])?$_COOKIE['username']:"NO USER NAME";
+        //$succursale = isset($_COOKIE['succursale'])?$_COOKIE['succursale']:"NO SUCCURSALE";
+        
+        //IL_Error::log("PHP_SESSION_NONE, USERNAME=[$username] SUCCURSALE=[$succursale]");
+        ini_set('session.gc_maxlifetime', IL_Session::getSessionAge());
         session_start();
     }
-
-    require_once(dirname(__DIR__).'/commonIncludes.php');
+    else {}
 
     // Personne de 'loggé' --> back to login
     if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
-        header('Location: ' . "../login.php");
-
-    // Load logged user
-    if(isset($_COOKIE['username'])){
-        $user = new IL_Users();
-        //$user->load(0, '', $_COOKIE['username'],0);
-        $user->load(0, '', IL_Session::r(IL_SessionVariables::USERNAME),0);
+    {
+        // header('Location: ' . "../login.php");
+        // back to previous page
+        $gotoLogin = 0;
+        
+        // If we have cookie data we load the session with it
+        if(isset($_COOKIE['USERNAME']))  { IL_Session::w(IL_SessionVariables::USERNAME,  $_COOKIE['USERNAME']);   $gotoLogin++; }
+        if(isset($_COOKIE['SUCCURSALE'])){ IL_Session::w(IL_SessionVariables::SUCCURSALE,$_COOKIE['SUCCURSALE']); $gotoLogin++; }
+        if(isset($_COOKIE['ID_USER']))   { IL_Session::w(IL_SessionVariables::ID_USER,   $_COOKIE['ID_USER']);    $gotoLogin++; }
+        if(isset($_COOKIE['LEVEL']))     { IL_Session::w(IL_SessionVariables::LEVEL,     $_COOKIE['LEVEL']);      $gotoLogin++; }
+        
+        if( $gotoLogin == 0 ){ // Cookie info was missing
+            IL_Error::log("Expired Session & Cookie info was missing");
+            header('Location: ' . "../login.php");
+        }
+        else // recreate user and keep on keeping on!!
+        {
+            IL_Error::log("Session data was restored from COOKIES" . print_r($_COOKIE, true));
+            $user = new IL_Users();
+            $user->load(0, '', IL_Session::r(IL_SessionVariables::USERNAME),0);
+        }
+    }
+    else{
+        // Load logged user
+        if(isset($_COOKIE['USERNAME'])){
+            $user = new IL_Users();
+            //$user->load(0, '', $_COOKIE['username'],0);
+            $user->load(0, '', IL_Session::r(IL_SessionVariables::USERNAME),0);
+        }
     }
     
-    // Don't show errors on webpage
-    error_reporting(0);
-    // Show errors on webpage
-    //error_reporting(E_ALL);
-
     $NOMPAGE = htmlspecialchars(basename($_SERVER['PHP_SELF']));
     // REQUIRED BY ALL PAGES
     // COMMON INCLUDES --> DB / FUNCTIONS / OBJECTS
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
 <head>
@@ -86,17 +110,12 @@
     <link rel="stylesheet" type="text/css" href="assets/css/awesomplete/awesomplete.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/recherche.css" />
         
-    <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
-    
-    <script type="application/javascript">
-        // Set listeClients in localStoage
-        //var listeClients = '<?php echo IL_Utils::getDistinctDestinataires() ?>';
-        //localStorage.setItem('listeClients', listeClients);
-    </script>
 </head>
     
     <?php 
-        //echo IL_Session::dump();
+        var_dump($_SESSION);
+        echo '</br>';
+        var_dump($_COOKIE);
     ?>
     <!--<div class="offline-ui"></div>-->
     <div class="loading" style="display: none;">Loading&#8230;</div>

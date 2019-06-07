@@ -40,7 +40,7 @@
         }
         else // recreate user and keep on keeping on!!
         {
-            IL_Error::log("Session data was restored from COOKIES" . print_r($_COOKIE, true));
+            IL_Error::log("Session data was restored from COOKIES --> " . print_r($_COOKIE, true));
             $user = new IL_Users();
             $user->load(0, '', IL_Session::r(IL_SessionVariables::USERNAME),0);
         }
@@ -69,7 +69,8 @@
     <meta http-equiv="Expires" content="0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
     <script type="application/javascript" src="assets/js/jquery.min.js"></script>
@@ -113,9 +114,9 @@
 </head>
     
     <?php 
-        var_dump($_SESSION);
-        echo '</br>';
-        var_dump($_COOKIE);
+        //var_dump($_SESSION);
+        //echo '</br>';
+        //var_dump($_COOKIE);
     ?>
     <!--<div class="offline-ui"></div>-->
     <div class="loading" style="display: none;">Loading&#8230;</div>

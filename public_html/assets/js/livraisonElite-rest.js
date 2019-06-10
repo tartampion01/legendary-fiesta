@@ -6,10 +6,11 @@ $( document ).ready(function() {
     postData.orderBy = null;
 
     var ID_LIVRAISON = -1;
-    var CLICKED_TR = null;
     var SIGNATURE_TD = null;
     var CLICKED_NAME = null;
     var CLICKED_TIME = null;
+
+    var DELETING = false;
     
     var $sigdiv = $('.jSignature');
     
@@ -78,35 +79,56 @@ $( document ).ready(function() {
     });
     */
     
+    // Bind click on delete image
+    $('body').on('click', '#imgDelete', function() {
+
+        DELETING = true;
+        
+        // $this = image. Parent1 = TD, parent2 = TR
+        ID_LIVRAISON = $(this).parent().parent().find('.isHidden').find('span').html();
+
+        overlay(true);
+        
+        // Afficher la div pour supprimer
+        $('#divConfirmDelete').attr('style','visibility:visible;background-color: white; margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:fixed;left:50%;transform: translate(-50%, 0);top:1px;');
+        
+    });
+    
+    $('#btnDeleteNo').click(function(){
+        overlay(false);
+        $('#divConfirmDelete').attr('style','visibility:hidden;');
+        DELETING = false;
+    });
+    
     // Bind click on result rows (to edit page)
     $('body').on('click', '.results-container tr', function() {
 
-        var row = $(this);
+        if( !DELETING ){
         
-        ID_LIVRAISON = row.find('.isHidden').find('span').html();
+            ID_LIVRAISON = $(this).find('.isHidden').find('span').html();
 
-        CLICKED_TR = $(this);
-        SIGNATURE_TD = CLICKED_TR.find('.signature').find('td');
-        CLICKED_NAME = CLICKED_TR.find('.nomSignataire').find('span');
-        CLICKED_TIME = CLICKED_TR.find('.dateLivraison').find('span');
-        
-        //id_livraison = row.find('.'
-        overlay(true);
-        
-        // Affiche la div pour la signature avec nom déjà présent
-        $('#tbNomSignataire').val(CLICKED_NAME.text());
-        $sigdiv.jSignature('reset');
-        
-        // Afficher la div avec le canvas
-        //$('#divCentreeSignature').attr('style','visibility:visible;background-color: white; width: 50%; height: 260px;margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:relative;');
-        $('#divCentreeSignature').attr('style','visibility:visible;background-color: white; margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:fixed;left:50%;transform: translate(-50%, 0);top:1px;');
-        $('#tbNomSignataire').focus();
-        
-        //console.log($('.jSignature').jSignature());
-        // Destroy the signature plugin instance
-        $sigdiv.jSignature('enable');
-        
-        //window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
+            SIGNATURE_TD = $(this).find('.signature').find('td');
+            CLICKED_NAME = $(this).find('.nomSignataire').find('span');
+            CLICKED_TIME = $(this).find('.dateLivraison').find('span');
+
+            //id_livraison = row.find('.'
+            overlay(true);
+
+            // Affiche la div pour la signature avec nom déjà présent
+            $('#tbNomSignataire').val(CLICKED_NAME.text());
+            $sigdiv.jSignature('reset');
+
+            // Afficher la div avec le canvas
+            //$('#divCentreeSignature').attr('style','visibility:visible;background-color: white; width: 50%; height: 260px;margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:relative;');
+            $('#divCentreeSignature').attr('style','visibility:visible;background-color: white; margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:fixed;left:50%;transform: translate(-50%, 0);top:1px;');
+            $('#tbNomSignataire').focus();
+
+            //console.log($('.jSignature').jSignature());
+            // Destroy the signature plugin instance
+            $sigdiv.jSignature('enable');
+
+            //window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
+        }
         
     });
     
@@ -142,7 +164,7 @@ $( document ).ready(function() {
             imgSRC = '<span id="imgSRC" style="display:none;">' + i.src + '</span>';
             signature = '<div class="svgSignature"><svg viewBox="0 0 600 150">' + svg + '</svg></div>';
             
-            SIGNATURE_TD.context.cells[6].innerHTML = imgSRC + signature;
+            SIGNATURE_TD.context.cells[7].innerHTML = imgSRC + signature;
         }
         catch(error) {
             //alert('Error found');
@@ -235,6 +257,84 @@ $( document ).ready(function() {
                     }
                     
                     window.localStorage.setItem('ELITE_DAY_DATA', JSON.stringify(json));
+                }
+            }
+        })
+    });
+
+    $('#btnDeleteYes').click(function(){
+        overlay(false);
+        $('#divConfirmDelete').attr('style','visibility:hidden;');
+        DELETING = false;
+        
+        // SAUVEGARDE DB OU LOCALFORAGE
+        $('tr.serializable').each(function() {
+
+            var id = $(this).find('.isHidden').find('span').html();
+            
+            if( ID_LIVRAISON == id ){
+                var postData = {
+                    id_livraison: id,
+                    delete: true
+                };
+
+                // Check connection is up/down
+                if(Offline.state == 'up' && navigator.onLine) {
+                    // Create livraison over ajax
+                    url = 'api/delete-livraison.php';
+
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: {'postData': JSON.stringify(postData)},
+                        //contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: true,
+                        cache: false,
+                        success: function(data){
+                            console.log(data);
+
+                            swal({
+                                position: 'top-end',
+                                type: 'warning',
+                                title: 'Livraison supprimée!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+
+                            //location.reload();
+                            var pData = {};
+                            pData.filterRows = null;
+                            pData.sortBy = null;
+                            pData.orderBy = null;
+                            fetchRecords(pData);
+                        },
+                        error: function(errMsg) {
+                            console.log(errMsg);
+                        }
+                    });
+
+                    console.log(postData);
+                }
+                else if(Offline.state == 'down' || !navigator.onLine) {
+                    // Store the query into localForage
+                    insertQueryIntoLocalForageForDelete(postData);
+                    
+                    //delete line from localStorage
+                    json = JSON.parse(window.localStorage.getItem('ELITE_DAY_DATA'));
+                    var found = false;
+                    var i = 0;
+                    while( i < json.length && !found )
+                    {
+                        if( json[i].id_livraison == ID_LIVRAISON ){
+                            delete json[i];
+                            found = true;
+                        }
+                        i++;
+                    }
+                    
+                    window.localStorage.setItem('ELITE_DAY_DATA', JSON.stringify(json));
+                    loadOfflineData();
                 }
             }
         })

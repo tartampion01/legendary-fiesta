@@ -115,10 +115,10 @@ $( document ).ready(function() {
                 array_colis.push(tmpItem);
             });
             postData.array_colis = array_colis;
-//alert('navigator.onLine : '+navigator.onLine);
+
             // Check connection is up/down
             if(Offline.state == 'up' && navigator.onLine) {
-//alert('Connection is UP');
+
                 // Create livraison over ajax
                 if(edit_page == true) {
                     url = 'api/update-livraison.php';
@@ -204,6 +204,26 @@ function insertQueryIntoLocalForage(postData) {
             title: 'Livraison enregistrée!',
             showConfirmButton: false,
             timer: 1500
+        });
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log(err);
+    });
+}
+
+function insertQueryIntoLocalForageForDelete(postData) {
+    
+    var timestamp = new Date().valueOf();
+    localforage.setItem('query-'+timestamp, postData).then(function (value) {
+        // Do other things once the value has been saved.
+        console.log(value);
+        
+        swal({
+            position: 'top-end',
+            type: 'warning',
+            title: 'Livraison supprimée',
+            showConfirmButton: false,
+            timer: 1111
         });
     }).catch(function(err) {
         // This code runs if there were any errors

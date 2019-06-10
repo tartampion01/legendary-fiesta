@@ -1376,7 +1376,7 @@ table.tableHaut tr td.ajouter { width: 5%; }
 table.tableData tr.trHeader td { font-size: 13px; font-family: verdana;font-weight: bold;background-color: gray;}
 table.tableData tr td { font-size: 11px; font-weight: bold; font-family: verdana;}
 
-                
+/* NOT USED LET COLUMNS BE SHAPED BY HEADER 13/05/2019
 table.tableData tr td.edit{ width: 1%;}
 table.tableData tr td.endroitPickup { width: 11%;}
 table.tableData tr td.bonCommande { width: 11%;}
@@ -1388,6 +1388,7 @@ table.tableData tr td.heure { width: 2%;}
 table.tableData tr td.directiveSpeciale { width: 20%;}
 table.tableData tr td.statut { width: 10%; }
 table.tableData tr td.ajouter { width: 5%; }
+*/
 
 table.tableData tr td select{background-color: #C5C5C5;}
 

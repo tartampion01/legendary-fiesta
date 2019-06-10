@@ -6,7 +6,7 @@
   margin-top: 50px;
 }
 .page_login .login {
-  margin-top: 100px;
+  margin-top: 20px;
   color: white;
   line-height: 2em;
 }
@@ -32,6 +32,7 @@
   width: 100%;
 }
 .page_login .loginBox {
-  padding: 15px;
+  padding: 10px;
+  border-radius: 25px;
   background-color: rgba(255, 255, 255, 0.2);
 }

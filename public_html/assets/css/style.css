@@ -1,6 +1,8 @@
 .isHidden {
   display: none !important;
 }
+
+
 .isInvalid {
   border: 2px solid red !important;
 }

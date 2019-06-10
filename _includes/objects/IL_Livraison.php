@@ -307,6 +307,46 @@ class IL_Livraison{
             return false;
     }
     
+    // Delete --> nullify line instead of really deleting
+    function delete($livraison) {
+        
+//        $conn = IL_Database::getConn();
+//        $sql = "DELETE FROM livraisons WHERE id_livraison=$livraison->id_livraison"; 
+//      
+//        //echo $sql;
+//        $stmt = $conn->prepare($sql);
+//        
+//        if($stmt->execute()){
+//            return true;
+//        }
+//        return false;
+        
+        $conn = IL_Database::getConn();
+        $null = NULL;
+        $del = "DELETED";
+        
+        $sql = "UPDATE livraisons SET dateLivraison=?," . 
+                " destinataire=?,".
+                " nomSignataire=?,".
+                " signature=?,".
+                " noEmploye=?,".
+                " colis=?,".
+                " facture=?,".
+                " id_user=?,".
+                " dateHumain=?,".
+                " succursale=?".
+                " WHERE id_livraison=$livraison->id_livraison";
+      
+        $stmt = $conn->prepare($sql);
+        
+        $stmt->bind_param("ssssssssss", $null, $null, $null, $null, $null, $null, $null, $null, $del, $null );
+        
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
+    }
+    
     function save($livraison) {
         $arrayColis = (array)$livraison->colis[0]; // pour convertr de stdClass
         $colis = $arrayColis["colis"];

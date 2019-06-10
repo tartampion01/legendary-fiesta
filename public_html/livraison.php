@@ -26,7 +26,6 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="row">
-                            <div class=col-xs-12>Date de livraison</div>
                             <div class="col-xs-12">
                                 <input type="text" name="tbDate" id="tbDate" value="<?php //echo $date; ?>" readonly="" maxlength="200"  class="input "></input>
                             </div>
@@ -34,11 +33,8 @@
                     </div>
                     <div class="col-xs-6">
                         <div class="row">
-                            <div class="col-xs-12 label">
-                                Employé
-                            </div>
                             <div class="col-xs-12">
-                                <input type="text" name="tbEmploye" id="tbEmploye" value="" maxlength="10"  class="input "></input>
+                                <input type="text" name="tbEmploye" placeholder="Employé" id="tbEmploye" value="" maxlength="10"  class="input "></input>
                             </div>
                         </div>
                     </div>
@@ -49,33 +45,22 @@
                 <div name="row1" class="row clonable serializable">
                     <div class="col-xs-5">
                         <div class="row">
-                            <div class="col-xs-12 label">
-                                Facture
-                            </div>
                             <div class="col-xs-12">
-                                <input type="text" name="tbNoFacture[]" id="tbNoFacture1" value="" maxlength="50"  class="input"></input><br>
+                                <input type="text" name="tbNoFacture[]" placeholder="Facture" id="tbNoFacture1" value="" maxlength="50"  class="input"></input><br>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-5">
                         <div class="row">
-                            <div class="col-xs-12 label">
-                                Colis
-                            </div>
                             <div class="col-xs-12">
-                                <input type="text" name="tbNoColis[]" id="tbNoColis1" value="" maxlength="20"  class="input"></input><br>
+                                <input type="text" name="tbNoColis[]" placeholder="Colis" id="tbNoColis1" value="" maxlength="20"  class="input"></input><br>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-2 center">
-                        <div class="row">
-                            <div class="col-xs-12 label">
-                                &nbsp;
-                            </div>
-                            <div class="col-xs-12">
-                                <i name="moins" class="removeItem buttonStyle fas fa-minus" style="display: none;"></i>
-                                <i name="plus" class="addItem firstItemRow buttonStyle fas fa-plus" data-item-row="1"></i>
-                            </div>
+                        <div class="col-xs-12">
+                            <i name="moins" class="removeItem buttonStyle fas fa-minus" style="display: none;"></i>
+                            <i name="plus" class="addItem firstItemRow buttonStyle fas fa-plus" data-item-row="1"></i>
                         </div>
                     </div>
                 </div>
@@ -84,9 +69,8 @@
             <section>
                 <div class="row">
                     <div class="col-md-12">
-                        <span class="label">Destinataire </span>
                         <div class="awesomplete">
-                            <input name="tbDestinataire" id="tbDestinataire" value="" list="listeClients" maxlength="100" class="input awesomplete" autocomplete="off" aria-autocomplete="list" type="text">
+                            <input name="tbDestinataire" placeholder="Destinataire" id="tbDestinataire" value="" list="listeClients" maxlength="100" class="input awesomplete" autocomplete="off" aria-autocomplete="list" type="text">
                         </div>
                         <datalist id="listeClients"><?php echo IL_Utils::getDistinctDestinataires(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?></datalist>
                     </div>
@@ -95,8 +79,7 @@
             <section>
                 <div class="row">
                     <div class="col-md-12">
-                        <span class="label">Nom du signataire </span>
-                        <input type="text" name="tbNomSignataire" id="tbNomSignataire" value="" autocomplete="off" maxlength="200" class="input "></input>
+                        <input type="text" name="tbNomSignataire" placeholder="Nom du signataire" id="tbNomSignataire" value="" autocomplete="off" maxlength="200" class="input "></input>
                     </div>
                 </div>
             </section>

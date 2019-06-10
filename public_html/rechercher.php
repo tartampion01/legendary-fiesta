@@ -5,7 +5,6 @@
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row">
         <div id="menu" class="col-xs-3 col-sm-2">
-            <!--<a href="<?php //echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">-->
             <a href="default.php" class="home-link">
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
@@ -58,15 +57,10 @@
                         <div class="col-xs-5">
                             <input type="text" name="value" id="value1" value="" maxlength="200" class="input">
                             <i name="delete" class="buttonStyle fas fa-minus" style="display: none;"></i>
+                            <i name="plus" class="addItemFilter firstItemRow buttonStyle fas fa-plus pull-left" data-item-row="1"></i>
                         </div>
                     </div>
                     
-                </div>
-                <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-xs-5">
-                        <i name="plus" class="addItemFilter firstItemRow buttonStyle fas fa-plus pull-left" data-item-row="1"></i>
-                    </div>
-                    <div class="col-xs-7">&nbsp;</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-offset-4 col-xs-4">
@@ -161,6 +155,7 @@
     </div>
     
     <div class="converter" style="display: none;"></div>
+    
 </body>
 </html>
 

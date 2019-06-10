@@ -148,8 +148,8 @@
                                 <div class="label">
                                     Client
                                 </div>
-                                <div class="">
-                                    <input type="text" name="tbClient[]" id="tbClient1" value="" maxlength="100" class="input" list="dlClients"></input>
+                                <div class="col-xs-12">
+                                    <input type="text" name="tbClient[]" id="tbClient1" style="width:200px;" value="" maxlength="100" class="input" list="dlClients"></input>
                                     <datalist id="dlClients" name="dlClients">
                                         <?php echo IL_Utils::getDistinctDestinataires(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                                     </datalist>
@@ -220,7 +220,7 @@
             <div class="col-xs-3">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input type="text" name="tbClient[]" id="tbClient${counter}" value="" maxlength="20"  class="input" list="dlClients"></input><br>
+                        <input type="text" name="tbClient[]" id="tbClient1${counter}" style="width:200px;" value="" maxlength="100" class="input" list="dlClients"></input>
                     </div>
                 </div>
             </div>

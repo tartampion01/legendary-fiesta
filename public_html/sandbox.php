@@ -1,8 +1,25 @@
-<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
+<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');
+
+phpinfo();
+
+echo session_status() . "  -  ";
+echo IL_Session::getSessionAge();
+
+IL_Error::log("ERREUR FEUILLE DE ROUTE USER=[".IL_Session::r(IL_SessionVariables::USERNAME) ."]" .
+                                                                  "SUCC=[".IL_Session::r(IL_SessionVariables::SUCCURSALE) ."]");
+
+echo "LEVEL=" . $applicationConfig['LOG_LEVEL'];
+
+if( $applicationConfig['LOG_LEVEL'] == 1 ){
+    echo "un";
+}
+else
+    echo "seize";
+?>
 
 <script type="text/javascript">
     
-    setTimeout(checkConnectionStatus, 1000);
+    //setTimeout(checkConnectionStatus, 1000);
     
     function doesConnectionExist() {
         var xhr = new XMLHttpRequest();
@@ -81,9 +98,9 @@
                     <a class="GpcMenuCategoryTitle" tabindex="">dateLivraison</a>
                     <ul class="dateLivraison" style="">
                         <?PHP $results = selectLivraisonsDisctinctCriteria('dateLivraison', ' id_livraison>0 ', 'COUNT', 'DESC' ); ?>
-                            <?PHP foreach($results as $key => $value){ ?>
+                            <?PHP //foreach($results as $key => $value){ ?>
                             <li class="GpcMenuItem filter-link" data-field='dateLivraison' data-value='<?PHP echo $key ?>' data-custom-criteria=' id_livraison>0 ' data-selected="false">
-                                <?PHP echo "<a class='GpcItemTitle' href='javascript:void(0);'>$key <span class='GpcMenuItemCount'>($value)</span></a>";} ?>
+                                <?PHP //echo "<a class='GpcItemTitle' href='javascript:void(0);'>$key <span class='GpcMenuItemCount'>($value)</span></a>";} ?>
                             </li>
                     </ul>
                 </li>

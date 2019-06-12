@@ -511,31 +511,38 @@ function sortTable(n) {
       /* Loop through all table rows (except the
       first, which contains table headers): */
       // -1 because of empty row at bottom  
-      for (i = 1; i < (rows.length - 1); i++) {
-        // Start by saying there should be no switching:
-        shouldSwitch = false;
-        /* Get the two elements you want to compare,
-        one from current row and one from the next: */
-        //x = rows[i].getElementsByTagName("TD")[n];
-        x = rows[i].cells[n].getElementsByTagName('span')[0].innerHTML;
-        //y = rows[i + 1].getElementsByTagName("TD")[n];
-        y = rows[i + 1].cells[n].getElementsByTagName('span')[0].innerHTML;
+      // >2 otherwise infinite loop
+      if( rows.length > 2 ){
+        for (i = 1; i < (rows.length - 1); i++) {
+          // Start by saying there should be no switching:
+          shouldSwitch = false;
+          /* Get the two elements you want to compare,
+          one from current row and one from the next: */
+          //x = rows[i].getElementsByTagName("TD")[n];
+          x = rows[i].cells[n].getElementsByTagName('span')[0].innerHTML;
+          //y = rows[i + 1].getElementsByTagName("TD")[n];
+          y = rows[i + 1].cells[n].getElementsByTagName('span')[0].innerHTML;
 
-        /* Check if the two rows should switch place,
-        based on the direction, asc or desc: */
-        if (_dir == "asc") {
-          if (x.toLowerCase() > y.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        } else if (_dir == "desc") {
-          if (x.toLowerCase() < y.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
+          /* Check if the two rows should switch place,
+          based on the direction, asc or desc: */
+          if (_dir == "asc") {
+            if (x.toLowerCase() > y.toLowerCase()) {
+              // If so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
+          } else if (_dir == "desc") {
+            if (x.toLowerCase() < y.toLowerCase()) {
+              // If so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
           }
         }
+      }
+      else
+      {
+          break;
       }
       if (shouldSwitch) {
         /* If a switch has been marked, make the switch

@@ -1,0 +1,53 @@
+.page_livraisons_offline table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+.page_livraisons_offline table .input {
+  width: 100%;
+}
+.page_livraisons_offline table th,
+.page_livraisons_offline table td {
+  overflow: hidden;
+}
+.page_livraisons_offline table th.sortable:hover {
+  cursor: pointer;
+}
+.page_livraisons_offline table .sortIcon {
+  margin-left: 5px;
+}
+.page_livraisons_offline table td * {
+  vertical-align: middle;
+}
+/*.page_livraisons_offline table tr.hoverable:hover * {
+  cursor: pointer;
+  background-color: lightgrey;
+}*/
+.page_livraisons_offline table td {
+  height: 2.5em;
+  text-align: left;
+  padding-left: 5px;
+  overflow: hidden;
+}
+.page_livraisons_offline table th.noFacture {
+  width: 9em;
+}
+.page_livraisons_offline table th.dateLivraison {
+  width: 11em;
+}
+.page_livraisons_offline table th.destinataire {
+  width: auto;
+}
+.page_livraisons_offline table th.noColis {
+  width: 7em;
+}
+.page_livraisons_offline table th.noEmploye {
+  width: 6em;
+}
+.page_livraisons_offline .nodata {
+  margin-top: 20px;
+}
+.page_livraisons_offline .signature svg {
+    line-height: 2em;
+    height: 2em;
+}

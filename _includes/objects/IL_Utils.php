@@ -1,6 +1,6 @@
 <?php
 
-interface iUserLEvel
+interface iUserLevel
 {
     const LIVREUR  = 0;
     const ADMIN    = 1;
@@ -24,7 +24,7 @@ class IL_Utils
      * @return type returns -1 if username/password combination is invalid
      * @ 0 = user
      * @ 1 = admin
-     * @ 2 = user & admin
+     * @ 2 = comptoir
      */
     public static function login($username, $password)
     {

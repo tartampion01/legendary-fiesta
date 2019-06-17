@@ -1,0 +1,125 @@
+.module_rechercheCustom {
+  padding-bottom: 15px;
+}
+.module_rechercheCustom .input {
+  width: 100%;
+}
+.module_rechercheCustom .input[name=value] {
+  width: 75%;
+  float: left;
+}
+.module_rechercheCustom .crits {
+  margin: 15px 0px 0px 0px;
+}
+.module_rechercheCustom .crits .row {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.module_rechercheCustom .crits .row > div {
+  padding: 0px 4px;
+}
+.module_rechercheCustom .crits .row > div:first-of-type {
+  padding-left: 15px;
+}
+.module_rechercheCustom .crits .row > div:last-of-type {
+  padding-right: 15px;
+}
+.module_rechercheCustom select[name=comparator] {
+  text-align: center;
+}
+.module_rechercheCustom .fa-minus,
+.module_rechercheCustom .fa-plus {
+  width: 20%;
+  padding-left: .5em;
+  padding-right: .5em;
+  float: right;
+}
+
+
+@media print {
+  body {
+    size: landscape;
+    background-color: white;
+  }
+  #entete {
+    display: none;
+  }
+  .layout_normal {
+    min-height: 100px;
+  }
+  .sortIcon {
+    display: none;
+  }
+  .module_liste th {
+    background: black !important;
+    color: white !important;
+  }
+}
+.page_recherche .input {
+  line-height: 1em;
+}
+.page_recherche .module_liste {
+  background-color: white;
+}
+.page_recherche .module_liste td {
+  height: 2.5em;
+  text-align: left;
+  padding-left: 5px;
+  overflow: hidden;
+}
+.page_recherche .module_liste th.noFacture {
+  width: 7em;
+}
+.page_recherche .module_liste th.dateLivraison {
+  width: 11em;
+}
+.page_recherche .module_liste th.destinataire {
+  width: auto;
+}
+.page_recherche .module_liste th.noColis {
+  width: 7em;
+}
+.page_recherche .module_liste th.noEmploye {
+  width: 7em;
+}
+.page_recherche .module_liste th.succursale {
+  width: 7em;
+}
+.page_recherche .section {
+  margin-top: 4ex;
+  margin-bottom: 4ex;
+}
+.page_recherche button[name=search] {
+  width: auto;
+}
+.page_recherche .module_liste .signature span {
+  /*display: none;*/
+}
+.page_recherche .module_liste .signature svg {
+  height: 2em;
+}
+@media print {
+  .page_recherche {
+    background-color: white;
+    background-image: none;
+  }
+}
+
+.module_paginator {
+  width: 400px;
+  text-align: center;
+  border: none;
+}
+.module_paginator .pageNo {
+  display: inline-block;
+  padding: 5px;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%)
+  /* must match buttons padding */
+}
+
+.svgSignature img {
+    height: 2em;
+}

@@ -1,0 +1,89 @@
+.layout_normal {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 0 0 100px;
+  position: relative;
+  /* samsung tab E landscape */
+  /* PC */
+}
+.layout_normal .input,
+.layout_normal .headerStyle {
+  height: 2.2em;
+  max-height: 2.2em;
+  line-height: 2.2em;
+}
+@media (max-width: 899px) {
+  .layout_normal {
+    /* SM */
+    font-size: 1.3em;
+  }
+  .layout_normal #contenu {
+    padding: 0px;
+  }
+  .layout_normal .module_signature {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+@media (min-width: 900px) {
+  .layout_normal {
+    font-size: 1.2em;
+    line-height: 1.2em;
+  }
+  .layout_normal #contenu {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .layout_normal .module_liste {
+    line-height: 2.3em;
+  }
+}
+@media (min-width: 1200px) {
+  .layout_normal {
+    font-size: 16px;
+  }
+}
+.layout_normal #entete {
+  margin-bottom: 5px;
+  border-bottom: 2px solid black;
+}
+.layout_normal #entete #menu {
+  float: left;
+  text-align: left;
+  font-size: 2.5em;
+}
+.layout_normal #entete #menu img {
+  height: 2.5ex;
+}
+.layout_normal #entete #menu:hover {
+  cursor: pointer;
+}
+.layout_normal #entete #titre {
+  text-align: center;
+  font-size: 3ex;
+  line-height: 4ex;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.layout_normal #entete #user {
+  float: right;
+  text-align: right;
+  padding-top: .5em;
+  padding-right: 2em;
+}
+.layout_normal #contenu {
+  margin-left: auto;
+  margin-right: auto;
+}
+.layout_normal footer {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  background-color: white;
+}
+.layout_normal footer .copyright {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}

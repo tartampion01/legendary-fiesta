@@ -1,0 +1,76 @@
+.page_livraison {
+  font-weight: bold;
+  overflow: hidden;
+  /* enlève les spinners pour les champs numériques */
+}
+.page_livraison section {
+  /*margin-top: 2em;*/
+  /*margin-bottom: 2em;*/
+}
+.page_livraison .row {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+.page_livraison input {
+  width: 100%;
+}
+.page_livraison .module_livraison {
+  padding-top: 0px;
+}
+.page_livraison .module_livraison .awesomplete {
+  width: 100%;
+}
+.page_livraison .module_livraison .awesomplete ul {
+  line-height: 2em;
+}
+.page_livraison .buttons {
+  margin-top: 1em;
+}
+.page_livraison button {
+  width: 100%;
+}
+.page_livraison input[type="number"]::-webkit-outer-spin-button,
+.page_livraison input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.page_livraison input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.module_signature {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.module_signature .signPad {
+    width: 600px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #eeeeee;
+}
+.signPad.active {
+    background-color: #FFF;
+}
+.jSignature {
+    background-color: rgb(255, 255, 255) !important;
+}
+.jSignature.disabled {
+    background-color: rgb(238, 238, 238) !important;
+}
+
+.control-error {
+    border: solid 1px #cc0000;
+    background-color: rgba(255, 0, 0, .1);
+}
+.module_signature.control-error {
+    border: solid 1px #cc0000;
+    background-color: #eeeeee;
+}
+.sortableArrows
+{
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
+}

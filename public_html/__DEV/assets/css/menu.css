@@ -1,0 +1,86 @@
+.page_menu .menufloat {
+  margin-top: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.page_menu .menufloat .menuitem {
+  display: inline-block;
+  margin: 15px;
+}
+.page_menu button {
+  display: block;
+  width: 140px;
+  height: 140px;
+  font-weight: bold;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  color: black;
+  border-style: none;
+  border: 2px solid #f37121;
+  border-radius: 100px;
+}
+.page_menu button a {
+  text-decoration: none;
+}
+.page_menu button .label {
+  margin-top: -40px;
+  margin-bottom: 0px;
+}
+.page_menu button img {
+  height: 5em;
+}
+.page_menu button:hover {
+  background-color: #4c494a;
+  color: white;
+}
+
+.page_menu button[name=feuillederoute] {
+  background-size: 90px;
+  background-position-x: 20px;
+  background-image: url("../images/ico-reseau-dynamique-livraison-orange-fdr70x70.png");
+}
+.page_menu button[name=feuillederoute]:hover {
+  background-image: url("../images/ico-reseau-dynamique-livraison-blanc-fdr70x70.png");
+}
+.page_menu button[name=livrer] {
+  background-size: 90px;
+  background-position-x: 20px;
+  background-image: url("../images/ico-reseau-dynamique-livraison-orange-70x70.png");
+}
+.page_menu button[name=livrer]:hover {
+  background-image: url("../images/ico-reseau-dynamique-livraison-blanc70x70.png");
+}
+.page_menu button[name=livraisons_offline] {
+  background-size: 90px;
+  background-position-x: 25px;
+  background-image: url("../images/ico-reseau-dynamique-horsligne-orange-70x70.png");
+}
+.page_menu button[name=livraisons_offline]:hover {
+  background-image: url("../images/ico-reseau-dynamique-horsligne-blanc-70x70.png");
+}
+.page_menu button[name=recherche] {
+  background-position-y: 60px;
+  background-size: 60px;
+  background-image: url("../images/ico-reseau-dynamique-recherche-orange-70x70.png");
+}
+.page_menu button[name=recherche]:hover {
+  background-image: url("../images/ico-reseau-dynamique-recherche-blanc-70x70.png");
+}
+.page_menu button[name=utilisateurs] {
+  background-position-y: 50px;
+  background-size: 75px;
+  background-image: url("../images/ico-reseau-dynamique-utilisateur-orange-70x70.png");
+}
+.page_menu button[name=utilisateurs]:hover {
+  background-image: url("../images/ico-reseau-dynamique-utilisateur-blanc-70x70.png");
+}
+.page_menu button[name=logout] {
+  background-size: 57px;
+  background-position-y: 65px;
+  background-position-x: 45px;
+  background-image: url("../images/ico-reseau-dynamique-deconnexion-orange-70x70.png");
+}
+.page_menu button[name=logout]:hover {
+  background-image: url("../images/ico-reseau-dynamique-deconnexion-blanc-70x70.png");
+}

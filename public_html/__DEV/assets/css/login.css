@@ -1,0 +1,37 @@
+.page_login {
+  height: 100%;
+  width: 100%;
+}
+.page_login .logo {
+  margin-top: 50px;
+}
+.page_login .login {
+  margin-top: 100px;
+  color: white;
+  line-height: 2em;
+}
+.page_login .login .row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.page_login .login .label {
+  text-align: right;
+}
+.label_boncommande {
+  text-align: right;
+  color: #FFF;
+}
+.page_login .login .field {
+  text-align: left;
+}
+.page_login .input {
+  width: 100%;
+  color: black;
+}
+.page_login .buttons button {
+  width: 100%;
+}
+.page_login .loginBox {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+}

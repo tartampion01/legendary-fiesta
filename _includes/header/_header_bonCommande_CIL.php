@@ -20,9 +20,9 @@ if(isset($_COOKIE['username'])) {
 <html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
 <?PHP
     // Don't show errors on webpage
-    //error_reporting(0);
+    error_reporting(0);
     // Show errors on webpage
-    error_reporting(E_ALL);
+    //error_reporting(E_ALL);
 
     $NOMPAGE = htmlspecialchars(basename($_SERVER['PHP_SELF']));
     // REQUIRED BY ALL PAGES

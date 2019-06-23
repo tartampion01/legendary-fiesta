@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
+<?php require_once(dirname(__DIR__) . '/includes/header/_header.php');?>
 <!--<script type="application/javascript" src="assets/js/livraison.js"></script>-->
 <body>
     <div name='livraison' class='page_livraison layout_normal base_layout base_page serializable'>
@@ -53,14 +53,16 @@
                     <div class="col-xs-5">
                         <div class="row">
                             <div class="col-xs-12">
-                                <input type="text" name="tbNoColis[]" placeholder="Colis" id="tbNoColis1" value="" maxlength="20"  class="input"></input><br>
+                                <input type="text" name="tbNoColis[]" placeholder="Colis" id="tbNoColis1" value="" maxlength="20"  class="input"></input>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-2 center">
-                        <div class="col-xs-12">
-                            <i name="moins" class="removeItem buttonStyle fas fa-minus" style="display: none;"></i>
-                            <i name="plus" class="addItem firstItemRow buttonStyle fas fa-plus" data-item-row="1"></i>
+                    <div class="col-xs-2">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <i name="moins" class="removeItem buttonStyle fas fa-minus" style="display: none;"></i>
+                                <i name="plus" class="addItem firstItemRow buttonStyle fas fa-plus" data-item-row="1"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -155,7 +157,7 @@
             <div class="col-xs-5">
                 <div class="row">
                     <div class="col-xs-12">
-                        <input type="text" name="tbNoFacture[]" id="tbNoColis${counter}" value="" maxlength="20"  class="input"></input><br>
+                        <input type="text" name="tbNoFacture[]" id="tbNoFacture${counter}" value="" maxlength="20"  class="input"></input><br>
                     </div>
                 </div>
             </div>

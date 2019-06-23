@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
+<?php require_once(dirname(__DIR__) . '/includes/header/_header.php');?>
 <script type="text/javascript">
     var NOEMPLOYE = '<?php echo IL_Session::r(IL_SessionVariables::USERNAME); ?>';
     var SUCCURSALE = '<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>';
@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
     <div id="entete" class="row">
         <div id="menu" class="col-xs-3 col-sm-2">
+            <!--<a href="<?php //echo "default.php?r=".mt_rand(0, 999999999); ?>" class="home-link">-->
             <a href="default.php" class="home-link">
                 <img src="assets/images/ico-reseau-dynamique-maison-orange70x70.png" alt="">
             </a>
@@ -34,10 +35,10 @@
                         <tr>
                             <th class="ID isHidden">ID</th>
                             <th class="delete">X</th>
-                            <th class="dateLivraison" onclick="sortTable(1);">Date de livraison&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>                            
-                            <th class="destinataire" onclick="sortTable(2);">Destinataire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>
-                            <th class="noFacture" onclick="sortTable(3);"># facture&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>
-                            <th class="noColis" onclick="sortTable(4);"># colis&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>
+                            <th class="dateLivraison" onclick="sortTable(2);">Date de livraison&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>                            
+                            <th class="destinataire" onclick="sortTable(3);">Destinataire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>
+                            <th class="noFacture" onclick="sortTable(4);"># facture&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>
+                            <th class="noColis" onclick="sortTable(5);"># colis&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png" /></th>
                             <th class="nomSignataire">Nom du signataire&nbsp;</th>
                             <th class="signature">Signature</th>
                         </tr>
@@ -62,7 +63,16 @@
                     <div style="padding:0 !important; margin:0 !important;width: 100% !important; height: 0 !important; -ms-touch-action: none; touch-action: none;margin-top:-1.5em !important; margin-bottom:1.5em !important; position: relative;"></div>
                 </div>
             </div>
-        </br>
+            <div class="multipleClients" style="padding-top: 5px;">
+                <input style="visibility: hidden" type="checkbox" class="multipleClients fatCheckBox" id="cbMultipleClients" name="cbMultipleClients" checked="checked" />&nbsp;&nbsp;
+                <span style="visibility: hidden" class="multipleClients" id="spanMultiClients" name="spanMultiClients">Faire signer pour tous les colis de [
+                    <b>
+                        <span style="visibility: hidden" class="multipleClients" id="spanNomClient" name="spanNomClient"></span>
+                    </b>
+                    ]
+                </span>
+                </br>
+            </div>
         <input type="button" id="btnSignatureAnnule" value="Annuler" style="width: 150px;height: 60px;font-size: 24px;color: red;" />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="button" id="btnSignatureOK" value="Accepter"  style="width: 150px;height: 60px;font-size: 24px;color: green;" />

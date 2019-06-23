@@ -1,4 +1,6 @@
 <?php
+    require_once(dirname(__DIR__).'/commonIncludes.php');
+    
     header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
     header("Cache-Control: post-check=0, pre-check=0", false);
     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
@@ -8,8 +10,6 @@
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: PUT, GET, POST");
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-
-    require_once(dirname(__DIR__).'/commonIncludes.php');
 
     if (session_status() == PHP_SESSION_NONE) {
         //$username = isset($_COOKIE['username'])?$_COOKIE['username']:"NO USER NAME";
@@ -40,7 +40,7 @@
         }
         else // recreate user and keep on keeping on!!
         {
-            IL_Error::log("Session data was restored from COOKIES --> " . print_r($_COOKIE, true));
+            IL_Error::log("Session data was restored from COOKIES" . print_r($_COOKIE, true));
             $user = new IL_Users();
             $user->load(0, '', IL_Session::r(IL_SessionVariables::USERNAME),0);
         }
@@ -69,7 +69,8 @@
     <meta http-equiv="Expires" content="0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>

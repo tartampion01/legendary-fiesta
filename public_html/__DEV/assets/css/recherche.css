@@ -62,16 +62,20 @@
   background-color: white;
 }
 .page_recherche .module_liste td {
-  height: 2.5em;
+  height: 2.2em;
   text-align: left;
   padding-left: 5px;
   overflow: hidden;
 }
+
 .page_recherche .module_liste th.noFacture {
   width: 7em;
 }
 .page_recherche .module_liste th.dateLivraison {
   width: 11em;
+}
+.page_recherche .module_liste th.delete {
+  width: 3em;
 }
 .page_recherche .module_liste th.destinataire {
   width: auto;

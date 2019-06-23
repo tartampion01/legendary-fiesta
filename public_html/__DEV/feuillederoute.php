@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php'); ?>
+<?php require_once(dirname(__DIR__) . '/__DEVincludes/header/_header.php'); ?>
 
 <script type="text/javascript">
     function loadForm()
@@ -143,43 +143,38 @@
                 </section>
                 <section name="livraisons" class="cloneDestination serializable">
                     <div name="row1" class="row clonable serializable">
-                        <div class="col-xs-3">
+                        <div class="col-xs-4">
                             <div class="row">
                                 <div class="label">
                                     Client
                                 </div>
                                 <div class="">
-                                    <input type="text" name="tbClient[]" id="tbClient1" value="" maxlength="100" class="input" list="dlClients"></input>
+                                    <input style="width:240px;" type="text" name="tbClient[]" id="tbClient1" value="" maxlength="100" class="input" list="dlClients"></input>                                    
                                     <datalist id="dlClients" name="dlClients">
                                         <?php echo IL_Utils::getDistinctDestinataires(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                                     </datalist>
+                                    <i name="plus" class="addItemCustomer firstItemRow buttonStyle fas fa-plus" title="Ajouter ligne client" data-item-row="1"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-4">
                             <div class="row">
                                 <div class="label">
                                     #facture
                                 </div>
                                 <div class="">
-                                    <input type="text" name="tbFacture[]" id="tbFacture1" value="" maxlength="50" autocomplete="off" class="input"></input>
+                                    <input style="width:180px;" type="text" name="tbFacture[]" id="tbFacture1" value="" maxlength="50" autocomplete="off" class="input"></input>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-4">
                             <div class="row">
                                 <div class="label">
                                     Nb Colis
                                 </div>
                                 <div class="">
-                                    <input type="text" name="tbColis[]" id="tbColis1" value="" maxlength="50" autocomplete="off" class="input"></input>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-3 center">
-                            <div class="row">
-                                <div class="label">
-                                    &nbsp;<br/>
+                                    <input style="width:180px;" type="text" name="tbColis[]" id="tbColis1" value="" maxlength="50" autocomplete="off" class="input"></input>
+                                    &nbsp;
                                     <i name="moins" class="removeItem buttonStyle fas fa-minus" style="display: none;"></i>
                                     <i name="plus" class="addItem firstItemRow buttonStyle fas fa-plus" data-item-row="1"></i>
                                 </div>
@@ -217,36 +212,32 @@
     <!-- Start : Javascript template -->
     <script id="itemTemplate" type="text/x-jquery-tmpl">
         <div class="row clonable cloned serializable itemRow${counter}">
-            <div class="col-xs-3">
+            <div class="col-xs-4">
                 <div class="row">
-                    <div class="col-xs-12">
-                        <input type="text" name="tbClient[]" id="tbClient${counter}" value="" maxlength="20"  class="input" list="dlClients"></input><br>
+                    <div class="">
+                        <input style="width:240px;background-color:${background}" type="text" name="tbClient[]" id="tbClient${counter}" value="${customerName}" maxlength="100" class="input" list="dlClients" ${readonly}></input>
+                        <i name="plus" class="addItemCustomer buttonStyle fas fa-plus" title="Ajouter ligne client" data-item-row="${counter}"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-4">
                 <div class="row">
-                    <div class="col-xs-12">
-                        <input type="text" name="tbFacture[]" id="tbFacture${counter}" value="" maxlength="50" autocomplete="off" class="input"></input><br>
+                    <div class="">                        
+                        <input style="width:180px;" type="text" name="tbFacture[]" id="tbFacture${counter}" value="" maxlength="50" autocomplete="off" class="input"></input><br>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-4">
                 <div class="row">
-                    <div class="col-xs-12">
-                        <input type="text" name="tbColis[]" id="tbColis${counter}" value="" maxlength="50" autocomplete="off" class="input"></input>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-3 center">
-                <div class="row">
-                    <div class="col-xs-12">
+                    <div class="">
+                        <input style="width:180px;" type="text" name="tbColis[]" id="tbColis${counter}" value="" maxlength="50" autocomplete="off" class="input"></input>
+                        &nbsp;
                         <i name="moins" class="removeItem buttonStyle fas fa-minus" data-item-row="${counter}"></i>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
-    </script>
+    </script>    
     <!-- End : Javascript template -->
 </body>
 </html>

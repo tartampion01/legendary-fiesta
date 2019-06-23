@@ -1,0 +1,41 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// required headers
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+
+// include database and object files
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/../_includes/objects/database.php');
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/../_includes/objects/IL_Livraison.php');
+
+// instantiate database and product object
+$database = new IL_Database();
+//$db = $database->getConnection();
+$conn = IL_Database::getConn();
+
+// initialize object
+$livraison = new IL_Livraison($conn);
+
+// get posted data
+$data = json_decode($_GET['postData']);
+
+// set product property values
+$livraison->id_livraison = (isset($data->id_livraison) ? $data->id_livraison : '');
+
+//var_dump($livraison);
+
+// delete the livraison
+if($livraison->delete($livraison)){
+    echo '{';
+        echo '"message": "La livraison a été supprimée."';
+    echo '}';
+}
+// if unable to delete the livraison, tell the user
+else{
+    echo '{';
+        echo '"message": "Impossible de modifier de livraison."';
+    echo '}';
+}
+?>

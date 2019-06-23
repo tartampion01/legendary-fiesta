@@ -1,9 +1,9 @@
 <?php
 interface IL_SessionVariables
 {
-    const USERNAME = 1;
-    const ID_USER = 2;
-    const LEVEL = 3;
+    const USERNAME   = 1;
+    const ID_USER    = 2;
+    const LEVEL      = 3; // 0=livreur 1=admin 2=comptoir
     const SUCCURSALE = 4;
 }
 
@@ -75,8 +75,9 @@ class IL_Session
      * 
      * @var integer
      */
-    protected static $SESSION_AGE = 86400; // 1 jour
-    //protected static $SESSION_AGE = 592200; // 1 semaine
+    //protected static $SESSION_AGE = 86400; // 1 jour
+    //protected static $SESSION_AGE = 604800; // 1 semaine
+    protected static $SESSION_AGE = 2592000; // 1 mois
     
     /**
      * Writes a value to the current session data.
@@ -86,6 +87,12 @@ class IL_Session
      * @return mixed Value or array of values written.
      * @throws InvalidArgumentTypeException Session key is not a string value.
      */
+    
+    public static function getSessionAge()
+    {
+        return self::$SESSION_AGE;
+    }
+    
     public static function write($key, $value)
     {
         if ( !is_string($key) )
@@ -351,6 +358,7 @@ class IL_Session
             //    throw new SessionCookieSecureException();
             //}
             $params = session_get_cookie_params();
+            ini_set('session.gc_maxlifetime', self::$SESSION_AGE);
             session_set_cookie_params(self::$SESSION_AGE,$params['path'], $params['domain'],$secure, $httponly);
             
             return session_start();

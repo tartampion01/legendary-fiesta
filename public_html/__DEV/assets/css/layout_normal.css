@@ -15,7 +15,7 @@
 @media (max-width: 899px) {
   .layout_normal {
     /* SM */
-    font-size: 1.3em;
+    /*font-size: 1.3em;*/
   }
   .layout_normal #contenu {
     padding: 0px;
@@ -27,8 +27,10 @@
 }
 @media (min-width: 900px) {
   .layout_normal {
-    font-size: 1.2em;
+    /*
+    font-size: 1.0em;
     line-height: 1.2em;
+    */
   }
   .layout_normal #contenu {
     padding-left: 40px;
@@ -60,7 +62,7 @@
 }
 .layout_normal #entete #titre {
   text-align: center;
-  font-size: 3ex;
+  font-size: 2ex;
   line-height: 4ex;
   font-weight: bold;
   text-transform: uppercase;

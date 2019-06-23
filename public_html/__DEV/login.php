@@ -158,7 +158,7 @@
         </div>
         <div class="row login">
             <div class="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 loginBox">
-                <form name="form" role="form" method="POST" action="/login.php">
+                <form name="form" role="form" method="POST" action="/__DEV/login.php">
                     <div class="row">
                         <div class="col-xs-6 label">Nom d'utilisateur</div>
                         <div class="col-xs-6 field">

@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
+require_once(dirname(__DIR__).'/__DEVincludes/commonIncludes.php');
 
 setcookie('USERNAME', "", time()-3600);
 setcookie('SUCCURSALE', "", time()-3600);

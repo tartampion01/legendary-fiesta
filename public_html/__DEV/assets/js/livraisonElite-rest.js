@@ -2,15 +2,17 @@ $( document ).ready(function() {
 
     var postData = {};
     postData.filterRows = null;
-    postData.sortBy = null;
-    postData.orderBy = null;
+    postData.sortBy     = null;
+    postData.orderBy    = null;
 
-    var ID_LIVRAISON = -1;
-    var CLICKED_TR = null;
-    var SIGNATURE_TD = null;
-    var CLICKED_NAME = null;
-    var CLICKED_TIME = null;
-    
+    var ID_LIVRAISON          = -1;
+    var CLICKED_TR            = null;
+    var SIGNATURE_TD          = null;
+    var CLICKED_NAME          = null;
+    var CLICKED_TIME          = null;
+    var DESTINATAIRE          = null;
+    var MULTIPLEDESTINATAIRES = false;
+    var DELETING              = false;
     var $sigdiv = $('.jSignature');
     
     window.addEventListener('load', function() {
@@ -78,39 +80,104 @@ $( document ).ready(function() {
     });
     */
     
-    // Bind click on result rows (to edit page)
-    $('body').on('click', '.results-container tr', function() {
+    // Bind click on delete image
+    $('body').on('click', '#imgDelete', function() {
 
-        var row = $(this);
+        DELETING = true;
         
-        ID_LIVRAISON = row.find('.isHidden').find('span').html();
+        // $this = image. Parent1 = TD, parent2 = TR
+        ID_LIVRAISON = $(this).parent().parent().find('.isHidden').find('span').html();
 
-        CLICKED_TR = $(this);
-        SIGNATURE_TD = CLICKED_TR.find('.signature').find('td');
-        CLICKED_NAME = CLICKED_TR.find('.nomSignataire').find('span');
-        CLICKED_TIME = CLICKED_TR.find('.dateLivraison').find('span');
-        
-        //id_livraison = row.find('.'
         overlay(true);
         
-        // Affiche la div pour la signature avec nom déjà présent
-        $('#tbNomSignataire').val(CLICKED_NAME.text());
-        $sigdiv.jSignature('reset');
-        
-        // Afficher la div avec le canvas
-        //$('#divCentreeSignature').attr('style','visibility:visible;background-color: white; width: 50%; height: 260px;margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:relative;');
-        $('#divCentreeSignature').attr('style','visibility:visible;background-color: white; margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:fixed;left:50%;transform: translate(-50%, 0);top:1px;');
-        $('#tbNomSignataire').focus();
-        
-        //console.log($('.jSignature').jSignature());
-        // Destroy the signature plugin instance
-        $sigdiv.jSignature('enable');
-        
-        //window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
+        // Afficher la div pour supprimer
+        $('#divConfirmDelete').attr('style','visibility:visible;background-color: white; margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:fixed;left:50%;transform: translate(-50%, 0);top:1px;');
         
     });
     
+    $('#btnDeleteNo').click(function(){
+        overlay(false);
+        $('#divConfirmDelete').attr('style','visibility:hidden;');
+        DELETING = false;
+    });
+    
+    // Bind click on result rows (to edit page)
+    $('body').on('click', '.results-container tr', function() {
+
+        if( !DELETING ){
+            var row = $(this);
+
+            ID_LIVRAISON = row.find('.isHidden').find('span').html();
+
+            // If undefined we have only one row "Feuille de route vide"
+            if( ID_LIVRAISON !== undefined ){
+                CLICKED_TR = $(this);
+                SIGNATURE_TD = CLICKED_TR.find('.signature').find('td');
+                CLICKED_NAME = CLICKED_TR.find('.nomSignataire').find('span');
+                CLICKED_TIME = CLICKED_TR.find('.dateLivraison').find('span');
+                DESTINATAIRE = CLICKED_TR.find('.destinataire').find('span').text();
+
+                //id_livraison = row.find('.'
+                overlay(true);
+
+                // Affiche la div pour la signature avec nom déjà présent
+                $('#tbNomSignataire').val(CLICKED_NAME.text());
+                $sigdiv.jSignature('reset');
+
+                // Loop TR pour signature groupée avec le DESTINATAIRE
+                // cant get this to work for now
+                $('.results-container > tbody  > tr').each(function() {
+                });
+
+                var multipleDestainataires = 0;
+                var i = 1; // 1 Parce que Row 0 == header
+
+                var table = document.getElementById('tbLivraisons');
+                var rowLength = table.rows.length;
+
+                // Donne rien de boucler on sort dès qu'on a deux pareils
+                while( multipleDestainataires < 2 && i < rowLength)
+                {
+                    var dest = table.rows[i].cells[3].innerText;
+                    if( dest == DESTINATAIRE )
+                        multipleDestainataires++;
+
+                    i++;
+                }
+
+                if( multipleDestainataires >= 2 )
+                {
+                    MULTIPLEDESTINATAIRES = true;
+                    $('.multipleClients').attr('style','visibility:visible;');
+                    $('#cbMultipleClients').prop('checked', true);
+                    $('#spanNomClient').html(DESTINATAIRE);
+                }
+                else
+                {
+                    MULTIPLEDESTINATAIRES = false;
+                    $('.multipleClients').attr('style','visibility:hidden;');
+                    $('#cbMultipleClients').prop('checked', false);
+                    $('#spanNomClient').html("");
+                }    
+
+                // Afficher la div avec le canvas
+                //$('#divCentreeSignature').attr('style','visibility:visible;background-color: white; width: 50%; height: 260px;margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:relative;');
+                $('#divCentreeSignature').attr('style','visibility:visible;background-color: white; margin:auto;padding:3px;border-width:2px;border-color:black;z-index:2;position:fixed;left:50%;transform: translate(-50%, 0);top:1px;');
+                $('#tbNomSignataire').focus();
+
+                //console.log($('.jSignature').jSignature());
+                // Destroy the signature plugin instance
+                $sigdiv.jSignature('enable');
+
+                //window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
+            }
+        }
+    });
+    
     $('#btnSignatureAnnule').click(function(){
+        $('.multipleClients').attr('style','visibility:hidden;');
+        $('#cbMultipleClients').prop('checked', false);
+        $('#spanNomClient').html("");
         overlay(false);
         $('#divCentreeSignature').attr('style','visibility:hidden;');
     });
@@ -119,6 +186,11 @@ $( document ).ready(function() {
         overlay(false);
         
         // Récupérer signature data et mettre dans Bonne cellule 'signature'...
+        var userWantsToSaveMany = $('#cbMultipleClients').prop('checked');
+        
+        $('.multipleClients').attr('style','visibility:hidden;');
+        $('#cbMultipleClients').prop('checked', false);
+        $('#spanNomClient').html("");
         $('#divCentreeSignature').attr('style','visibility:hidden;');
         
         var datapair = $('.jSignature').jSignature('getData', 'base30');
@@ -140,9 +212,9 @@ $( document ).ready(function() {
             svg = fakeSignature.jSignature("getData","svg")[1];
 
             imgSRC = '<span id="imgSRC" style="display:none;">' + i.src + '</span>';
-            signature = '<div class="svgSignature"><svg viewBox="0 0 600 150">' + svg + '</svg></div>';
+            signatureSVG = '<div class="svgSignature"><svg viewBox="0 0 600 150">' + svg + '</svg></div>';
             
-            SIGNATURE_TD.context.cells[6].innerHTML = imgSRC + signature;
+            SIGNATURE_TD.context.cells[7].innerHTML = imgSRC + signatureSVG;
         }
         catch(error) {
             //alert('Error found');
@@ -153,8 +225,8 @@ $( document ).ready(function() {
         }
         
         // NOM SIGNATAIRE
-        var nomSignataire = $("#tbNomSignataire").val();
-        CLICKED_NAME.text(nomSignataire);
+        var nomSignataireDiv = $("#tbNomSignataire").val();
+        CLICKED_NAME.text(nomSignataireDiv);
         
         // DATE
         var d = new Date();
@@ -162,17 +234,24 @@ $( document ).ready(function() {
         var strHeure = " " + d.getHours() + ":" + ((d.getMinutes()) < 10 ?"0"+d.getMinutes():d.getMinutes()) + ":" + ((d.getSeconds()) < 10 ?"0"+d.getSeconds():d.getSeconds());
         
         CLICKED_TIME.text(strDate + strHeure);
-        
+
         // SAUVEGARDE DB OU LOCALFORAGE
-        
         $('tr.serializable').each(function() {
 
             var id = $(this).find('.isHidden').find('span').html();
-            var date = $(this).find('.dateLivraison').find('span').html();
-            var nomSignataire = $(this).find('.nomSignataire').find('span').html();
-            var signature = $(this).find('#imgSRC').text();
+            var destinataire = $(this).find('.destinataire').find('span').html();
             
-            if( ID_LIVRAISON == id ){
+            if( ( MULTIPLEDESTINATAIRES && userWantsToSaveMany && destinataire == DESTINATAIRE ) || ( ID_LIVRAISON == id ) )
+            {
+                // SET Les valeurs dans le tableau
+                $(this).find('.signature').html(imgSRC + signatureSVG);
+                $(this).find('.nomSignataire').find('span').html(nomSignataireDiv);
+                $(this).find('.dateLivraison').find('span').html(strDate + strHeure);
+                
+                var date = $(this).find('.dateLivraison').find('span').html();
+                var nomSignataire = $(this).find('.nomSignataire').find('span').html();
+                var signature = $(this).find('#imgSRC').text();
+                
                 var postData = {
                     id_livraison: id,
                     dateLivraison: date,
@@ -222,10 +301,10 @@ $( document ).ready(function() {
                     //alert('Connection is DOWN');
                     // Store de query into localForage
                     insertQueryIntoLocalForage(postData);
-                    
+
                     //update localStorage with Signature data
                     json = JSON.parse(window.localStorage.getItem('ELITE_DAY_DATA'));
-                    
+
                     for(var i = 0; i < json.length; i++) {
                         if( json[i].id_livraison == id ){
                             json[i].nomSignataire = nomSignataire;
@@ -233,23 +312,100 @@ $( document ).ready(function() {
                             json[i].dateLivraison = date;
                         }
                     }
-                    
+
                     window.localStorage.setItem('ELITE_DAY_DATA', JSON.stringify(json));
                 }
             }
         })
     });
-});
 
+    $('#btnDeleteYes').click(function(){
+        overlay(false);
+        $('#divConfirmDelete').attr('style','visibility:hidden;');
+        DELETING = false;
+
+        // SAUVEGARDE DB OU LOCALFORAGE
+        $('tr.serializable').each(function() {
+
+            var id = $(this).find('.isHidden').find('span').html();
+
+            if( ID_LIVRAISON == id ){
+                var postData = {
+                    id_livraison: id,
+                    delete: true
+                };
+
+                // Check connection is up/down
+                if(Offline.state == 'up' && navigator.onLine) {
+                    // Create livraison over ajax
+                    url = 'api/delete-livraison.php';
+
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        data: {'postData': JSON.stringify(postData)},
+                        //contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: true,
+                        cache: false,
+                        success: function(data){
+                            console.log(data);
+
+                            swal({
+                                position: 'top-end',
+                                type: 'warning',
+                                title: 'Livraison supprimée!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+
+                            //location.reload();
+                            var pData = {};
+                            pData.filterRows = null;
+                            pData.sortBy = null;
+                            pData.orderBy = null;
+                            fetchRecords(pData);
+                        },
+                        error: function(errMsg) {
+                            console.log(errMsg);
+                        }
+                    });
+
+                    console.log(postData);
+                }
+                else if(Offline.state == 'down' || !navigator.onLine) {
+                    // Store the query into localForage
+                    insertQueryIntoLocalForageForDelete(postData);
+
+                    //delete line from localStorage
+                    json = JSON.parse(window.localStorage.getItem('ELITE_DAY_DATA'));
+                    var found = false;
+                    var i = 0;
+                    while( i < json.length && !found )
+                    {
+                        if( json[i].id_livraison == ID_LIVRAISON ){
+                            delete json[i];
+                            found = true;
+                        }
+                        i++;
+                    }
+
+                    window.localStorage.setItem('ELITE_DAY_DATA', JSON.stringify(json));
+                    loadOfflineData();
+                }
+            }
+        })
+    });
+});
 function overlay(show)
 {
     var docHeight = $(document).height();
     var op = 0.0;
-    
+
     if( show ){
         op = 0.4;
         $("body").append("<div id='overlay'></div>");
-        
+
         $("#overlay")
         .height(docHeight)
         .css({
@@ -267,17 +423,17 @@ function overlay(show)
 }
 
 function fetchRecords(postData) {
-    
+
     // Show loading spinner
     $('.loading').show();
-    
+
     // Get the current page
     var currentPage = 1;
     if(typeof $pagination !== 'undefined'/* && resetPage == false*/)
         currentPage = $pagination.twbsPagination('getCurrentPage');
     else
         currentPage = 1;
-    
+
     var params = {
         currentPage : currentPage,
         limitPerPage : 100,
@@ -285,7 +441,7 @@ function fetchRecords(postData) {
         sortBy: postData.sortBy,
         orderBy: postData.orderBy
     };
-    
+
     $.ajax({
         url: 'api/read.php?SUCCURSALE=' + SUCCURSALE + '&NOEMPLOYE=' + NOEMPLOYE,
         type: "GET",
@@ -293,25 +449,25 @@ function fetchRecords(postData) {
         dataType: 'json',
         async: true,
         success: function(data){
-            
+
             if(data.records != null) {
                 if(data.records.length > 0) {
-                    
+
                     window.localStorage.setItem("ELITE_DAY_DATA",JSON.stringify(data.records));
-                    
+
                     // Empty out the div that will hold the generated content
                     $(".results-container").empty();
-                    
+
                     // Append data to template
                     $("#resultsTemplate").tmpl( data.records ).appendTo(".results-container");
                     //console.log(data.records);
-                    
+
                     // Setup jSignature
                     var fakeSignature = $('.converter');
                     $('td.signature').each(function() {
 
                         var _data = $(this).find('.jSignature').html();
-                        
+
                         var html;
                         fakeSignature.jSignature();
                         try {
@@ -329,9 +485,9 @@ function fetchRecords(postData) {
                             //console.log(this);
                         }
                     });
-                    
+
                     $('.loading').hide();
-                    
+
                 }
                 else {
                     $(".results-container").empty().html('<tr><td colspan="6">Feuille de route vide</td></tr>');
@@ -400,42 +556,50 @@ function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("tbLivraisons");
     switching = true;
+    var noChange = 0;
     // Set the sorting direction to ascending:
 
     /* Make a loop that will continue until
     no switching has been done: */
-    while (switching) {
+    while (switching && noChange < 2) {
       // Start by saying: no switching is done:
       switching = false;
       rows = table.rows;
       /* Loop through all table rows (except the
       first, which contains table headers): */
       // -1 because of empty row at bottom  
-      for (i = 1; i < (rows.length - 1); i++) {
-        // Start by saying there should be no switching:
-        shouldSwitch = false;
-        /* Get the two elements you want to compare,
-        one from current row and one from the next: */
-        //x = rows[i].getElementsByTagName("TD")[n];
-        x = rows[i].cells[n].getElementsByTagName('span')[0].innerHTML;
-        //y = rows[i + 1].getElementsByTagName("TD")[n];
-        y = rows[i + 1].cells[n].getElementsByTagName('span')[0].innerHTML;
+      // >2 otherwise infinite loop
+      if( rows.length > 2 ){
+        for (i = 1; i < (rows.length - 1); i++) {
+          // Start by saying there should be no switching:
+          shouldSwitch = false;
+          /* Get the two elements you want to compare,
+          one from current row and one from the next: */
+          //x = rows[i].getElementsByTagName("TD")[n];
+          x = rows[i].cells[n].getElementsByTagName('span')[0].innerHTML;
+          //y = rows[i + 1].getElementsByTagName("TD")[n];
+          y = rows[i + 1].cells[n].getElementsByTagName('span')[0].innerHTML;
 
-        /* Check if the two rows should switch place,
-        based on the direction, asc or desc: */
-        if (_dir == "asc") {
-          if (x.toLowerCase() > y.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        } else if (_dir == "desc") {
-          if (x.toLowerCase() < y.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
+          /* Check if the two rows should switch place,
+          based on the direction, asc or desc: */
+          if (_dir == "asc") {
+            if (x.toLowerCase() > y.toLowerCase()) {
+              // If so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
+          } else if (_dir == "desc") {
+            if (x.toLowerCase() < y.toLowerCase()) {
+              // If so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
           }
         }
+      }
+      else
+      {
+          break;
       }
       if (shouldSwitch) {
         /* If a switch has been marked, make the switch
@@ -450,9 +614,11 @@ function sortTable(n) {
         if (switchcount == 0 && _dir == "asc") {
           _dir = "desc";
           switching = true;
+          noChange++;
         } else if( switchcount == 0 && _dir == "desc") {
             _dir = "asc";
             switching = true;
+            noChange++;
         }
       }
     }        

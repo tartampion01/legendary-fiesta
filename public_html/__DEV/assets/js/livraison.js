@@ -65,9 +65,13 @@ $( document ).ready(function() {
         var itemRowCount = $(btn).attr('data-item-row');
         itemRowCount++
         var data = [
-            { counter: itemRowCount }
+            { counter:       itemRowCount,
+              customerName:  "",
+              readonly:      ""
+            }
         ];
         $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
+        $('.addItemCustomer.firstItemRow').attr('data-item-row', itemRowCount);
         $("#itemTemplate").tmpl(data).appendTo(".cloneDestination");
     });
     
@@ -79,8 +83,28 @@ $( document ).ready(function() {
         var itemRow = $(btn).attr('data-item-row');
         $('.itemRow' + itemRow).remove();
         $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
+        $('.addItemCustomer.firstItemRow').attr('data-item-row', itemRowCount);
     });
     
+    // Bind click on add an customer row
+    $('body').on('click', '.addItemCustomer', function() {
+        btn = $(this);
+        var itemRowCount = $('.addItem.firstItemRow').attr('data-item-row');
+        customerName = btn.parent().find(".input").val();
+        
+        itemRowCount++
+        var data = [
+            { counter:      itemRowCount,
+              customerName: customerName,
+              readonly:     "readonly",
+              background:   "#BBBBBB;"
+            }
+        ];
+        $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
+        $('.addItemCustomer.firstItemRow').attr('data-item-row', itemRowCount);
+        $("#itemTemplate").tmpl(data).appendTo(".cloneDestination");
+    });
+       
     // Bind click on "Effacer la signature" button
     $('.btnClear').on('click', function() {
         // Destroy the signature plugin instance
@@ -157,8 +181,7 @@ $( document ).ready(function() {
                 console.log(postData);
             }
             else if(Offline.state == 'down' || !navigator.onLine) {
-//alert('Connection is DOWN');
-                // Store de query into localForage
+                // Store the query into localForage
                 insertQueryIntoLocalForage(postData);
             }
 
@@ -204,6 +227,26 @@ function insertQueryIntoLocalForage(postData) {
             title: 'Livraison enregistrée!',
             showConfirmButton: false,
             timer: 1500
+        });
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log(err);
+    });
+}
+
+function insertQueryIntoLocalForageForDelete(postData) {
+    
+    var timestamp = new Date().valueOf();
+    localforage.setItem('query-'+timestamp, postData).then(function (value) {
+        // Do other things once the value has been saved.
+        console.log(value);
+        
+        swal({
+            position: 'top-end',
+            type: 'warning',
+            title: 'Livraison supprimée',
+            showConfirmButton: false,
+            timer: 1111
         });
     }).catch(function(err) {
         // This code runs if there were any errors
@@ -282,7 +325,7 @@ function validateForm() {
         errorMessage+= '<li>Employé</li>';
         $('#tbEmploye').addClass('control-error');
         error = true;
-    }
+    } 
     else {
         $('#tbEmploye').removeClass('control-error');
         //error = false;

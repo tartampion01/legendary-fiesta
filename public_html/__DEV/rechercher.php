@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
+<?php require_once(dirname(__DIR__) . '/__DEVincludes/header/_header.php');?>
 <script type="application/javascript" src="assets/js/recherche-rest.js"></script>
 <body>
     <div name='menu' class='page_menu layout_normal base_layout base_page page_recherche serializable'>
@@ -24,7 +24,7 @@
     
     <!-- Search header -->
     <div class="row section">
-        <div class="col-xs-offset-2 col-xs-8 col-md-offset-3 col-md-6">
+        <div class="col-xs-offset-1 col-xs-10 col-md-offset-2 col-md-8">
             <div name="mod_rechercheCustom" class="module_rechercheCustom base_module container-fluid serializable">
                 <div class="row headerStyle">
                     <div class="col-xs-4">Champ</div>
@@ -57,14 +57,14 @@
                         </div>
                         <div class="col-xs-5">
                             <input type="text" name="value" id="value1" value="" maxlength="200" class="input">
+                            <i name="plus" class="addItemFilter firstItemRow buttonStyle fas fa-plus" data-item-row="1"></i>
                             <i name="delete" class="buttonStyle fas fa-minus" style="display: none;"></i>
                         </div>
                     </div>
                     
                 </div>
-                <div class="row" style="margin-bottom: 15px;">
+                <div class="row" style="margin-bottom: 10px;">
                     <div class="col-xs-5">
-                        <i name="plus" class="addItemFilter firstItemRow buttonStyle fas fa-plus pull-left" data-item-row="1"></i>
                     </div>
                     <div class="col-xs-7">&nbsp;</div>
                 </div>

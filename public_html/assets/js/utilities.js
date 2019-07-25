@@ -189,4 +189,16 @@ window.addEventListener('load', function() {
         $('#logout').hide();
     }
 });
+
+//trigger this after successful login
+function afterSuccessLogin(usr, pwd) {
+
+    if( Android != undefined ){
+        if( Android.saveValues != undefined ){
+            Android.saveValues(usr, pwd);
+        }
+    }
+    else
+    {}
+}
 /* service worker */

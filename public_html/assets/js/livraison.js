@@ -231,7 +231,7 @@ function insertQueryIntoLocalForage(postData) {
         swal({
             position: 'top-end',
             type: 'success',
-            title: 'Livraison enregistrée!',
+            title: 'Données enregistrées!',
             showConfirmButton: false,
             timer: 1500
         });

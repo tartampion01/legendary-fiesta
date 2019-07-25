@@ -319,6 +319,71 @@ $( document ).ready(function() {
         })
     });
 
+    // Pickup on save fournisseur + client a partir des textbox
+    // on génère date/heure, succursale, employé et on met "PICKUP" dans destinataire
+    $('#btnPickup').click(function(){
+        overlay(false);
+        
+        var postData = {
+            //tbDate: $('#tbDate').val(),
+            tbDate: dsSwissKnife.prettyPrint('date',new Date()),
+            tbEmploye: NOEMPLOYE,
+            succursale: SUCCURSALE,
+            tbDestinataire: "PICKUP",
+            tbNomSignataire: $("#tbFournisseur").val() + " / " + $("#tbClient").val(),
+            signature: ""
+        };
+
+        // Colis needed even if not meaningful here to avoid modifying existing code
+        var array_colis = [];
+        tmpItem = { facture: "-", colis: "-"};
+        array_colis.push(tmpItem);
+        
+        postData.array_colis = array_colis;
+            
+        if(Offline.state == 'up' && navigator.onLine) {
+            // Create livraison over ajax
+            url = 'api/create-livraison.php';
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: {'postData': JSON.stringify(postData)},
+                //contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: true,
+                cache: false,
+                success: function(data){
+                    console.log(data);
+
+                    swal({
+                        position: 'top-end',
+                        type: 'success',
+                        title: 'Pickup enregistré!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    //location.reload();
+                },
+                error: function(errMsg) {
+                    console.log(errMsg);
+                }
+            });
+
+            console.log(postData);
+            
+        }
+        else if(Offline.state == 'down' || !navigator.onLine) {
+            // Store the query into localForage
+            insertQueryIntoLocalForage(postData);
+        }
+        
+        // Empty form values
+        $("#tbFournisseur").val("");
+        $("#tbClient").val("");
+    });
+    
     $('#btnDeleteYes').click(function(){
         overlay(false);
         $('#divConfirmDelete').attr('style','visibility:hidden;');

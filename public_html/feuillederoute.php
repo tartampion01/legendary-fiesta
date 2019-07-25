@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/includes/header/_header.php'); ?>
+<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php'); ?>
 
 <script type="text/javascript">
     function loadForm()
@@ -149,7 +149,7 @@
                                     Client
                                 </div>
                                 <div class="">
-                                    <input style="width:240px;" type="text" name="tbClient[]" id="tbClient1" value="" maxlength="100" class="input" list="dlClients"></input>                                    
+                                    <input style="width:240px;" type="text" name="tbClient[]" id="tbClient1" value="" maxlength="100" class="input" list="dlClients" autocomplete="off" autocorrect="off" spellcheck="false"></input>
                                     <datalist id="dlClients" name="dlClients">
                                         <?php echo IL_Utils::getDistinctDestinataires(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                                     </datalist>

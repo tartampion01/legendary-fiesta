@@ -1,5 +1,5 @@
 <?php
-    require_once(dirname(__DIR__).'/commonIncludes.php');
+    require_once(dirname(__DIR__) . '/commonIncludes.php');
     
     header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
     header("Cache-Control: post-check=0, pre-check=0", false);
@@ -40,7 +40,7 @@
         }
         else // recreate user and keep on keeping on!!
         {
-            IL_Error::log("Session data was restored from COOKIES" . print_r($_COOKIE, true));
+            IL_Error::log("Session data was restored from COOKIES " . print_r($_COOKIE, true));
             $user = new IL_Users();
             $user->load(0, '', IL_Session::r(IL_SessionVariables::USERNAME),0);
         }

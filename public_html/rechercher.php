@@ -93,7 +93,7 @@
                             <th class="nomSignataire sortable" data-order-by="nomSignataire">Nom du signataire<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="signature">Signature</th>
                             <th class="noEmploye sortable" data-order-by="noEmploye"># employé<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
-                            <th class="succursale sortable" data-order-by="succursale">Succursale<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
+                            <th class="succursale sortable" style="width: 0px;" data-order-by="succursale">Succursale<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                         </tr>
                     </thead>
                     <tbody class="results-container">

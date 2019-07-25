@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/includes/header/_header.php');?>
+<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
 <script type="application/javascript" src="assets/js/recherche-rest.js"></script>
 <body>
     <div name='menu' class='page_menu layout_normal base_layout base_page page_recherche serializable'>

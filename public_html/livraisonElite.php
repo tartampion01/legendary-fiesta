@@ -53,7 +53,37 @@
         </div>
     </div>       
 </div>
-
+    <br>
+    <div style="margin-left: auto;margin-right: auto;max-width: 550px;float: none;background-color: #f37121;border: 3px inset #4c494a;">
+        <label class="fa-2x" style="background-color: white;border: 1px inset #4c494a;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PICKUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <table id="" class="" style="background-color: black;width: 100%;text-align: center;align-content: center;">
+            <thead>
+                <tr style="background-color: white;width: 50%;">
+                    <th>Fournisseur</th>
+                    <th>Client</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="" style="background-color: white;width: 66%;">
+                <tr style="width: 66%;">
+                    <td style="padding-bottom: 12px;">
+                        <div class="awesomplete">
+                            <input name="tbFournisseur" id="tbFournisseur" value="" list="listeClients" maxlength="100" class="input awesomplete" autocomplete="off" aria-autocomplete="list" type="text">
+                        </div>
+                        <datalist id="listeClients"><?php echo IL_Utils::getDistinctDestinataires(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?></datalist>
+                    </td>  
+                    <td style="padding-bottom: 12px;">
+                        <input name="tbClient" id="tbClient" id="tbDestinataire" value="" maxlength="100" class="input" type="text">
+                    </td>
+                    <td style="padding-bottom: 12px;">
+                        <input name="btnPickup" id="btnPickup" value="Pickup fait" class="input"type="button">
+                        <br/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
     <div id="divCentreeSignature" style="visibility: hidden;position:relative;">
         Nom&nbsp;:&nbsp;<input id="tbNomSignataire" type="text" maxlength="50" autocomplete="off" style="width:450px;height:40px;font-size: 28px;"></br>
             <div name='mod_signature' class='module_signature base_module serializable' >

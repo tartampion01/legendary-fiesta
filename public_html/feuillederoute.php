@@ -149,7 +149,9 @@
                                     Client
                                 </div>
                                 <div class="">
-                                    <input style="width:240px;" type="text" name="tbClient[]" id="tbClient1" value="" maxlength="100" class="input" list="dlClients" autocomplete="off" autocorrect="off" spellcheck="false"></input>
+                                    <div class="awesomplete">
+                                        <input style="width:240px;" name="tbClient[]" id="tbClient1" value="" list="dlClients" maxlength="100" class="input awesomplete" autocomplete="on" aria-autocomplete="list" type="text">
+                                    </div>
                                     <datalist id="dlClients" name="dlClients">
                                         <?php echo IL_Utils::getDistinctDestinataires(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                                     </datalist>
@@ -214,9 +216,14 @@
         <div class="row clonable cloned serializable itemRow${counter}">
             <div class="col-xs-4">
                 <div class="row">
-                    <div class="">
-                        <input style="width:240px;background-color:${background}" type="text" name="tbClient[]" id="tbClient${counter}" value="${customerName}" maxlength="100" class="input" list="dlClients" ${readonly}></input>
-                        <i name="plus" class="addItemCustomer buttonStyle fas fa-plus" title="Ajouter ligne client" data-item-row="${counter}"></i>
+                    <div class="awesomplete">
+                        <div class="">
+                            <input style="width:240px;background-color:${background}" type="text" name="tbClient[]" id="tbClient${counter}" value="${customerName}" maxlength="100" class="input" list="dlClientsClones" ${readonly}></input>
+                            <datalist id="dlClientsClones" name="dlClientsClones">
+                                <?php echo IL_Utils::getDistinctDestinataires(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                            </datalist>
+                            <i name="plus" class="addItemCustomer buttonStyle fas fa-plus" title="Ajouter ligne client" data-item-row="${counter}"></i>
+                        </div>                                                                                                                                                                   
                     </div>
                 </div>
             </div>
@@ -238,6 +245,6 @@
             </div>
         </div>
     </script>    
-    <!-- End : Javascript template -->
+    <!-- End : Javascript template -->     
 </body>
 </html>

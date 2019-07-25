@@ -1,5 +1,5 @@
 <?php require_once(dirname(__DIR__) . '/_includes/header/_header.php'); ?>
-<body>
+<body onload="<?php if(isset($_GET["p"])){echo "afterSuccessLogin('" . IL_Session::r(IL_SessionVariables::USERNAME) . "','" . base64_decode($_GET["p"]) . "');";}?>">
         <?php
             if(isset($_POST["btnDelete"]))
             {
@@ -40,7 +40,7 @@
                 IL_Utils::getUserMenu(IL_Session::r(IL_SessionVariables::LEVEL),IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>        
         </div>
     </div>
-        <!--<a href="sandbox.php">SANDBOX</a><br>-->
+        
         <!--<a href="viewdb.php">VIEWDB</a><br>-->
     <form method="POST" action="default.php">
         <!--<input type="submit" value="Delete livraisons and colis" id="btnDelete" name="btnDelete">-->

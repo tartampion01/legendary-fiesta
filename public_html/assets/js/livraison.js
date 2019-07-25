@@ -70,9 +70,15 @@ $( document ).ready(function() {
               readonly:      ""
             }
         ];
+        
         $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
         $('.addItemCustomer.firstItemRow').attr('data-item-row', itemRowCount);
         $("#itemTemplate").tmpl(data).appendTo(".cloneDestination");
+        
+        // Dynamically add awesomeplete to created control that was added to template
+        var input = document.getElementById("tbClient" + itemRowCount);
+        new Awesomplete(input, {list: document.querySelector("#dlClientsClones")});
+        
     });
     
     // Bind click on remove an item row
@@ -100,6 +106,7 @@ $( document ).ready(function() {
               background:   "#BBBBBB;"
             }
         ];
+        
         $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
         $('.addItemCustomer.firstItemRow').attr('data-item-row', itemRowCount);
         $("#itemTemplate").tmpl(data).appendTo(".cloneDestination");
@@ -351,6 +358,7 @@ function validateForm() {
         //error = false;
     }
     
+    /* Commenté car demande faite que le colis soit optionnel le 24/07/2019 par Sylvain Goulet
     if($('#tbNoColis1').val() == '') {
         errorMessage+= '<li>Colis</li>';
         $('#tbNoColis1').addClass('control-error');
@@ -360,7 +368,9 @@ function validateForm() {
         $('#tbNoColis1').removeClass('control-error');
         //error = false;
     }
+    */
     
+    /* Commenté car demande faite que le nom de destinataire soit optionnel le 24/07/2019 par Sylvain Goulet
     if($('#tbDestinataire').val() == '') {
         errorMessage+= '<li>Destinataire</li>';
         $('#tbDestinataire').addClass('control-error');
@@ -370,6 +380,8 @@ function validateForm() {
         $('#tbDestinataire').removeClass('control-error');
         //error = false;
     }
+    */
+   
     /* Commenté car demande faite que le nom de signataire soit optionnel le 07/02/2019
     if($('#tbNomSignataire').val() == '') {
         errorMessage+= '<li>Nom du signataire</li>';

@@ -218,10 +218,7 @@
                 <div class="row">
                     <div class="awesomplete">
                         <div class="">
-                            <input style="width:240px;background-color:${background}" type="text" name="tbClient[]" id="tbClient${counter}" value="${customerName}" maxlength="100" class="input" list="dlClientsClones" ${readonly}></input>
-                            <datalist id="dlClientsClones" name="dlClientsClones">
-                                <?php echo IL_Utils::getDistinctDestinataires(IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                            </datalist>
+                            <input style="width:240px;background-color:${background}" type="text" name="tbClient[]" id="tbClient${counter}" value="${customerName}" maxlength="100" class="input" list="dlClients" ${readonly}></input>
                             <i name="plus" class="addItemCustomer buttonStyle fas fa-plus" title="Ajouter ligne client" data-item-row="${counter}"></i>
                         </div>                                                                                                                                                                   
                     </div>

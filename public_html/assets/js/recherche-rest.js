@@ -97,6 +97,16 @@ $( document ).ready(function() {
             window.location.href = '/livraison-edit.php?id_livraison=' + id_livraison + '&r=' + Math.floor((Math.random() * 100000000000) + 1);
         });
     }
+    
+    $("#field1").change(function () {
+        var pickup = this.value;
+        if( pickup == "PICKUP" )
+        {
+            $("#value1").val("PICKUP");
+            $("#field1").val('destinataire');
+            $(".btnSearch").click();
+        }
+    });
 });
 
 function showLocalForageAsSearch()

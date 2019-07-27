@@ -45,6 +45,7 @@
                                 <!--<option value="signature">Signature</option>-->
                                 <option value="noEmploye"># employé</option>
                                 <option value="Succursale">Succursale</option>
+                                <option value="PICKUP">PICKUP</option>
                             </select>
                         </div>
                         <div class="col-xs-3">

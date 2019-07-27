@@ -88,7 +88,7 @@
 
                             // On ne redirige pas si c'est un admin
                             if( IL_Session::r(IL_SessionVariables::LEVEL) != iUserLevel::ADMIN )
-                                echo '<script type="text/javascript">window.location="livraisonElite.php";</script>';
+                                echo '<script type="text/javascript">window.location="livraisonElite.php?r='.mt_rand(0, 999999999).'";</script>';
                         }                    
                         else
                         {

@@ -1364,7 +1364,7 @@ i.fa {
 
 table.tableHaut tr td.edit { width:1%; }
 table.tableHaut tr td{ font-size: 13px; font-family: verdana;font-weight: bold; }
-table.tableHaut tr td.bonCommande { width: 8%; }
+table.tableHaut tr td.bonCommande { width: 10%; }
 table.tableHaut tr td.fournisseur { width: 12%; }
 table.tableHaut tr td.av { width: 3%; }
 table.tableHaut tr td.heure { width: 5%; }
@@ -1379,7 +1379,7 @@ table.tableData tr.trHeader td { font-size: 13px; font-family: verdana;font-weig
 table.tableData tr td { font-size: 11px; font-weight: bold; font-family: verdana;}
 
 table.tableData tr td.edit{ width: 1%;}
-table.tableData tr td.bonCommande { width: 8%;}
+table.tableData tr td.bonCommande { width: 12%;}
 table.tableData tr td.fournisseur { width: 12%;}
 table.tableData tr td.av { width: 3%;}
 table.tableData tr td.heure { width: 5%;}
@@ -1393,6 +1393,54 @@ table.tableData tr td.ajouter { width: 7%;padding-top: 5px;}
 table.tableData tr td select{background-color: #ff6666;}
 table.tableData tr td select.Attribue{background-color: #ffff66;}
 table.tableData tr td select.Recu{background-color: #66ff66;}
+
+/* jg JOB GARAGE */
+table.tableHaut tr td.edit.jg { width:1%; }
+table.tableHaut tr td.jg{ font-size: 13px; font-family: verdana;font-weight: bold; }
+table.tableHaut tr td.jg.jobgarage { width: 6%; }
+table.tableHaut tr td.jg.vendeur { width: 12%; }
+table.tableHaut tr td.jg.fournisseur { width: 12%; }
+table.tableHaut tr td.jg.heure { width: 5%; }
+table.tableHaut tr td.jg.date { width: 5%; }
+table.tableHaut tr td.jg.statut { width: 12%; }
+table.tableHaut tr td.jg.datePrevue { width: 26%; }
+table.tableHaut tr td.jg.ajouter { width: 7%;}
+                
+table.tableData tr.trHeader td.jg { font-size: 13px; font-family: verdana;font-weight: bold;background-color: gray;}
+table.tableData tr td.jg { font-size: 11px; font-weight: bold; font-family: verdana;}
+
+table.tableData tr td.jg.edit{ width: 1%;}
+table.tableData tr td.jg.jobGarage { width: 6%;}
+table.tableData tr td.jg.fournisseur { width: 12%;}
+table.tableData tr td.jg.vendeur { width: 3%;}
+table.tableData tr td.jg.heure { width: 5%;}
+table.tableData tr td.jg.date { width: 5%;}
+table.tableData tr td.jg.statut { width: 12%;}
+table.tableData tr td.jg.datePrevue { width: 26%;}
+table.tableData tr td.jg.ajouter { width: 7%;padding-top: 5px;}
+
+table.tableData tr td select.jg.Commandee{width:125px;background-color: #ff6666;}
+table.tableData tr td select.jg.Encours{width:125px;background-color: #ffff66;}
+table.tableData tr td select.jg.Binjob{width:125px;background-color: #66ff66;}
+
+.jg.tbBonCommande{width:120px; font-size: 13px;}
+.jg.tbVendeur{width: 150px; font-size: 13px;}
+.jg.tbFournisseur{width:150px; font-size: 13px;}
+.jg.tbHeure{width:60px; font-size: 13px;}
+.jg.tbDate{width:80px; font-size: 13px;}
+.jg.tbDatePrevue{width:150px; font-size: 13px;}
+.jg.tbCommentaireElargi{width:500px; font-size: 13px;}
+
+.jg.inputCombo {
+  width:125px;
+  height: 20px;
+  padding-left: 0px;
+  vertical-align: middle;
+  border-radius: 1px;
+  background-color: #eeeeee;
+}
+
+/********************************************************************************************************************************** JOB GARAGE ****************/
 
 table.tableData tr.rowEdit{
     background-color: #555;
@@ -1478,6 +1526,7 @@ table.tableData tr.rowEdit{
 .tbDate{width:100px; font-size: 13px;}
 .tbChauffeur{width:100px; font-size: 13px;}
 .tbCommentaire{width:200px; font-size: 13px;}
+.tbCommentaireElargi{width:500px; font-size: 13px;}
 
 .tbEdit{
     
@@ -1485,6 +1534,29 @@ table.tableData tr.rowEdit{
 
 table.tableMenuTop {width:100%;}
 table.tableMenuTop td {text-align: right; width:20%;color:#413d3e;}
+table.tableMenuTop td.tableMenuTopGeoTab{border-style: inset;border-color: #b4afb8; border-width: 1px;}
 table.tableMenuTop td.tableMenuTopRefresh{border-style: inset;border-color: #b4afb8; border-width: 1px;}
 table.tableMenuTop td.tableMenuTopReload{border-style: inset;border-color: #b4afb8; border-width: 1px;}
 table.tableMenuTop td.tableMenuTopLogout{border-style: inset;border-color: #b4afb8; border-width: 1px;}
+
+tr.border_bottom td {
+  border-bottom:1pt dotted #000000;
+}
+
+.lienTexte
+{
+    text-decoration: none;
+    color: #2A2A2A;
+    border-style: ridge;
+    border-color: #A0A0A0;
+    border-width: 2px;
+}
+.lienTexte:hover
+{    
+    text-decoration: none;
+    color: #0A0A0A;
+    border-style: ridge;
+    border-color: #5A5A5A;
+    border-width: 2px;
+    background-color: #DADADA;
+}

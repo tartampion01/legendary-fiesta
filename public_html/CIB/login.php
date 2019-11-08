@@ -99,11 +99,16 @@
                                         IL_Session::w(IL_SessionVariables::LEVEL,$user->level);
                                         IL_Session::w(IL_SessionVariables::SUCCURSALE,$user->succursale);
                                         
+                                        $pageDemandee = IL_Session::r(IL_SessionVariables::ASKED_PAGE);
+
                                         setcookie('username', $user->username, time() + (86400 * 30), "/");
                                         setcookie('succursale', $user->succursale, time() + (86400 * 30), "/");
                                         
                                         if( $user->succursale == "CIB" )
-                                            header('Location: ' . "boncommande.php?succ=" . $user->succursale);
+                                            if( $pageDemandee == "" )
+                                                header('Location: ' . "boncommande.php?succ=" . $user->succursale );
+                                            else
+                                                header('Location: ' . $pageDemandee . "?succ=" . $user->succursale . "&askedPage=" . $pageDemandee );
                                         else
                                             header('Location: ' . "login.php");
                                         

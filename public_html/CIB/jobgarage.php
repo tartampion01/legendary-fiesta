@@ -20,7 +20,7 @@
         {
             document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneHidden';
             document.getElementById('row_' + rowId).className = '';
-            updateBonCommandes();
+            updateJobGarage();
         }*/
         
         // RADIO BUTTONS
@@ -54,85 +54,81 @@
             document.getElementById("row_" + document.frm.radioEdit[i].value).className = '';
         }
         
-        updateBonCommandes();
+        updateJobGarage();
     }
     
     function saveRow(rowId){
         
-        var bonCommande = document.getElementById('tbBonCommande_' + rowId).value;
+        var jobGarage = document.getElementById('tbJobGarage_' + rowId).value;
+        var vendeur = document.getElementById('tbVendeur_' + rowId).value;
         var fournisseur = document.getElementById('tbFournisseur_' + rowId).value;
-        var av = document.getElementById('tbAV_' + rowId).value;
         var heure = document.getElementById('tbHeure_' + rowId).value;
         var date = document.getElementById('tbDate_' + rowId).value;
-        //var chauffeur = document.getElementById('tbChauffeur_' + rowId).value;
-        var chauffeur = "";
-        var commentaire = document.getElementById('tbCommentaire_' + rowId).value;
+        var datePrevue = document.getElementById('tbDatePrevue_' + rowId).value;
         
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 //document.getElementById("divSauvegarde").innerHTML = this.responseText;
-                showBonCommandes();
+                showJobGarage();
             }
         };
 
-        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + bonCommande + "&3=" + fournisseur + "&4=" + av + "&5=" + heure + "&6=" + date + "&7=" + chauffeur + "&8=" + commentaire;
-        xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
+        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + jobGarage + "&3=" + vendeur + "&4=" + fournisseur + "&5=" + heure + "&6=" + date + "&7=" + datePrevue;
+        xhttp.open("GET", "callJobGarage.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
-        showBonCommandes();
+        showJobGarage();
         
     }    
     
     function ClearTopData()
     {
-        document.getElementById('tbBonCommande').value = '';
+        document.getElementById('tbJobGarage').value = '';
+        document.getElementById('tbVendeur').value = '';
         document.getElementById('tbFournisseur').value = '';
-        document.getElementById('tbAV').value = '';
         document.getElementById('tbHeure').value = '';
         document.getElementById('tbDate').value = '';
-        //document.getElementById('tbChauffeur').value = '';
-        //document.getElementById('cbStatut').value = '';
-        document.getElementById('tbCommentaire').value = '';
+        document.getElementById('tbDatePrevue').value = '';
     }
     
-    function updateStatut(dropDown, pkBonCommande){
+    function updateStatut(dropDown, pkJobGarage){
         
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                showBonCommandes();
+                showJobGarage();
             }
         };
         
-        var dataToAdd = "&oper=updateStatut&1=" + pkBonCommande + "&2=" + dropDown.value;
-        xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
+        var dataToAdd = "&oper=updateStatut&1=" + pkJobGarage + "&2=" + dropDown.value;
+        xhttp.open("GET", "callJobGarage.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
     }
     
-    function showBonCommandes() {
+    function showJobGarage() {
 
         var xhttp;
         if (succ == "") {
-            document.getElementById("tbBonCommandes").innerHTML = "";
+            document.getElementById("tableJobGarage").innerHTML = "";
             return;
         }
         
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("tbBonCommandes").innerHTML = this.responseText;
+                document.getElementById("tableJobGarage").innerHTML = this.responseText;
             }
         };
 
-        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=readWithoutDriver", true);
+        xhttp.open("GET", "callJobGarage.php?succ=" + succ  + "&oper=read", true);
         xhttp.send();
     }
     
-    function deleteRow(pkBonCommande)
+    function deleteRow(pkJobGarage)
     {
-        clearTimeout(showBonCommandes);
+        clearTimeout(showJobGarage);
         
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -141,44 +137,41 @@
             }
         };
         
-        var dataToAdd = "&oper=del&pk=" + pkBonCommande;
-        xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
+        var dataToAdd = "&oper=del&pk=" + pkJobGarage;
+        xhttp.open("GET", "callJobGarage.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
-        showBonCommandes();
+        showJobGarage();
     }
     
     function confirmerSuppression(noCommande)
     {
-        return confirm("Supprimer PO " + noCommande + " ?");
+        return confirm("Supprimer [ " + noCommande + " ] ?");
     }
     
-    function ajouterBonCommande() {
+    function ajouterJobGarage() {
         
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 ClearTopData();
-                showBonCommandes();
+                showJobGarage();
             }
         };
         
-        var bonCommande = document.getElementById('tbBonCommande').value;
+        var jobGarage = document.getElementById('tbJobGarage').value;
+        var vendeur = document.getElementById('tbVendeur').value;
         var fournisseur = document.getElementById('tbFournisseur').value;
-        var av = document.getElementById('tbAV').value;
         var heure = document.getElementById('tbHeure').value;
         var date = document.getElementById('tbDate').value;
-        //var chauffeur = document.getElementById('tbChauffeur').value;
-        var chauffeur = "";
-        //var chauffeur = document.getElementById('ddChauffeur').value;
-        var statut = document.getElementById('cbStatut').value;
-        var commentaire = document.getElementById('tbCommentaire').value;
+        var statut = document.getElementById('cbStatutJob').value;
+        var datePrevue = document.getElementById('tbDatePrevue').value;
         
-        var dataToAdd = "&oper=add&1=" + bonCommande + "&2=" + fournisseur + "&3=" + av + "&4=" + heure + "&5=" + date + "&6=" + chauffeur + "&7=" + statut + "&8=" + commentaire;
-        xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
+        var dataToAdd = "&oper=add&1=" + jobGarage + "&2=" + vendeur + "&3=" + fournisseur + "&4=" + heure + "&5=" + date + "&6=" + statut + "&7=" + datePrevue;
+        xhttp.open("GET", "callJobGarage.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
-        showBonCommandes();
+        showJobGarage();
     }    
     
     function addZero(i) {
@@ -210,7 +203,7 @@
     {
         timerDelay = ceci.value;
         clearTimer();
-        updateBonCommandes();
+        updateJobGarage();
     }
     
     function clearTimer()
@@ -219,34 +212,30 @@
     }
     
     var TIMER;
-    var updateBonCommandes = function(){
-        showBonCommandes();
-        TIMER = setTimeout(updateBonCommandes, timerDelay);
+    var updateJobGarage = function(){
+        showJobGarage();
+        TIMER = setTimeout(updateJobGarage, timerDelay);
     };
-    //setTimeout(updateBonCommandes, 1000);
+    //setTimeout(updateJobGarage, 1000);
     
 </script>
 
-<body onload="updateBonCommandes();">
+<body onload="updateJobGarage();">
     <div name='bonCommande' class='base_page_boncommande serializable'>
     <div style="position: fixed; width: 100%;text-align: right;">
-        <a class="lienTexte" href="jobgarage.php?succ=<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>">&nbsp;Jobs garage&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="lienTexte" href="boncommande.php?succ=<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>">&nbsp;Bons de commande&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
     <form id="frm" name="frm" action=""> 
         <table style="width:100%;">
             <tr>
                 <td style="width:40%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
                 <td style="width:40%;text-align:center;">
-                    <label class="h1bonCommande">Bons de commande</label>
+                    <label class="h1bonCommande">Jobs Garage</label>
                 </td>
                 <td style="width:20%;text-align:right;" valign="middle">    
                     
                     <table class="tableMenuTop">
                         <tr>
-                            <td class="tableMenuTopGeoTab">Geotab
-                                </br>
-                                <a href="https://my31.geotab.com/" target="_blank"><img src="../assets/images/iconePlanete.png"></a>
-                            </td>
                             <td class="tableMenuTopRefresh">Auto refresh
                                 </br>                                
                                 <select title="Auto refresh" class="inputCombo" onchange="updateTimer(this);">
@@ -271,32 +260,35 @@
         <datalist id="dl" name="dl"><?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?></datalist>         
         <hr>
         <table id="tbEntrerBonCommande" class="tableHaut">
-            <tr>            
-                <td class="bonCommande"># de commande</td>
-                <td class="fournisseur">Fournisseur</td>
-                <td class="av">AV</td>
-                <td class="heure">Heure</td>
-                <td class="date">Date</td>
-                <td class="statut">Statut</td>
-                <td class="commentaire">Commentaire</td>
-                <td class="ajouter"></td>
+            <tr>
+                <td class="jg edit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td class="jg jobgarage"># de job</td>
+                <td class="jg vendeur">Vendeur</td>
+                <td class="jg fournisseur">Fournisseur</td>
+                <td class="jg heure">Heure</td>
+                <td class="jg date">Date</td>
+                <td class="jg statut">Statut</td>
+                <td class="jg datePrevue">Date Prevue</td>
+                <td class="jg ajouter"></td>
             </tr>
             <tr>
-                <td class="bonCommande"><input type="text" class="tbBonCommande" maxlength="6" id="tbBonCommande" name="tbBonCommande"></td>
-                <td class="fournisseur">
-                    <input type="text" class="tbFournisseur" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
-                    <datalist class="input" id="dlFournisseur" name="dlFournisseur">
-                        <?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>
-                </td>
-                <td class="av">
-                    <input type="text" class="tbAV" id="tbAV" name="tbAV" list="dlAV">
+                <td class="jg edit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td class="jg jobgarage"><input type="text" class="jg tbJobGarage" maxlength="6" id="tbJobGarage" name="tbJobGarage"></td>
+                <td class="jg av">
+                    <input type="text" class="jg tbVendeur" id="tbVendeur" name="tbVendeur" list="dlAV">
                     <datalist id="dlAV" name="dlAV">
-                        <?php echo IL_Utils::getAutoComplete('aviseur', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                        <?php echo IL_Utils::getAutoComplete('vendeurJobGarage', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                 </td>
-                <td class="heure"><input type="text" class="tbHeure" id="tbHeure" onfocus="getHeure(this);" name="tbHeure"></td>
-                <td class="date"><input type="text" class="tbDate" id="tbDate" onfocus="getDate(this);" name="tbDate"></td>
+                <td class="jg fournisseur">
+                    <input type="text" class="jg tbFournisseur" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
+                    <datalist class="jg input" id="dlFournisseur" name="dlFournisseur">
+                        <?php echo IL_Utils::getAutoComplete('fournisseurJobGarage', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                    </datalist>
+                </td>
+                
+                <td class="heure"><input type="text" class="jg tbHeure" id="tbHeure" onfocus="getHeure(this);" name="tbHeure"></td>
+                <td class="date"><input type="text" class="jg tbDate" id="tbDate" onfocus="getDate(this);" name="tbDate"></td>
                 <!--
                 <td class="chauffeur">
                     <input type="text" class="tbChauffeur" id="tbChauffeur" name="tbChauffeur" list="dlChauffeur">
@@ -315,25 +307,25 @@
                     </select>
                 </td>
                 -->
-                <td class="statut">                    
+                <td class="jg statut">                    
                     <!--DATALIST
                     <input type="text" class="input" id="tbStatut" name="tbStatut" list="dlStatut">                    
                     <datalist id="dlStatut" name="dlStatut">
                         <?php //echo IL_Utils::getAutoComplete('statutBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>-->
-                    <select class="inputCombo" id="cbStatut"><option>En cours</option><option>Attribue</option><option>Recu</option></select>                    
+                    <select class="jg inputCombo" id="cbStatutJob"><option>Commandee</option><option>En cours</option><option>Bin job</option></select>                    
                 </td>
-                <td class="commentaire"><textarea rows="1" class="" cols="60" type="text" class="input" id="tbCommentaire" name="tbCommentaire"></textarea></td>
-                <td class="ajouter">
-                    <div class="tooltip">
-                        <input class="boutonAjout" type="button" alt="Ajouter" onclick="ajouterBonCommande();">
-                        <span class="tooltiptext">Ajouter</span>
+                <td class="jg date"><input type="date" class="jg tbDatePrevue" id="tbDatePrevue" name="tbDate" value="<?php echo date('Y-m-d'); ?>"></td>
+                <td class="jg ajouter">
+                    <div class="jg tooltip">
+                        <input class="jg boutonAjout" type="button" alt="Ajouter" onclick="ajouterJobGarage();">
+                        <span class="jg tooltiptext">Ajouter</span>
                     </div>
                 </td>
             </tr>
         </table>
         <hr>
-        <table id="tbBonCommandes" class="tableData" cellspacing="0" cellpadding="0"></table>
+        <table id="tableJobGarage" class="tableData" cellspacing="0" cellpadding="0"></table>
     </form>
 
     <!--<a href='https://interlivraison.reseaudynamique.com/boncommande/boncommande.php?succ=CIB'>CIB</a>-->

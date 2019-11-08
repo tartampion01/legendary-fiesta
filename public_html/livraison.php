@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/includes/header/_header.php');?>
+<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
 <!--<script type="application/javascript" src="assets/js/livraison.js"></script>-->
 <body>
     <div name='livraison' class='page_livraison layout_normal base_layout base_page serializable'>
@@ -19,7 +19,6 @@
             </a>
         </div>
     </div>
-    
     <div id="contenu">
         <div name='mod_livraison' class='module_livraison base_module awesomplete col-lg-offset-2 col-lg-8 serializable' >
             <section>

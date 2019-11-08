@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
-    require_once(dirname(__DIR__).'/_includes/commonIncludes.php');
+    require_once(dirname(__DIR__) . '/_includes/commonIncludes.php');
     
     ini_set('session.gc_maxlifetime', 2592000);
     ini_set('session.cookie_lifetime', 2592000);
@@ -27,6 +27,30 @@
     <script type="application/javascript" src="assets/js/container.js"></script>
     <script type="application/javascript" src="assets/js/animator.js"></script>
     <script type="application/javascript" src="assets/js/popup.js"></script>
+    <script type="application/javascript" src="assets/js/versionInfo.js"></script>
+    
+    <script type="text/javascript">
+        // these will be triggered by webview 
+        function fillUserNamePassword(usr, pwd) {
+            // TABLET WILL SEND "undefined" STRING IF VALUE WAS NOT FOUND FROM SETTINGS
+            if( usr !== "undefined" && pwd !== "undefined" ){
+                document.getElementById("username").value = usr;
+                document.getElementById("password").value = pwd;
+            }
+        }
+        function checkVersion(APK_version)
+        {
+            var div = document.getElementById('divNewVersion');
+            if( APK_version < CURRENT_VERSION )
+            {
+                div.style.display = 'block';
+            }
+            else
+            {
+                div.style.display = 'none';
+            }
+        }
+    </script>
     
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/animator.css" />
@@ -125,7 +149,8 @@
                                         setcookie('ID_USER', $user->id, time() + (2592000), "/");
                                         setcookie('LEVEL', $user->level, time() + (2592000), "/");
                                         
-                                        header('Location: ' . "default.php");
+                                        $pwd = base64_encode($password);
+                                        header('Location: ' . "default.php?p=$pwd");
                                         
                                     } else{
                                         // Display an error message if password is not valid
@@ -176,6 +201,27 @@
                     <div class="row buttons">
                         <div class=" col-xs-12">
                             <input type="submit" class="buttonStyle btn-default" id="btnLogin" name="btnLogin" value="Entrer" />
+                        </div>
+                    </div>
+                    <div class="row" id="divNewVersion" style="display:none;">
+                    </hr>
+                        <div class=" col-xs-12">
+                            Une nouvelle version de l'application est disponible!
+                            </br>
+                            <a href="https://interlivraison.reseaudynamique.com/assets/apk/interlivraison.apk">
+                                <input type="button" class="buttonStyle btn-default" id="btnLogin" name="btnLogin" value="Cliquez" />
+                            </a>
+                            pour la télécharger
+                        </div>
+                        <div>
+                            <ul><b>Dernières modification :</b>
+                                <li>
+                                    Stockage du nom d'utilisateur/mot de passe au login
+                                </li>
+                                <li>
+                                    Gestion de la version de l'application
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </form>

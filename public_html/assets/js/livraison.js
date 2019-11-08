@@ -65,10 +65,20 @@ $( document ).ready(function() {
         var itemRowCount = $(btn).attr('data-item-row');
         itemRowCount++
         var data = [
-            { counter: itemRowCount }
+            { counter:       itemRowCount,
+              customerName:  "",
+              readonly:      ""
+            }
         ];
+        
         $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
+        $('.addItemCustomer.firstItemRow').attr('data-item-row', itemRowCount);
         $("#itemTemplate").tmpl(data).appendTo(".cloneDestination");
+        
+        // Dynamically add awesomeplete to created control that was added to template
+        var input = document.getElementById("tbClient" + itemRowCount);
+        new Awesomplete(input, {list: document.querySelector("#dlClientsClones")});
+        
     });
     
     // Bind click on remove an item row
@@ -79,8 +89,29 @@ $( document ).ready(function() {
         var itemRow = $(btn).attr('data-item-row');
         $('.itemRow' + itemRow).remove();
         $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
+        $('.addItemCustomer.firstItemRow').attr('data-item-row', itemRowCount);
     });
     
+    // Bind click on add an customer row
+    $('body').on('click', '.addItemCustomer', function() {
+        btn = $(this);
+        var itemRowCount = $('.addItem.firstItemRow').attr('data-item-row');
+        customerName = btn.parent().find(".input").val();
+        
+        itemRowCount++
+        var data = [
+            { counter:      itemRowCount,
+              customerName: customerName,
+              readonly:     "readonly",
+              background:   "#BBBBBB;"
+            }
+        ];
+        
+        $('.addItem.firstItemRow').attr('data-item-row', itemRowCount);
+        $('.addItemCustomer.firstItemRow').attr('data-item-row', itemRowCount);
+        $("#itemTemplate").tmpl(data).appendTo(".cloneDestination");
+    });
+       
     // Bind click on "Effacer la signature" button
     $('.btnClear').on('click', function() {
         // Destroy the signature plugin instance
@@ -115,10 +146,10 @@ $( document ).ready(function() {
                 array_colis.push(tmpItem);
             });
             postData.array_colis = array_colis;
-
+//alert('navigator.onLine : '+navigator.onLine);
             // Check connection is up/down
             if(Offline.state == 'up' && navigator.onLine) {
-
+//alert('Connection is UP');
                 // Create livraison over ajax
                 if(edit_page == true) {
                     url = 'api/update-livraison.php';
@@ -157,8 +188,7 @@ $( document ).ready(function() {
                 console.log(postData);
             }
             else if(Offline.state == 'down' || !navigator.onLine) {
-//alert('Connection is DOWN');
-                // Store de query into localForage
+                // Store the query into localForage
                 insertQueryIntoLocalForage(postData);
             }
 
@@ -201,7 +231,7 @@ function insertQueryIntoLocalForage(postData) {
         swal({
             position: 'top-end',
             type: 'success',
-            title: 'Livraison enregistrée!',
+            title: 'Données enregistrées!',
             showConfirmButton: false,
             timer: 1500
         });
@@ -302,7 +332,7 @@ function validateForm() {
         errorMessage+= '<li>Employé</li>';
         $('#tbEmploye').addClass('control-error');
         error = true;
-    }
+    } 
     else {
         $('#tbEmploye').removeClass('control-error');
         //error = false;
@@ -328,6 +358,7 @@ function validateForm() {
         //error = false;
     }
     
+    /* Commenté car demande faite que le colis soit optionnel le 24/07/2019 par Sylvain Goulet
     if($('#tbNoColis1').val() == '') {
         errorMessage+= '<li>Colis</li>';
         $('#tbNoColis1').addClass('control-error');
@@ -337,7 +368,9 @@ function validateForm() {
         $('#tbNoColis1').removeClass('control-error');
         //error = false;
     }
+    */
     
+    /* Commenté car demande faite que le nom de destinataire soit optionnel le 24/07/2019 par Sylvain Goulet
     if($('#tbDestinataire').val() == '') {
         errorMessage+= '<li>Destinataire</li>';
         $('#tbDestinataire').addClass('control-error');
@@ -347,6 +380,8 @@ function validateForm() {
         $('#tbDestinataire').removeClass('control-error');
         //error = false;
     }
+    */
+   
     /* Commenté car demande faite que le nom de signataire soit optionnel le 07/02/2019
     if($('#tbNomSignataire').val() == '') {
         errorMessage+= '<li>Nom du signataire</li>';

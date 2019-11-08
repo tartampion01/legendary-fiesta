@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/includes/header/_header.php');?>
+<?php require_once(dirname(__DIR__) . '/_includes/header/_header.php');?>
 <script type="application/javascript" src="assets/js/recherche-rest.js"></script>
 <body>
     <div name='menu' class='page_menu layout_normal base_layout base_page page_recherche serializable'>
@@ -45,6 +45,7 @@
                                 <!--<option value="signature">Signature</option>-->
                                 <option value="noEmploye"># employé</option>
                                 <option value="Succursale">Succursale</option>
+                                <option value="PICKUP">PICKUP</option>
                             </select>
                         </div>
                         <div class="col-xs-3">
@@ -93,7 +94,7 @@
                             <th class="nomSignataire sortable" data-order-by="nomSignataire">Nom du signataire<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                             <th class="signature">Signature</th>
                             <th class="noEmploye sortable" data-order-by="noEmploye"># employé<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
-                            <th class="succursale sortable" data-order-by="succursale">Succursale<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
+                            <th class="succursale sortable" style="width: 0px;" data-order-by="succursale">Succursale<span class="sortIcon down" data-order="ASC">▼</span><span class="sortIcon up" data-order="DESC" style="display: none;">▲</span></th>
                         </tr>
                     </thead>
                     <tbody class="results-container">

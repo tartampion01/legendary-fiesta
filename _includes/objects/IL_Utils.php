@@ -50,14 +50,14 @@ class IL_Utils
         switch($level)
         {
             // USER
-            case 0: echo '<a href="feuillederoute.php" class="menuitem offline_hide utilisateurs"><button name="feuillederoute" class=""><div class="label">Remplir feuille</div></button></a>' .
+            case 0: echo '<a href="feuillederoute.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="feuillederoute" class=""><div class="label">Remplir feuille</div></button></a>' .
                          '<a href="livraisonElite.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>' .
                          '<a href="livraison.php" class="menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Livrer</div></button></a>' .
                          '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
                          '<button name="logout" class="menuitem offline_hide logout" onclick="window.location.href=\'logout.php\'"><div class="label">Déconnexion</div></button>';
                     break;
             // ADMIN
-            case 1: echo '<a href="feuillederoute.php" class="menuitem offline_hide utilisateurs"><button name="feuillederoute" class=""><div class="label">Remplir feuille</div></button></a>' .
+            case 1: echo '<a href="feuillederoute.php?r='.mt_rand(0, 999999999). '" class="menuitem offline_hide utilisateurs"><button name="feuillederoute" class=""><div class="label">Remplir feuille</div></button></a>' .
                          '<a href="livraisonElite.php" class= "menuitem offline_hide livraison"><button name="livrer" class=""><div class="label">Feuille de route</div></button></a>' .
                          '<a href="rechercher.php" class="menuitem offline_hide recherche"><button name="recherche" class=""><div class="label">Rechercher</div></button></a>' .
                          '<a href="utilisateurs.php" class="menuitem offline_hide utilisateurs"><button name="utilisateurs" class=""><div class="label">Utilisateurs</div></button></a>' .

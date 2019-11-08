@@ -364,6 +364,20 @@ a {
 .input[type=checkbox] {
   height: 20px;
 }
+
+.fatCheckBox
+{
+    -webkit-appearance:none;
+    width:30px;
+    height:30px;
+    background:white;
+    border-radius:5px;
+    border:2px solid #555;
+}
+.fatCheckBox[type='checkbox']:checked {
+    background: #57A957;
+}
+
 .input[type=checkboxlist] {
   display: table;
   margin: 0px;
@@ -1288,3 +1302,31 @@ i.fa {
 }
 /* Button Sync localForage */
 
+/* POLY FILL VALUES */
+.datalist-polyfill {
+	list-style: none;
+	display: none;
+	background: white;
+	box-shadow: 0 2px 2px #999;
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin: 0;
+	padding: 0;
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.datalist-polyfill:empty {
+	display: none !important;
+}
+
+.datalist-polyfill > li {
+    padding: 3px;
+    font: 13px "Lucida Grande", Sans-Serif;
+}
+    
+.datalist-polyfill__active {
+    background: #3875d7;
+    color: white;
+}

@@ -17,13 +17,20 @@ else // On a un utilisateur connecté/authentifié
     {
         case "read": echo IL_Utils::getJobGarage($succursale);
                      break;
-        case "add":  echo IL_Utils::addJobGarage($_GET["1"], $_GET["2"], $_GET["3"], $_GET["4"], $_GET["5"], $_GET["6"], $_GET["7"], $succursale);
+        case "readArchive": echo IL_Utils::getJobGarageArchive($succursale);
+                            break;
+        case "add":  echo IL_Utils::addJobGarage($_GET["1"], $_GET["2"], $_GET["3"], $_GET["4"], $_GET["5"], $_GET["6"], $_GET["7"], $_GET["8"], $_GET["9"], $_GET["10"], $_GET["11"], $succursale);
                      break;
         case "del":  echo IL_Utils::deleteJobGarage($_GET["pk"]);
                      break;
+        case "deleteFromArchive":  echo IL_Utils::deleteJobGarageFromArchive($_GET["pk"]);
+                                   break;                 
         case "updateStatut": echo IL_Utils::updateStatutJobGarage($_GET["1"],$_GET["2"]);
                              break;
-        case "updateLigne": echo IL_Utils::updateLigneJobGarage($_GET["1"], $_GET["2"], $_GET["3"], $_GET["4"], $_GET["5"], $_GET["6"], $_GET["7"], $succursale);
+        case "updateStatutReceptionnee": echo IL_Utils::updateStatutReceptionneeJobGarage($_GET["1"],$_GET["2"]);
+                             break;
+           // updateLigne                                         rowId       jobGarage   av          vendeur     fournisseur heure       date        transport   datePrevue  AMouPM       commentaire;
+        case "updateLigne": echo IL_Utils::updateLigneJobGarage($_GET["1"], $_GET["2"], $_GET["3"], $_GET["4"], $_GET["5"], $_GET["6"], $_GET["7"], $_GET["8"], $_GET["9"], $_GET["10"], $_GET["11"],$succursale);
                             break;
     }
 }

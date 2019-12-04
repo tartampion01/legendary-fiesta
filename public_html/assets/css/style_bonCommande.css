@@ -1337,6 +1337,7 @@ i.fa {
 .page_login .input {
   width: 100%;
   color: black;
+  height: 22px;
 }
 .page_login .buttons button {
   width: 100%;
@@ -1398,12 +1399,14 @@ table.tableData tr td select.Recu{background-color: #66ff66;}
 table.tableHaut tr td.edit.jg { width:1%; }
 table.tableHaut tr td.jg{ font-size: 13px; font-family: verdana;font-weight: bold; }
 table.tableHaut tr td.jg.jobgarage { width: 6%; }
-table.tableHaut tr td.jg.vendeur { width: 12%; }
-table.tableHaut tr td.jg.fournisseur { width: 12%; }
+table.tableHaut tr td.jg.vendeur { width: 10%; }
+table.tableHaut tr td.jg.fournisseur { width: 10%; }
 table.tableHaut tr td.jg.heure { width: 5%; }
-table.tableHaut tr td.jg.date { width: 5%; }
-table.tableHaut tr td.jg.statut { width: 12%; }
-table.tableHaut tr td.jg.datePrevue { width: 26%; }
+table.tableHaut tr td.jg.date { width: 1%; }
+table.tableHaut tr td.jg.transport { width: 5%; }
+table.tableHaut tr td.jg.statut { width: 1%; }
+table.tableHaut tr td.jg.datePrevue { width: 20%; }
+table.tableHaut tr td.jg.commentaire { width: 26%;}
 table.tableHaut tr td.jg.ajouter { width: 7%;}
                 
 table.tableData tr.trHeader td.jg { font-size: 13px; font-family: verdana;font-weight: bold;background-color: gray;}
@@ -1411,33 +1414,45 @@ table.tableData tr td.jg { font-size: 11px; font-weight: bold; font-family: verd
 
 table.tableData tr td.jg.edit{ width: 1%;}
 table.tableData tr td.jg.jobGarage { width: 6%;}
-table.tableData tr td.jg.fournisseur { width: 12%;}
-table.tableData tr td.jg.vendeur { width: 3%;}
+table.tableData tr td.jg.av { width: 3%;}
+table.tableData tr td.jg.fournisseur { width: 10%;}
+table.tableData tr td.jg.vendeur { width: 10%;}
 table.tableData tr td.jg.heure { width: 5%;}
-table.tableData tr td.jg.date { width: 5%;}
-table.tableData tr td.jg.statut { width: 12%;}
-table.tableData tr td.jg.datePrevue { width: 26%;}
+table.tableData tr td.jg.date { width: 1%;}
+table.tableData tr td.jg.transport { width: 5%;}
+table.tableData tr td.jg.statut { width: 1%;}
+table.tableData tr td.jg.datePrevue { width: 20%;}
+table.tableData tr td.jg.commentaire { width: 26%;}
 table.tableData tr td.jg.ajouter { width: 7%;padding-top: 5px;}
 
-table.tableData tr td select.jg.Commandee{width:125px;background-color: #ff6666;}
-table.tableData tr td select.jg.Encours{width:125px;background-color: #ffff66;}
-table.tableData tr td select.jg.Binjob{width:125px;background-color: #66ff66;}
+table.tableData tr td select.jg.transport{width:125px;background-color: #eeeeee;font-size:11px;}
+table.tableData tr td select.jg.Acommander{width:110px;background-color: #66ff66;font-size:11px;}
+table.tableData tr td select.jg.Commandee{width:110px;background-color: #ff6666;font-size:11px;}
+table.tableData tr td select.jg.Transit{width:110px;background-color: #ffff66;font-size:11px;}
+table.tableData tr td select.jg.Recu{width:110px;background-color: #9370DB;font-size:11px;}
+table.tableData tr td select.jg.Binjob{width:110px;background-color: #AFEEEE;font-size:11px;}
 
-.jg.tbBonCommande{width:120px; font-size: 13px;}
-.jg.tbVendeur{width: 150px; font-size: 13px;}
-.jg.tbFournisseur{width:150px; font-size: 13px;}
-.jg.tbHeure{width:60px; font-size: 13px;}
-.jg.tbDate{width:80px; font-size: 13px;}
-.jg.tbDatePrevue{width:150px; font-size: 13px;}
-.jg.tbCommentaireElargi{width:500px; font-size: 13px;}
+table.tableData tr td.datePrevue label{font-weight: normal;}
+
+.jg.tbJobGarage{width:55px; font-size: 11px;}
+.jg.tbAV{width:20px; font-size: 11px;}
+.jg.tbVendeur{width: 120px; font-size: 11px;}
+.jg.tbFournisseur{width:120px; font-size: 11px;}
+.jg.tbHeure{width:40px; font-size: 11px;}
+.jg.tbDate{width:100px; font-size: 11px;}
+.jg.tbDatePrevue{width:120px; font-size: 11px;}
+.jg.tbTransport{width:120px; font-size: 11px;}
+.jg.tbCommentaire{width:300px; font-size: 11px;}
+.jg.tbCommentaireElargi{width:300px; font-size: 11px;}
 
 .jg.inputCombo {
-  width:125px;
+  width:120px;
   height: 20px;
   padding-left: 0px;
   vertical-align: middle;
   border-radius: 1px;
   background-color: #eeeeee;
+  font-size:11px;
 }
 
 /********************************************************************************************************************************** JOB GARAGE ****************/

@@ -297,19 +297,23 @@ class IL_Utils
         $data = '<tr class="trHeader">
                     <td class="jg edit"></td>
                     <td class="jg jobGarage"># de job</td>
-                    <td class="jg vendeur">Vendeur</td>
+                    <td class="jg av">AV</td>
+                    <td class="jg vendeur">Demandeur</td>
                     <td class="jg fournisseur">Fournisseur</td>
                     <td class="jg heure">Heure</td>
                     <td class="jg date">Date</td>
+                    <td class="jg transport">Transport</td>
                     <td class="jg statut">Statut</td>
                     <td class="jg datePrevue">Date prévue</td>
+                    <td class="jg commentaire">Commentaire</td>
+                    <!--<td class="jg datePrevue">Receptionnee</td>-->
                     <td class="jg ajouter"></td>
                 </tr>';
               
         $conn = IL_Database::getConn();
         mysqli_set_charset($conn,"utf8");
         
-        $sql = "SELECT pkJobGarage, jobGarage, fournisseur, vendeur, heure, date, receptionnee,statut, commentaire, datePrevue, archive FROM jobs_garage WHERE succursale='$succursale' AND archive=0";
+        $sql = "SELECT pkJobGarage, jobGarage, AV, fournisseur, vendeur, heure, date, transport, statut, AMouPM, commentaire, datePrevue, archive FROM jobs_garage WHERE succursale='$succursale' AND archive=0";
         //echo $sql;
         $result = mysqli_query($conn, $sql);
         
@@ -321,32 +325,92 @@ class IL_Utils
                     
                     $data .= "<tr id='row_" . $pkJobGarage . "' class=''>";
                     $data .= "<td id='cbEdit_" . $pkJobGarage . "' class='jg edit'><input title='Modifier cette ligne' type='radio' id='radioEdit' name='radioEdit' class='chkEditRow' onclick='editMode(this," . $pkJobGarage . ");' value='" . $pkJobGarage . "' alt='Modifier'></td>";
-                    $data .= "<td class='jg jobGarage'><input type='text' id='tbJobGarage_" . $pkJobGarage . "' class='jg tbJobGarage' maxlength='6' value='" . $row["jobGarage"] . "'></input></td>";
-                    $data .= "<td class='jg vendeur'><input type='text' id='tbVendeur_" . $pkJobGarage . "' class='jg tbAffichage tbVendeur' list='dlAV' value='" . $row["vendeur"] . "'></input></td>";
+                    $data .= "<td class='jg jobGarage'><input type='text' id='tbJobGarage_" . $pkJobGarage . "' class='jg tbJobGarage' maxlength='7' value='" . $row["jobGarage"] . "'></input></td>";
+                    $data .= "<td class='jg av'><input type='text' id='tbAV_" . $pkJobGarage . "' class='jg tbAV' list='dlAV' value='" . $row["AV"] . "'></input></td>";
+                    $data .= "<td class='jg vendeur'><input type='text' id='tbVendeur_" . $pkJobGarage . "' class='jg tbAffichage tbVendeur' list='dlDemandeur' value='" . $row["vendeur"] . "'></input></td>";
                     $data .= "<td class='jg fournisseur'><input type='text' id='tbFournisseur_" . $pkJobGarage . "' class='jg tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
                     $data .= "<td class='jg heure'><input type='text' id='tbHeure_" . $pkJobGarage . "' class='jg tbHeure' value='" . $row["heure"] . "'></input></td>";
-                    $data .= "<td class='jg date'><input type='text' id='tbDate_" . $pkJobGarage . "' class='jg tbDate' value='" . $row["date"] . "'></input></td>";
+                    //$data .= "<td class='jg date'><input type='text' id='tbDate_" . $pkJobGarage . "' class='jg tbDate' value='" . $row["date"] . "'></input></td>";
+                    $data .= '<td class="jg date"><input type="text" id="tbDate_' . $pkJobGarage . '" class="jg tbDate" value="' . htmlspecialchars($row["date"]) . '"></input>';
+                    $data .= '<td class="jg date"><input type="text" id="tbTransport_' . $pkJobGarage . '" class="jg tbTransport" list="dlTransport" value="' . htmlspecialchars($row["transport"]) . '"></input>';
+
+                    /*
+                    $transport = "";
+                    if( $row['transport'] == 'Notre chauffeur')
+                    {
+                        $transport = '<select id="ddTransport_' . $pkJobGarage . '" class="jg transport">';
+                        $transport .= '<option selected>Notre chauffeur</option><option>Dicom</option><option>Vitex</option><option>Navistar</option></select>';
+                    }
+                    elseif( $row['transport'] == 'Dicom' )
+                    {
+                        $transport = '<select id="ddTransport_' . $pkJobGarage . '" class="jg transport">';
+                        $transport .= '<option>Notre chauffeur</option><option selected>Dicom</option><option>Vitex</option><option>Navistar</option></select>';
+                    }
+                    elseif( $row['transport'] == 'Vitex' )
+                    {
+                        $transport = '<select id="ddTransport_' . $pkJobGarage . '" class="jg transport">';
+                        $transport .= '<option>Notre chauffeur</option><option>Dicom</option><option selected>Vitex</option><option>Navistar</option></select>';
+                    }
+                    else{
+                        $transport = '<select id="ddTransport_' . $pkJobGarage . '" class="jg transport">';
+                        $transport .= '<option>Notre chauffeur</option><option>Dicom</option><option>Vitex</option><option selected>Navistar</option></select>';
+                    }
+                                            
+                    $data .= "<td class='jg transport'>$transport</td>";
+                     *
+                     */
                     
+                    // 5 possibilités de statut:
+                    // Acommander, commandee, transit, recu, binjob
                     $statut = "";
-                    if( $row['statut'] == 'Commandee')
+                    if( $row['statut'] == 'A commander')
+                    {
+                        $statut = '<select class="jg Acommander" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
+                        $statut .= '<option selected>A commander</option><option>Commandee</option><option>Transit</option><option>Recue</option><option>Bin job</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Commandee' )
                     {
                         $statut = '<select class="jg Commandee" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
-                        $statut .= '<option selected>Commandee</option><option>En cours</option><option>Bin job</option></select>';
+                        $statut .= '<option>A commander</option><option selected>Commandee</option><option>Transit</option><option>Recue</option><option>Bin job</option></select>';
                     }
-                    elseif( $row['statut'] == 'En cours' )
+                    elseif( $row['statut'] == 'Transit' )
                     {
-                        $statut = '<select class="jg Encours" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
-                        $statut .= '<option>Commandee</option><option selected>En cours</option><option>Bin job</option></select>';
+                        $statut = '<select class="jg Transit" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
+                        $statut .= '<option>A commander</option><option>Commandée</option><option selected>Transit</option><option>Recue</option><option>Bin job</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Recue' )
+                    {
+                        $statut = '<select class="jg Recu" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
+                        $statut .= '<option>A commander</option><option>Commandee</option><option>Transit</option><option selected>Recue</option><option>Bin job</option></select>';
                     }
                     else
                     {
                         $statut = '<select class="jg Binjob" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
-                        $statut .= '<option>Commandee</option><option>En cours</option><option selected>Bin job</option></select>';
+                        $statut .= '<option>A commander</option><option>Commandee</option><option>Transit</option><option>Recue</option><option selected>Bin job</option></select>';
                     }
                     
-                    $data .= "<td class='statut'>$statut</td>";
-                    //$data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkJobGarage . '" class="tbCommentaire" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
-                    $data .= '<td class="datePrevue"><input type="date" id="tbDatePrevue_' . $pkJobGarage . '" class="jg tbDatePrevue" value="' . htmlspecialchars($row["datePrevue"]) . '"></input></td>';
+                    $data .= "<td class='jg statut'>$statut</td>";
+                    
+                    // date Prevue plus radiobutton dans TD
+                    $data .= '<td class="jg datePrevue"><input type="text" id="tbDatePrevue_' . $pkJobGarage . '" class="jg tbDatePrevue" value="' . htmlspecialchars($row["datePrevue"]) . '"></input>';
+                    
+                    if( $row["AMouPM"] == "AM" ){
+                        $data .= '<input type="radio" id="rbAM_' . $pkJobGarage . '" name="rbAMouPM_' . $pkJobGarage . '" onclick="highlightRadioAM(this);" value="AM" checked="checked"/><label for="rbAM_' . $pkJobGarage . '" id="rbAM_' . $pkJobGarage . 'label" style="background-color:#66FF99">AM</label>';
+                        $data .= '<input type="radio" id="rbPM_' . $pkJobGarage . '" name="rbAMouPM_' . $pkJobGarage . '" onclick="highlightRadioPM(this);" value="PM" /><label for="rbPM_' . $pkJobGarage . '" id="rbPM_' . $pkJobGarage . 'label" style="background-color:#C5C5C5">PM</label></td>';
+                    }
+                    else
+                    {
+                        $data .= '<input type="radio" id="rbAM_' . $pkJobGarage . '" name="rbAMouPM_' . $pkJobGarage . '" onclick="highlightRadioAM(this);" value="AM" /><label for="rbAM_' . $pkJobGarage . '" id="rbAM_' . $pkJobGarage . 'label" style="background-color:#C5C5C5">AM</label>';
+                        $data .= '<input type="radio" id="rbPM_' . $pkJobGarage . '" name="rbAMouPM_' . $pkJobGarage . '" onclick="highlightRadioPM(this);" value="PM" checked="checked" /><label for="rbPM_' . $pkJobGarage . '" id="rbPM_' . $pkJobGarage . 'label" style="background-color:#CC9966">PM</label></td>';
+                    }
+                    
+                    $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkJobGarage . '" class="jg tbCommentaire" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
+                    
+                    $checked = "";
+                    if( $row["receptionnee"] == "1")
+                        $checked = " checked ";
+                    
+                    //$data .= '<td class="jg receptionnee"><input onClick="updateStatutReceptionnee(this,\'' . $row["pkJobGarage"] . '\');" type="checkbox" id="cbReceptionnee_' . $pkJobGarage . '" class="jg tbRecetpionnee"' . $checked . '></input></td>"';
                     
                     $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkJobGarage . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkJobGarage"] . ");' alt='Sauvegarder'>";
                     $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='if( confirmerSuppression(\"" . $row["jobGarage"] . "\"))deleteRow(" . $row["pkJobGarage"] . ");' alt='Supprimer'></td></tr>";
@@ -355,12 +419,160 @@ class IL_Utils
                 $data .= '<tr><td class="edit">
                               <img id="btnDeselectionner" style="visibility:hidden;" onclick="deselectionner();" src="../assets/images/iconeRemove.png" alt=""/></td>
                               <td class="jg jobGarage"></td>
+                              <td class="jg av"></td>
                               <td class="jg fournisseur"></td>
                               <td class="jg vendeur"></td>
                               <td class="jg heure"></td>
                               <td class="jg date"></td>
+                              <td class="jg transport"></td>
                               <td class="jg statut"></td>
                               <td class="jg datePreveu"></td>
+                              <td class="jg commentaire"></td>
+                              <td class="ajouter"></td></tr>';
+            }
+        }
+        catch (Exception $e) {
+            //echo $e;
+        }
+        
+        return $data;
+    }
+    
+    public static function getJobGarageArchive($succursale){
+        
+        /*
+        $data = "<th># de commande</th>";
+        $data .= "<th>Fournisseur</th>";
+        $data .= "<th>AV</th>";
+        $data .= "<th>Heure</th>";
+        $data .= "<th>Date</th>";
+        $data .= "<th>Chauffeur</th>";
+        $data .= "<th>Statut</th>";
+        $data .= "<th>Commentaire</th>";
+        $data .= "<th>X</th>";
+         * 
+         */
+        $data = '<tr class="trHeader">
+                    <td class="jg jobGarage"># de job</td>
+                    <td class="jg av">AV</td>
+                    <td class="jg vendeur">Demandeur</td>
+                    <td class="jg fournisseur">Fournisseur</td>
+                    <td class="jg heure">Heure</td>
+                    <td class="jg date">Date</td>
+                    <td class="jg transport">Transport</td>
+                    <td class="jg statut">Statut</td>
+                    <td class="jg datePrevue">Date prévue</td>
+                    <td class="jg commentaire">Commentaire</td>
+                    <!--<td class="jg datePrevue">Receptionnee</td>-->
+                    <td class="jg ajouter"></td>
+                </tr>';
+              
+        $conn = IL_Database::getConn();
+        mysqli_set_charset($conn,"utf8");
+        
+        $sql = "SELECT pkJobGarage, jobGarage, AV, fournisseur, vendeur, heure, date, transport, statut, AMouPM, commentaire, datePrevue, archive FROM jobs_garage WHERE succursale='$succursale' AND archive=1";
+        //echo $sql;
+        $result = mysqli_query($conn, $sql);
+        
+        try
+        {
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_assoc($result)) {
+                    $pkJobGarage = $row["pkJobGarage"];
+                    
+                    $data .= "<tr id='row_" . $pkJobGarage . "' class=''>";
+                    $data .= "<td class='jg jobGarage'><input readonly type='text' id='tbJobGarage_" . $pkJobGarage . "' class='jg tbJobGarage' maxlength='7' value='" . $row["jobGarage"] . "'></input></td>";
+                    $data .= "<td class='jg av'><input readonly type='text' id='tbAV_" . $pkJobGarage . "' class='jg tbAV' list='dlAV' value='" . $row["AV"] . "'></input></td>";
+                    $data .= "<td class='jg vendeur'><input readonly type='text' id='tbVendeur_" . $pkJobGarage . "' class='jg tbAffichage tbVendeur' list='dlDemandeur' value='" . $row["vendeur"] . "'></input></td>";
+                    $data .= "<td class='jg fournisseur'><input readonly type='text' id='tbFournisseur_" . $pkJobGarage . "' class='jg tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
+                    $data .= "<td class='jg heure'><input readonly type='text' id='tbHeure_" . $pkJobGarage . "' class='jg tbHeure' value='" . $row["heure"] . "'></input></td>";
+                    //$data .= "<td class='jg date'><input type='text' id='tbDate_" . $pkJobGarage . "' class='jg tbDate' value='" . $row["date"] . "'></input></td>";
+                    $data .= '<td class="jg date"><input readonly type="text" id="tbDate_' . $pkJobGarage . '" class="jg tbDate" value="' . htmlspecialchars($row["date"]) . '"></input>';
+                    $data .= '<td class="jg date"><input readonly type="text" id="tbTransport_' . $pkJobGarage . '" class="jg tbTransport" list="dlTransport" value="' . htmlspecialchars($row["transport"]) . '"></input>';
+                    
+                    /*
+                    $transport = "";
+                    if( $row['transport'] == 'Notre chauffeur')
+                    {
+                        $transport = '<select disabled id="ddTransport_' . $pkJobGarage . '" class="jg transport">';
+                        $transport .= '<option selected>Notre chauffeur</option><option>Dicom</option><option>Vitex</option><option>Navistar</option></select>';
+                    }
+                    elseif( $row['transport'] == 'Dicom' )
+                    {
+                        $transport = '<select disabled id="ddTransport_' . $pkJobGarage . '" class="jg transport">';
+                        $transport .= '<option>Notre chauffeur</option><option selected>Dicom</option><option>Vitex</option><option>Navistar</option></select>';
+                    }
+                    elseif( $row['transport'] == 'Vitex' )
+                    {
+                        $transport = '<select disabled id="ddTransport_' . $pkJobGarage . '" class="jg transport">';
+                        $transport .= '<option>Notre chauffeur</option><option>Dicom</option><option selected>Vitex</option><option>Navistar</option></select>';
+                    }
+                    else{
+                        $transport = '<select disabled id="ddTransport_' . $pkJobGarage . '" class="jg transport">';
+                        $transport .= '<option>Notre chauffeur</option><option>Dicom</option><option>Vitex</option><option selected>Navistar</option></select>';
+                    }
+                                            
+                    $data .= "<td class='jg transport'>$transport</td>";
+                    */
+                    
+                    // 5 possibilités de statut:
+                    // Acommander, commandee, transit, recu, binjob
+                    $statut = "";
+                    if( $row['statut'] == 'A commander')
+                    {
+                        $statut = '<select readonly class="jg inputCombo">';
+                        $statut .= '<option selected>A commander</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Commandee' )
+                    {
+                        $statut = '<select readonly class="jg Commandee" >';
+                        $statut .= '<option selected>Commandee</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Transit' )
+                    {
+                        $statut = '<select readonly class="jg Transit" >';
+                        $statut .= '<option selected>Transit</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Recue' )
+                    {
+                        $statut = '<select readonly class="jg Recu" >';
+                        $statut .= '<option selected>Recue</option></select>';
+                    }
+                    else
+                    {
+                        $statut = '<select readonly class="jg Binjob" >';
+                        $statut .= '<option selected>Bin job</option></select>';
+                    }
+                    
+                    $data .= "<td class='jg statut'>$statut</td>";
+                    
+                    // date Prevue plus radiobutton dans TD
+                    $data .= '<td class="jg datePrevue"><input readonly type="text" id="tbDatePrevue_' . $pkJobGarage . '" class="jg tbDatePrevue" value="' . htmlspecialchars($row["datePrevue"]) . '"></input>';
+                    
+                    $data .= '<label>&nbsp;&nbsp;' . $row["AMouPM"] . '</label>';
+                   
+                    $data .= '<td class="commentaire"><input readonly type="text" id="tbCommentaire_' . $pkJobGarage . '" class="jg tbCommentaire" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
+                    
+                    $checked = "";
+                    if( $row["receptionnee"] == "1")
+                        $checked = " checked ";
+                    
+                    //$data .= '<td class="jg receptionnee"><input onClick="updateStatutReceptionnee(this,\'' . $row["pkJobGarage"] . '\');" type="checkbox" id="cbReceptionnee_' . $pkJobGarage . '" class="jg tbRecetpionnee"' . $checked . '></input></td>"';
+                    
+                    $data .= "<td class='ajouter'><input type='button' title='Enlever la ligne' class='boutonDelete' onclick='if( confirmerSuppression(\"" . $row["jobGarage"] . "\"))deleteArchive(" . $row["pkJobGarage"] . ");' alt='Supprimer'></td></tr>";
+                }
+                
+                $data .= '<tr>
+                              <td class="jg jobGarage"></td>
+                              <td class="jg av"></td>
+                              <td class="jg fournisseur"></td>
+                              <td class="jg vendeur"></td>
+                              <td class="jg heure"></td>
+                              <td class="jg date"></td>
+                              <td class="jg transport"></td>
+                              <td class="jg statut"></td>
+                              <td class="jg datePreveu"></td>
+                              <td class="jg commentaire"></td>
                               <td class="ajouter"></td></tr>';
             }
         }
@@ -488,21 +700,25 @@ class IL_Utils
         return "Bon de commande ajouté";
     }
     
-    public static function addJobGarage($jobGarage, $vendeur, $fournisseur, $heure, $date, $statut, $datePrevue, $succursale){
+    public static function addJobGarage($jobGarage, $av, $vendeur, $fournisseur, $heure, $date, $transport, $statut, $datePrevue, $AMouPM, $commentaire, $succursale){
         
         $conn = IL_Database::getConn();
         
         $jobGarage = mysqli_real_escape_string($conn, $jobGarage);
+        $av = mysqli_real_escape_string($conn, $av);
         $vendeur = mysqli_real_escape_string($conn, $vendeur);
         $fournisseur = mysqli_real_escape_string($conn, $fournisseur);
         $heure = mysqli_real_escape_string($conn, $heure);
         $date = mysqli_real_escape_string($conn, $date);
+        $transport = mysqli_real_escape_string($conn, $transport);
         $statut = mysqli_real_escape_string($conn, $statut);
         $datePrevue = mysqli_real_escape_string($conn, $datePrevue);
+        $AMouPM = mysqli_real_escape_string($conn, $AMouPM);
+        $commentaire = mysqli_real_escape_string($conn, $commentaire);
         $succursale = mysqli_real_escape_string($conn, $succursale);
 
-        $sql = "INSERT INTO jobs_garage(jobGarage,vendeur,fournisseur,heure,date,statut,datePrevue,succursale) ";
-        $sql .= "VALUES('$jobGarage','$vendeur','$fournisseur','$heure','$date','$statut','$datePrevue','$succursale')";
+        $sql = "INSERT INTO jobs_garage(jobGarage,av,vendeur,fournisseur,heure,date,transport,statut,datePrevue,AMouPM,commentaire,succursale) ";
+        $sql .= "VALUES('$jobGarage','$av','$vendeur','$fournisseur','$heure','$date','$transport','$statut','$datePrevue','$AMouPM','$commentaire','$succursale')";
         mysqli_query($conn, $sql);
         $this->id = $conn->insert_id;
         
@@ -527,6 +743,16 @@ class IL_Utils
         return "Job Garage effacée";
     }
     
+    public static function deleteJobGarageFromArchive($pkJobGarage)
+    {
+        $conn = IL_Database::getConn();
+        
+        mysqli_query($conn, "DELETE FROM jobs_garage WHERE pkJobGarage='$pkJobGarage'");
+        
+        return "Job Garage effacée de l'archive";
+    }
+    
+    
     public static function updateStatut($pkBonCommande, $nouveauStatut)
     {
         $conn = IL_Database::getConn();
@@ -543,6 +769,15 @@ class IL_Utils
         mysqli_query($conn, "UPDATE jobs_garage SET statut='$nouveauStatut' WHERE pkJobGarage='$pkJobGarage'");
         
         return "Statut de job modifié";
+    }
+    
+    public static function updateStatutReceptionneeJobGarage($pkJobGarage, $nouveauStatut)
+    {
+        $conn = IL_Database::getConn();
+        
+        mysqli_query($conn, "UPDATE jobs_garage SET receptionnee='$nouveauStatut' WHERE pkJobGarage='$pkJobGarage'");
+        
+        return "Statut de job [receptionnee] modifié";
     }
     
     public static function updateLigne($pkBonCommande, $bonCommande, $fournisseur, $av, $heure, $date, $chauffeur, $commentaire, $succursale)
@@ -565,19 +800,23 @@ class IL_Utils
         return $sql;//"Bon de commande modifié";
     }
     
-    public static function updateLigneJobGarage($pkJobGarage, $jobGarage, $vendeur, $fournisseur, $heure, $date, $datePrevue, $succursale)
+    public static function updateLigneJobGarage($pkJobGarage, $jobGarage, $av, $vendeur, $fournisseur, $heure, $date, $transport, $datePrevue, $AMouPM, $commentaire, $succursale)
     {
         $conn = IL_Database::getConn();
         
         $jobGarage = mysqli_real_escape_string($conn, $jobGarage);
+        $av = mysqli_real_escape_string($conn, $av);
         $vendeur = mysqli_real_escape_string($conn, $vendeur);
         $fournisseur = mysqli_real_escape_string($conn, $fournisseur);
         $heure = mysqli_real_escape_string($conn, $heure);
         $date = mysqli_real_escape_string($conn, $date);
+        $transport = mysqli_real_escape_string($conn, $transport);
         $datePrevue = mysqli_real_escape_string($conn, $datePrevue);
+        $AMouPM = mysqli_real_escape_string($conn, $AMouPM);
+        $commentaire = mysqli_real_escape_string($conn, $commentaire);
         $succursale = mysqli_real_escape_string($conn, $succursale);
         
-        $sql = "UPDATE jobs_garage SET jobGarage='$jobGarage', vendeur='$vendeur', fournisseur='$fournisseur', heure='$heure', date='$date', datePrevue='$datePrevue', succursale='$succursale' WHERE pkJobGarage='$pkJobGarage'";
+        $sql = "UPDATE jobs_garage SET jobGarage='$jobGarage', av='$av', vendeur='$vendeur', fournisseur='$fournisseur', heure='$heure', date='$date', transport='$transport', datePrevue='$datePrevue', AMouPM='$AMouPM', commentaire='$commentaire', succursale='$succursale' WHERE pkJobGarage='$pkJobGarage'";
 
         mysqli_query($conn, $sql );
         

@@ -1,34 +1,10 @@
 <?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CIB.php');?>
 <script type="text/javascript">
     
-    $.datepicker.regional['fr'] = {clearText: 'Effacer', clearStatus: '',
-    closeText: 'Fermer', closeStatus: 'Fermer sans modifier',
-    prevText: '&lt;Préc', prevStatus: 'Voir le mois précédent',
-    nextText: 'Suiv&gt;', nextStatus: 'Voir le mois suivant',
-    currentText: 'Courant', currentStatus: 'Voir le mois courant',
-    monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin',
-    'Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
-    monthNamesShort: ['Jan','Fév','Mar','Avr','Mai','Jun',
-    'Jul','Aoû','Sep','Oct','Nov','Déc'],
-    monthStatus: 'Voir un autre mois', yearStatus: 'Voir un autre année',
-    weekHeader: 'Sm', weekStatus: '',
-    dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
-    dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
-    dayNamesMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
-    dayStatus: 'Utiliser DD comme premier jour de la semaine', dateStatus: 'Choisir le DD, MM d',
-    dateFormat: 'dd/mm/yy', firstDay: 0, 
-    initStatus: 'Choisir la date', isRTL: false};
-    $.datepicker.setDefaults($.datepicker.regional['fr']);
- 
-    $( function() {
-        //$( ".jg.tbDate" ).datepicker();
-        $( ".jg.tbDatePrevue" ).datepicker();
-    } );
-  
     // WRITE JS VARIABLE WITH PHP SESSION VALUE
     <?php echo "var succ = '" . IL_Session::r(IL_SessionVariables::SUCCURSALE) . "';" ?>
         
-    var timerDelay = 60000;
+    var timerDelay = 6000000;
 
     function editMode(ceci, rowId){
         
@@ -89,7 +65,7 @@
         var fournisseur = document.getElementById('tbFournisseur_' + rowId).value;
         var heure = document.getElementById('tbHeure_' + rowId).value;
         var date = document.getElementById('tbDate_' + rowId).value;
-        var transport = document.getElementById('tbTransport_' + rowId).value;
+        var transport = document.getElementById('ddTransport_' + rowId).value;
         var datePrevue = document.getElementById('tbDatePrevue_' + rowId).value;
         var AMouPM = document.getElementById('rbAM_' + rowId).checked ? "AM" : "PM";
         var commentaire = document.getElementById('tbCommentaire_' + rowId).value;
@@ -113,7 +89,6 @@
     function ClearTopData()
     {
         document.getElementById('tbJobGarage').value = '';
-        document.getElementById('tbAV').value = '';
         document.getElementById('tbVendeur').value = '';
         document.getElementById('tbFournisseur').value = '';
         document.getElementById('tbHeure').value = '';
@@ -168,15 +143,14 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("tableJobGarage").innerHTML = this.responseText;
-                $( ".jg.tbDatePrevue" ).datepicker();
             }
         };
 
-        xhttp.open("GET", "callJobGarage.php?succ=" + succ  + "&oper=read", true);
+        xhttp.open("GET", "callJobGarage.php?succ=" + succ  + "&oper=readArchive", true);
         xhttp.send();
     }
     
-    function deleteRow(pkJobGarage)
+    function deleteArchive(pkJobGarage)
     {
         clearTimeout(showJobGarage);
         
@@ -187,7 +161,7 @@
             }
         };
         
-        var dataToAdd = "&oper=del&pk=" + pkJobGarage;
+        var dataToAdd = "&oper=deleteFromArchive&pk=" + pkJobGarage;
         xhttp.open("GET", "callJobGarage.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
@@ -218,10 +192,9 @@
         var transport = document.getElementById('tbTransport').value;
         var statut = document.getElementById('cbStatutJob').value;
         var datePrevue = document.getElementById('tbDatePrevue').value;
-        var AMouPM = document.getElementById('rbAM').checked ? "AM" : "PM";
         var commentaire = document.getElementById('tbCommentaire').value;
         
-        var dataToAdd = "&oper=add&1=" + jobGarage + "&2=" + av + "&3=" + vendeur + "&4=" + fournisseur + "&5=" + heure + "&6=" + date + "&7=" + transport + "&8=" + statut + "&9=" + datePrevue +  "&10=" + AMouPM + "&11=" + commentaire;
+        var dataToAdd = "&oper=add&1=" + jobGarage + "&2=" + av + "&3=" + vendeur + "&4=" + fournisseur + "&5=" + heure + "&6=" + date + "&7=" + transport + "&8=" + statut + "&9=" + datePrevue +  "&10=" + commentaire;
         xhttp.open("GET", "callJobGarage.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
@@ -247,7 +220,7 @@
     function getDate(ceci)
     {
         var d = new Date();
-        var vMois = ["Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"];
+        var vMois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
         var mois = vMois[d.getMonth()];
         var jour = d.getDate();
         document.getElementById(ceci.id).value = jour + ' ' + mois;
@@ -290,29 +263,17 @@
 
 <body onload="updateJobGarage();">
     <div name='bonCommande' class='base_page_boncommande serializable'>
-    <div style="position: fixed; width: 100%;text-align: right;">
-        <a class="lienTexte" href="boncommande.php?succ=<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>">&nbsp;Bons de commande&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </div>
     <form id="frm" name="frm" action=""> 
         <table style="width:100%;">
             <tr>
-                <td style="width:40%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
-                <td style="width:40%;text-align:center;">
-                    <label class="h1bonCommande">Jobs Garage</label>
+                <td style="width:45%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
+                <td style="width:45%;text-align:center;">
+                    <label class="h1bonCommande">Jobs Garage Archivées</label>
                 </td>
-                <td style="width:20%;text-align:right;" valign="middle">    
+                <td style="width:10%;text-align:right;" valign="middle">    
                     
                     <table class="tableMenuTop">
                         <tr>
-                            <td class="tableMenuTopRefresh">Auto refresh
-                                </br>                                
-                                <select title="Auto refresh" class="inputCombo" onchange="updateTimer(this);">
-                                    <option value="60000">1min</option>
-                                    <option value="300000">5min</option>
-                                    <option value="600000">10min</option>
-                                    <option value="3600000">1h</option>
-                                </select>
-                            </td>
                             <td class="tableMenuTopReload">Reload
                                 </br>
                                     <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Reload" onclick="javascript:location.reload();"/>
@@ -325,110 +286,6 @@
                     </table>                    
                 </td>
         </table>        
-        <datalist id="dl" name="dl"><?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?></datalist>         
-        <hr>
-        <table id="tbEntrerBonCommande" class="tableHaut">
-            <tr>
-                <td class="jg edit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td class="jg jobgarage"># de job</td>
-                <td class="jg av">AV</td>
-                <td class="jg vendeur">Demandeur</td>
-                <td class="jg fournisseur">Fournisseur</td>
-                <td class="jg heure">Heure</td>
-                <td class="jg date">Date</td>
-                <td class="jg transport">Transport</td>
-                <td class="jg statut">Statut</td>
-                <td class="jg datePrevue">Date Prevue</td>
-                <td class="jg commentaire">Commentaire</td>
-                <td class="jg ajouter"></td>
-            </tr>
-            <tr>
-                <td class="jg edit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td class="jg jobgarage">
-                    <input type="text" class="jg tbJobGarage" maxlength="7" id="tbJobGarage" name="tbJobGarage">
-                </td>
-                <td class="jg av">
-                    <input type="text" class="jg tbAV" id="tbAV" name="tbAV" list="dlAV">
-                    <datalist id="dlAV" name="dlAV">
-                        <?php echo IL_Utils::getAutoComplete('aviseur', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>
-                </td>
-                <td class="jg vendeur">
-                    <input type="text" class="jg tbVendeur" id="tbVendeur" name="tbVendeur" list="dlDemandeur">
-                    <datalist id="dlDemandeur" name="dlDemandeur">
-                        <?php echo IL_Utils::getAutoComplete('vendeurJobGarage', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>
-                </td>
-                <td class="jg fournisseur">
-                    <input type="text" class="jg tbFournisseur" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
-                    <datalist class="jg input" id="dlFournisseur" name="dlFournisseur">
-                        <?php echo IL_Utils::getAutoComplete('fournisseurJobGarage', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>
-                </td>
-                
-                <td class="heure">
-                    <input type="text" class="jg tbHeure" id="tbHeure" onfocus="getHeure(this);" name="tbHeure">
-                </td>
-                <td class="date">
-                    <input type="text" class="jg tbDate" id="tbDate" onfocus="getDate(this);" name="tbDate">
-                </td>
-                <!--
-                <td class="chauffeur">
-                    <input type="text" class="tbChauffeur" id="tbChauffeur" name="tbChauffeur" list="dlChauffeur">
-                    <datalist id="dlChauffeur" name="dlChauffeur">
-                        <?php //echo IL_Utils::getAutoComplete('chauffeur', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>
-                    <!--
-                    <select id="ddChauffeur" class="inputCombo">
-                        <option value="https://my31.geotab.com/">Jean-Guy</option>
-                        <option value="https://my31.geotab.com/">Claude</option>
-                        <option value="https://my31.geotab.com/">Daniel</option>
-                        <option value="https://my31.geotab.com/">René</option>
-                        <option value="https://my31.geotab.com/">Sylvain</option>
-                        <option value="https://my31.geotab.com/">Benoit</option>
-                        <option value="https://my31.geotab.com/">Éric</option>
-                    </select>
-                </td>
-                -->
-                <td class="jg transport">
-                    <input type="text" class="jg tbTransport" name="tbTransport" id="tbTransport" list="dlTransport">
-                    <datalist class="jg input" id="dlTransport" name="dlTransport">
-                        <?php echo IL_Utils::getAutoComplete('transportJobGarage', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>
-                </td>
-                <td class="jg statut">                    
-                    <!--DATALIST
-                    <input type="text" class="input" id="tbStatut" name="tbStatut" list="dlStatut">                    
-                    <datalist id="dlStatut" name="dlStatut">
-                        <?php //echo IL_Utils::getAutoComplete('statutBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>-->
-                    <select class="jg inputCombo" id="cbStatutJob">
-                        <option>A commander</option>
-                        <option>Commandee</option>
-                        <option>Recue</option>
-                        <option>Transit</option>
-                        <option>Bin job</option>
-                    </select>
-                </td>
-                <td class="jg datePrevue">
-                    <input type="text" class="jg tbDatePrevue" id="tbDatePrevue" name="tbDate"></br>
-                    <input type="radio" id="rbAM" name="rbAMouPM" value="AM" onclick="highlightRadioAM(this);" checked />
-                        <label id="rbAMlabel" for="rbAM" style="background-color: #66FF99;font-weight:normal;font-size:12px;">&nbsp;AM&nbsp;</label>
-                    <input type="radio" id="rbPM" name="rbAMouPM" value="PM" onclick="highlightRadioPM(this);" />
-                        <label id="rbPMlabel" for="rbPM" style="font-weight:normal;font-size:12px;">&nbsp;PM&nbsp;</label>
-                </td>
-                <td class="commentaire">
-                    <textarea rows="1" cols="40" type="text" class="jg commentaire" id="tbCommentaire" name="tbCommentaire"></textarea>
-                </td>
-                <td class="jg ajouter">
-                    <div class="jg tooltip">
-                        <input class="jg boutonAjout" type="button" alt="Ajouter" onclick="ajouterJobGarage();">
-                        <span class="jg tooltiptext">Ajouter</span>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <hr>
         <table id="tableJobGarage" class="tableData" cellspacing="0" cellpadding="0"></table>
     </form>
 

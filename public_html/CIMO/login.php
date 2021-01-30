@@ -12,7 +12,7 @@
 
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
-    <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande_CIMO.css" />
     
     <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="application/javascript" src="../assets/js/dsTools/dsSwissKnife.js"></script>
@@ -104,7 +104,7 @@
                                         setcookie('username', $user->username, time() + (86400 * 30), "/");
                                         setcookie('succursale', $user->succursale, time() + (86400 * 30), "/");
                                         
-                                        if( $user->succursale == "CIB" )
+                                        if( $user->succursale == "CIMO" )
                                             if( $pageDemandee == "" )
                                                 header('Location: ' . "boncommande.php?succ=" . $user->succursale );
                                             else

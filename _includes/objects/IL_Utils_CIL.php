@@ -130,14 +130,14 @@ class IL_Utils
         $data = '<tr class="trHeader">';
         if( $archive == 0 )
             $data .= '<th class="edit"></td>
-                      <th class="endroitPickup" onclick="sortTable(1)";>Endroit de P/UP&nbsp;<img class="sortableArrows"  src="../assets/images/sortable.png"></img></td>
-                      <th class="bonCommande" onclick="sortTable(2)";>No. Commande&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                      <th class="noConfirmation" onclick="sortTable(3)";>No. Confirmation&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                      <th class="commandePar" onclick="sortTable(4)";>Commandé par&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                      <th class="endroitPickup" onclick="sortTable(1);">Endroit de P/UP&nbsp;<img class="sortableArrows"  src="../assets/images/sortable.png"></img></td>
+                      <th class="bonCommande" onclick="sortTable(2);">No. Commande&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                      <th class="noConfirmation" onclick="sortTable(3);">No. Confirmation&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                      <th class="commandePar" onclick="sortTable(4);">Commandé par&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                       <th class="contactFournisseur" onclick="sortTable(5);">Contact Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                       <th class="date">Date</td>
                       <th class="heure">Heure</td>
-                      <th class="directiveSpeciale" onclick="sortTable(7)";>Directive spéciale&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                      <th class="directiveSpeciale" onclick="sortTable(8)";>Directive spéciale&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                       <th class="statut">Statut</td>
                       <th class="ajouter"></td>
                     </tr>';
@@ -237,7 +237,7 @@ class IL_Utils
                     $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbBonCommande' value='" . $row["bonCommande"] . "'></input></td>";
                     $data .= "<td class='noConfirmation'><input type='text' id='tbNoConfirmation_" . $pkBonCommande . "' class='tbNoConfirmation' value='" . $row["noConfirmation"] . "'></input></td>";
                     $data .= "<td class='commandePar'><input type='text' id='tbCommandePar_" . $pkBonCommande . "' class='tbCommandePar' value='" . $row["commandePar"] . "'></input></td>";
-                    $data .= "<td class='contactFournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
+                    $data .= "<td class='contactFournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . str_replace("Ã©", "é", $row["fournisseur"]) . "'></input></td>";
                     $data .= "<td class='date'><input type='date' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . $row["date"] . "'></input></td>";
                     $data .= "<td class='heure'><input type='text' disabled='disabled' id='tbHeure_" . $pkBonCommande . "' class='tbHeure' value='" . $row["heure"] . "'></input></td>";
                     $data .= "<td class='directiveSpeciale'><input type='text' id='tbDirectiveSpeciale_" . $pkBonCommande . "' class='tbDirectiveSpeciale' value='" . $row["directiveSpeciale"] . "'></td>";

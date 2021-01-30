@@ -62,7 +62,7 @@
                     // Prepare a select statement
                     $conn = IL_Database::getConn();
                     
-//                    echo password_hash(mysqli_real_escape_string($conn, 'BclcBBBBB88888'),PASSWORD_DEFAULT);
+                    //echo password_hash(mysqli_real_escape_string($conn, 'BclcBBBBB88888'),PASSWORD_DEFAULT);
 //                    echo password_hash(mysqli_real_escape_string($conn, 'phil'),PASSWORD_DEFAULT);
 //                    echo password_hash(mysqli_real_escape_string($conn, '999'),PASSWORD_DEFAULT);
                     
@@ -104,7 +104,7 @@
                                         setcookie('username', $user->username, time() + (86400 * 30), "/");
                                         setcookie('succursale', $user->succursale, time() + (86400 * 30), "/");
                                         
-                                        if( $user->succursale == "CIB" )
+                                        if( $user->succursale == "CCB" )
                                             if( $pageDemandee == "" )
                                                 header('Location: ' . "boncommande.php?succ=" . $user->succursale );
                                             else

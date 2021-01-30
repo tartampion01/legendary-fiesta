@@ -62,7 +62,7 @@
                     // Prepare a select statement
                     $conn = IL_Database::getConn();
                     
-                    echo password_hash(mysqli_real_escape_string($conn, 'BclcBBBBB88888'),PASSWORD_DEFAULT);
+                    //echo password_hash(mysqli_real_escape_string($conn, 'BclcBBBBB88888'),PASSWORD_DEFAULT);
 //                    echo password_hash(mysqli_real_escape_string($conn, 'phil'),PASSWORD_DEFAULT);
 //                    echo password_hash(mysqli_real_escape_string($conn, '999'),PASSWORD_DEFAULT);
                     

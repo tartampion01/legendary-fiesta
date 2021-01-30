@@ -189,6 +189,115 @@ class IL_Utils
         return $data == "" ? $option_o . $option_c : $data;
     }
     
+    public static function getBonCommandeLCB($succursale){
+        
+        /*
+        $data = "<th># de commande</th>";
+        $data .= "<th>Fournisseur</th>";
+        $data .= "<th>AV</th>";
+        $data .= "<th>Heure</th>";
+        $data .= "<th>Date</th>";
+        $data .= "<th>Chauffeur</th>";
+        $data .= "<th>Statut</th>";
+        $data .= "<th>Commentaire</th>";
+        $data .= "<th>X</th>";
+         * 
+         */
+        $data = '<tr class="trHeader">
+                    <td class="edit"></td>
+                    <td class="bonCommande"># comm</td>
+                    <td class="fournisseur">Fournisseur</td>
+                    <td class="av">AV</td>
+                    <td class="heure">Heure</td>
+                    <td class="date">Date</td>
+                    <td class="statut">Statut</td>
+                    <td class="chauffeur">Livreur</td>
+                    <td class="commentaire">Commentaire</td>
+                    <td class="ajouter"></td>
+                </tr>';
+        $conn = IL_Database::getConn();
+        mysqli_set_charset($conn,"utf8");
+        
+        $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, heure, date, chauffeur, statut, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=0";
+        
+        $result = mysqli_query($conn, $sql);
+        
+        try
+        {
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_assoc($result)) {
+                    $pkBonCommande = $row["pkBonCommande"];
+                    
+                    $data .= "<tr class='border_bottom' id='row_" . $pkBonCommande . "' class=''>";
+                    $data .= "<td id='cbEdit_" . $pkBonCommande . "' class='edit'><input title='Modifier cette ligne' type='radio' id='radioEdit' name='radioEdit' class='chkEditRow' onclick='editMode(this," . $pkBonCommande . ");' value='" . $pkBonCommande . "' alt='Modifier'></td>";
+                    $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbBonCommande' maxlength='6' value='" . $row["bonCommande"] . "'></input></td>";
+                    $data .= "<td class='fournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
+                    $data .= "<td class='av'><input type='text' id='tbAV_" . $pkBonCommande . "' class='tbAffichage av' list='dlAV' value='" . $row["av"] . "'></input></td>";
+                    $data .= "<td class='heure'><input type='text' id='tbHeure_" . $pkBonCommande . "' class='tbHeure' value='" . $row["heure"] . "'></input></td>";
+                    $data .= "<td class='date'><input type='text' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . str_replace("Ã©", "é", $row["date"]) . "'></input></td>";
+                    
+                    $statut = "";
+                    if( $row['statut'] == 'En cours')
+                    {
+                        $statut = '<select class="En cours" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option selected>En cours</option><option>Attribue</option><option>Recu</option><option>Virage</option><option>Dicom</option><option>DS2</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Attribue' )
+                    {
+                        $statut = '<select class="Attribue" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option>En cours</option><option selected>Attribue</option><option>Recu</option><option>Virage</option><option>Dicom</option><option>DS2</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Recu' )
+                    {
+                        $statut = '<select class="Recu" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option>En cours</option><option>Attribue</option><option selected>Recu</option><option>Virage</option><option>Dicom</option><option>DS2</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Virage' )
+                    {
+                        $statut = '<select class="Virage" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option>En cours</option><option>Attribue</option><option>Recu</option><option selected>Virage</option><option>Dicom</option><option>DS2</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Dicom' )
+                    {
+                        $statut = '<select class="Dicom" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option>En cours</option><option>Attribue</option><option>Recu</option><option>Virage</option><option selected>Dicom</option><option>DS2</option></select>';
+                    }
+                    else
+                    {
+                        $statut = '<select class="DS2" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option>En cours</option><option>Attribue</option><option>Recu</option><option>Virage</option><option>Dicom</option><option selected>DS2</option></select>';
+                    }
+                    $data .= "<td class='statut'>$statut</td>";
+                    
+                    
+                    $data .= "<td class='chauffeur'><input type='text' id='tbChauffeur_" . $pkBonCommande . "' class='tbChauffeur' list='dlChauffeur' value='" . $row["chauffeur"] . "'></td>";
+                    //$data .= '<td class="textarea"><textarea rows="1" cols="60" id="tbCommentaire_' . $pkBonCommande . '">' . htmlspecialchars($row["commentaire"]) . '</textarea></td>';
+                    $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkBonCommande . '" class="tbCommentaireElargi" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
+                    $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkBonCommande . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkBonCommande"] . ");' alt='Sauvegarder'>";
+                    $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='if( confirmerSuppression(\"" . $row["bonCommande"] . "\"))deleteRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td></tr>";
+                }
+                
+                $data .= '<tr class=""><td class="edit">
+                              <img id="btnDeselectionner" style="visibility:hidden;" onclick="deselectionner();" src="../assets/images/iconeRemove.png" alt=""/></td>
+                              <td class="bonCommande"></td>
+                              <td class="fournisseur"></td>
+                              <td class="av"></td>
+                              <td class="heure"></td>
+                              <td class="date"></td>
+                              <td class="chauffeur"></td>
+                              <td class="lienChauffeur"></td>
+                              <td class="statut"></td>
+                              <td class="commentaire"></td>
+                              <td class="ajouter"></td></tr>';
+            }
+        }
+        catch (Exception $e) {
+            //echo $e;
+        }
+        
+        return $data;
+    }
+    
     public static function getBonCommandeWithoutDriver($succursale){
         
         /*
@@ -233,7 +342,7 @@ class IL_Utils
                     $data .= "<td class='fournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
                     $data .= "<td class='av'><input type='text' id='tbAV_" . $pkBonCommande . "' class='tbAffichage av' list='dlAV' value='" . $row["av"] . "'></input></td>";
                     $data .= "<td class='heure'><input type='text' id='tbHeure_" . $pkBonCommande . "' class='tbHeure' value='" . $row["heure"] . "'></input></td>";
-                    $data .= "<td class='date'><input type='text' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . $row["date"] . "'></input></td>";
+                    $data .= "<td class='date'><input type='text' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . str_replace("Ã©", "é", $row["date"]) . "'></input></td>";
                     
                     $statut = "";
                     if( $row['statut'] == 'En cours')
@@ -296,16 +405,17 @@ class IL_Utils
          */
         $data = '<tr class="trHeader">
                     <td class="jg edit"></td>
-                    <td class="jg jobGarage"># de job</td>
-                    <td class="jg av">AV</td>
-                    <td class="jg vendeur">Demandeur</td>
-                    <td class="jg fournisseur">Fournisseur</td>
+                    <td class="jg jobGarage" onclick="sortTable(1);"># job&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg av" onclick="sortTable(2);">AV<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg vendeur" onclick="sortTable(3);">Demandeur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg fournisseur" onclick="sortTable(4);">Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="jg heure">Heure</td>
-                    <td class="jg date">Date</td>
-                    <td class="jg transport">Transport</td>
-                    <td class="jg statut">Statut</td>
+                    <td class="jg date">Date</td>                    
+                    <td class="jg transport" onclick="sortTable(7);">Transport&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg indexStatut"></td>
+                    <td class="jg statut" onclick="sortTable(8);">Statut&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="jg datePrevue">Date prévue</td>
-                    <td class="jg commentaire">Commentaire</td>
+                    <td class="jg commentaire"onclick="sortTable(11);">Commentaire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <!--<td class="jg datePrevue">Receptionnee</td>-->
                     <td class="jg ajouter"></td>
                 </tr>';
@@ -332,7 +442,7 @@ class IL_Utils
                     $data .= "<td class='jg heure'><input type='text' id='tbHeure_" . $pkJobGarage . "' class='jg tbHeure' value='" . $row["heure"] . "'></input></td>";
                     //$data .= "<td class='jg date'><input type='text' id='tbDate_" . $pkJobGarage . "' class='jg tbDate' value='" . $row["date"] . "'></input></td>";
                     $data .= '<td class="jg date"><input type="text" id="tbDate_' . $pkJobGarage . '" class="jg tbDate" value="' . htmlspecialchars($row["date"]) . '"></input>';
-                    $data .= '<td class="jg date"><input type="text" id="tbTransport_' . $pkJobGarage . '" class="jg tbTransport" list="dlTransport" value="' . htmlspecialchars($row["transport"]) . '"></input>';
+                    $data .= '<td class="jg transport"><input type="text" id="tbTransport_' . $pkJobGarage . '" class="jg tbTransport" list="dlTransport" value="' . htmlspecialchars($row["transport"]) . '"></input>';
 
                     /*
                     $transport = "";
@@ -363,33 +473,39 @@ class IL_Utils
                     // 5 possibilités de statut:
                     // Acommander, commandee, transit, recu, binjob
                     $statut = "";
+                    $indexStatut = -1; // pour t5rier la colonne selon l'importance voulu et non la valeur du texte
                     if( $row['statut'] == 'A commander')
                     {
                         $statut = '<select class="jg Acommander" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
                         $statut .= '<option selected>A commander</option><option>Commandee</option><option>Transit</option><option>Recue</option><option>Bin job</option></select>';
+                        $indexStatut = 3;
                     }
                     elseif( $row['statut'] == 'Commandee' )
                     {
                         $statut = '<select class="jg Commandee" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
                         $statut .= '<option>A commander</option><option selected>Commandee</option><option>Transit</option><option>Recue</option><option>Bin job</option></select>';
+                        $indexStatut = 2;
                     }
                     elseif( $row['statut'] == 'Transit' )
                     {
                         $statut = '<select class="jg Transit" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
                         $statut .= '<option>A commander</option><option>Commandée</option><option selected>Transit</option><option>Recue</option><option>Bin job</option></select>';
+                        $indexStatut = 5;
                     }
                     elseif( $row['statut'] == 'Recue' )
                     {
                         $statut = '<select class="jg Recu" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
                         $statut .= '<option>A commander</option><option>Commandee</option><option>Transit</option><option selected>Recue</option><option>Bin job</option></select>';
+                        $indexStatut = 4;
                     }
                     else
                     {
                         $statut = '<select class="jg Binjob" onchange="updateStatut(this,\'' . $row["pkJobGarage"] . '\');">';
                         $statut .= '<option>A commander</option><option>Commandee</option><option>Transit</option><option>Recue</option><option selected>Bin job</option></select>';
+                        $indexStatut = 1;
                     }
                     
-                    $data .= "<td class='jg statut'>$statut</td>";
+                    $data .= "<td class='jg indexStatut'><input type='text' id='tbIndexStatut_" . $pkJobGarage . "' class='jg tbIndexStatut' value='" . $indexStatut . "'></input></td><td class='jg statut'>$statut</td>";
                     
                     // date Prevue plus radiobutton dans TD
                     $data .= '<td class="jg datePrevue"><input type="text" id="tbDatePrevue_' . $pkJobGarage . '" class="jg tbDatePrevue" value="' . htmlspecialchars($row["datePrevue"]) . '"></input>';
@@ -629,7 +745,7 @@ class IL_Utils
                     $data .= "<td class='fournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
                     $data .= "<td class='av'><input type='text' id='tbAV_" . $pkBonCommande . "' class='tbAffichage av' list='dlAV' value='" . $row["av"] . "'></input></td>";
                     $data .= "<td class='heure'><input type='text' id='tbHeure_" . $pkBonCommande . "' class='tbHeure' value='" . $row["heure"] . "'></input></td>";
-                    $data .= "<td class='date'><input type='text' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . $row["date"] . "'></input></td>";
+                    $data .= "<td class='date'><input type='text' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . str_replace("Ã©", "é", $row["date"]) . "'></input></td>";
                     $data .= "<td class='chauffeur'><input type='text' id='tbChauffeur_" . $pkBonCommande . "' class='tbChauffeur' list='dlChauffeur' value='" . $row["chauffeur"] . "'></td>";
                     $data .= "<td class='lienChauffeur'><a href='https://my31.geotab.com/' target='_blank'><img src='../assets/images/iconePlanete.png' /></a></td>";
                     

@@ -1,14 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once(dirname(__DIR__).'/commonIncludes_CIL.php');
+require_once(dirname(__DIR__).'/commonIncludes.php');
 
 // Personne de 'loggé'
 if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
-    header('Location: ' . "login.php");
+{
+    // get asked page
+    IL_Session::w(IL_SessionVariables::ASKED_PAGE,htmlspecialchars(basename($_SERVER['PHP_SELF'])));
+    header('Location: ' . "../CIB/login.php");
+}
 
 // Load logged user
 if(isset($_COOKIE['username'])) {
@@ -17,7 +20,7 @@ if(isset($_COOKIE['username'])) {
 }
 ?>
 
-<html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
+<html>
 <?PHP
     // Don't show errors on webpage
     error_reporting(0);
@@ -40,8 +43,14 @@ if(isset($_COOKIE['username'])) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
-    <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande_CIL.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande_CIMO.css" />
     <link rel="stylesheet" type="text/css" href="../../public_html/assets/css/bootstrap.css" />
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
 <!--    <script type="application/javascript" src="../../public_html/assets/js/jquery.min.js"></script>
     <script type="application/javascript" src="../../public_html/assets/js/dsTools/dsSwissKnife.js"></script>
     <script type="application/javascript" src="../../public_html/assets/js/dsTools/dsAjaxCommunicator.js"></script>

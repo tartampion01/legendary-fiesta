@@ -203,6 +203,7 @@ class IL_Utils
         $data .= "<th>X</th>";
          * 
          */
+        
         $data = '<tr class="trHeader">
                     <td class="edit"></td>
                     <td class="bonCommande"># de commande</td>
@@ -219,7 +220,7 @@ class IL_Utils
         $conn = IL_Database::getConn();
         mysqli_set_charset($conn,"utf8");
         
-        $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, heure, date, chauffeur, statut, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=0";
+        $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, heure, CONVERT(date USING utf8) as 'date', chauffeur, statut, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=0";
         
         $result = mysqli_query($conn, $sql);
         

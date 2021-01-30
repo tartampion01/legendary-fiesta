@@ -1,4 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -21,7 +20,7 @@ if(isset($_COOKIE['username'])) {
 }
 ?>
 
-<html  xmlns="http://www.w3.org/1999/xhtml" lang="fr-CA" xml:lang="fr-CA">
+<html>
 <?PHP
     // Don't show errors on webpage
     error_reporting(0);
@@ -31,6 +30,7 @@ if(isset($_COOKIE['username'])) {
     $NOMPAGE = htmlspecialchars(basename($_SERVER['PHP_SELF']));
     // REQUIRED BY ALL PAGES
     // COMMON INCLUDES --> DB / FUNCTIONS / OBJECTS
+    header("Content-Type: text/html; charset=utf-8");
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: PUT, GET, POST");
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");

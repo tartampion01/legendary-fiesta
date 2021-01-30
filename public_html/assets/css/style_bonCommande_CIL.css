@@ -1373,6 +1373,13 @@ table.tableHaut tr td.directiveSpeciale { width: 20%; }
 table.tableHaut tr td.statut { width: 10%; }
 table.tableHaut tr td.ajouter { width: 5%; }
 
+.trHeader th.endroitPickup{cursor:pointer;}
+.trHeader th.bonCommande{cursor:pointer;}
+.trHeader th.noConfirmation{cursor:pointer;}
+.trHeader th.commandePar{cursor:pointer;}
+.trHeader th.contactFournisseur{cursor:pointer;}
+.trHeader th.directiveSpeciale{cursor:pointer;}
+
 table.tableData tr.trHeader td { font-size: 13px; font-family: verdana;font-weight: bold;background-color: gray;}
 table.tableData tr td { font-size: 11px; font-weight: bold; font-family: verdana;}
 

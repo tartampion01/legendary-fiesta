@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CIB.php');?>
+<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_LCB.php');?>
 <script type="text/javascript">
     
     $.datepicker.regional['fr'] = {clearText: 'Effacer', clearStatus: '',
@@ -497,7 +497,7 @@ function sortTable(n) {
         <table id="tableJobGarage" class="tableData" cellspacing="0" cellpadding="0"></table>
     </form>
 
-    <!--<a href='https://interlivraison.reseaudynamique.com/boncommande/boncommande.php?succ=CIB'>CIB</a>-->
+    <!--<a href='https://interlivraison.reseaudynamique.com/boncommande/boncommande.php?succ=LCB'>LCB</a>-->
 <br>
     </div>
 </body>

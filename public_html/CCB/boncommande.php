@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_LCB.php');?>
+<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CCB.php');?>
 <script type="text/javascript">
     
     // WRITE JS VARIABLE WITH PHP SESSION VALUE

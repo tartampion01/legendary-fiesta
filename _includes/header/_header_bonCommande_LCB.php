@@ -30,6 +30,7 @@ if(isset($_COOKIE['username'])) {
     $NOMPAGE = htmlspecialchars(basename($_SERVER['PHP_SELF']));
     // REQUIRED BY ALL PAGES
     // COMMON INCLUDES --> DB / FUNCTIONS / OBJECTS
+    header("Content-Type: text/html; charset=utf-8");
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: PUT, GET, POST");
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
@@ -42,7 +43,7 @@ if(isset($_COOKIE['username'])) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
-    <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande_LCB.css" />
     <link rel="stylesheet" type="text/css" href="../../public_html/assets/css/bootstrap.css" />
     
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

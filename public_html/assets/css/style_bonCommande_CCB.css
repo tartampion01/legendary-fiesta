@@ -1369,7 +1369,7 @@ i.fa {
 
 table.tableHaut tr td.edit { width:1%; }
 table.tableHaut tr td{ font-size: 13px; font-family: verdana;font-weight: bold; }
-table.tableHaut tr td.bonCommande { width: 10%; }
+table.tableHaut tr td.bonCommande { width: 8%; }
 table.tableHaut tr td.fournisseur { width: 12%; }
 table.tableHaut tr td.av { width: 3%; }
 table.tableHaut tr td.heure { width: 5%; }
@@ -1384,14 +1384,14 @@ table.tableData tr.trHeader td { font-size: 13px; font-family: verdana;font-weig
 table.tableData tr td { font-size: 11px; font-weight: bold; font-family: verdana;}
 
 table.tableData tr td.edit{ width: 1%;}
-table.tableData tr td.bonCommande { width: 12%;}
+table.tableData tr td.bonCommande { width:8%;}
 table.tableData tr td.fournisseur { width: 12%;}
 table.tableData tr td.av { width: 3%;}
 table.tableData tr td.heure { width: 5%;}
 table.tableData tr td.date { width: 5%;}
 table.tableData tr td.chauffeur { width: 15%;}
 table.tableData tr td.lienChauffeur { width: 15px; text-align: left;}
-table.tableData tr td.statut { width: 12%;}
+table.tableData tr td.statut { width: 12%;padding-left:3px;}
 table.tableData tr td.commentaire { width: 26%;}
 table.tableData tr td.ajouter { width: 7%;padding-top: 5px;}
 

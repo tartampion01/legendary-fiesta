@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_LCB.php');?>
+<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CIMO.php');?>
 <script type="text/javascript">
     
     // WRITE JS VARIABLE WITH PHP SESSION VALUE
@@ -65,7 +65,8 @@
         var av = document.getElementById('tbAV_' + rowId).value;
         var heure = document.getElementById('tbHeure_' + rowId).value;
         var date = document.getElementById('tbDate_' + rowId).value;
-        var chauffeur = document.getElementById('tbChauffeur_' + rowId).value;
+        //var chauffeur = document.getElementById('tbChauffeur_' + rowId).value;
+        var chauffeur = "";
         var commentaire = document.getElementById('tbCommentaire_' + rowId).value;
         
         var xhttp = new XMLHttpRequest();
@@ -154,8 +155,8 @@
         document.getElementById('tbAV').value = '';
         document.getElementById('tbHeure').value = '';
         document.getElementById('tbDate').value = '';
-        document.getElementById('tbChauffeur').value = '';
-        document.getElementById('cbStatut').selectedIndex=0;
+        //document.getElementById('tbChauffeur').value = '';
+        //document.getElementById('cbStatut').value = '';
         document.getElementById('tbCommentaire').value = '';
     }
     
@@ -231,7 +232,8 @@
         var av = document.getElementById('tbAV').value;
         var heure = document.getElementById('tbHeure').value;
         var date = document.getElementById('tbDate').value;
-        var chauffeur = document.getElementById('tbChauffeur').value;
+        //var chauffeur = document.getElementById('tbChauffeur').value;
+        var chauffeur = "";
         //var chauffeur = document.getElementById('ddChauffeur').value;
         var statut = document.getElementById('cbStatut').value;
         var commentaire = document.getElementById('tbCommentaire').value;
@@ -334,13 +336,12 @@
         <hr>
         <table id="tbEntrerBonCommande" class="tableHaut">
             <tr>            
-                <td class="bonCommande"># comm</td>
+                <td class="bonCommande"># de commande</td>
                 <td class="fournisseur">Fournisseur</td>
                 <td class="av">AV</td>
                 <td class="heure">Heure</td>
                 <td class="date">Date</td>
                 <td class="statut">Statut</td>
-                <td class="chauffeur">Livreur</td>
                 <td class="commentaire">Commentaire</td>
                 <td class="ajouter"></td>
             </tr>
@@ -360,18 +361,11 @@
                 </td>
                 <td class="heure"><input type="text" class="tbHeure" id="tbHeure" onfocus="getHeure(this);" name="tbHeure"></td>
                 <td class="date"><input type="text" class="tbDate" id="tbDate" onfocus="getDate(this);" name="tbDate"></td>
-                <td class="statut">                    
-                    <!--DATALIST
-                    <input type="text" class="input" id="tbStatut" name="tbStatut" list="dlStatut">                    
-                    <datalist id="dlStatut" name="dlStatut">
-                        <?php //echo IL_Utils::getAutoComplete('statutBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>-->
-                    <select class="inputCombo" id="cbStatut"><option>En cours</option><option>Attribue</option><option>Recu</option><option>Virage</option><option>Dicom</option><option>DS2</option></select>                    
-                </td>
+                <!--
                 <td class="chauffeur">
                     <input type="text" class="tbChauffeur" id="tbChauffeur" name="tbChauffeur" list="dlChauffeur">
                     <datalist id="dlChauffeur" name="dlChauffeur">
-                        <?php echo IL_Utils::getAutoComplete('chauffeur', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                        <?php //echo IL_Utils::getAutoComplete('chauffeur', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                     <!--
                     <select id="ddChauffeur" class="inputCombo">
@@ -383,7 +377,15 @@
                         <option value="https://my31.geotab.com/">Benoit</option>
                         <option value="https://my31.geotab.com/">Éric</option>
                     </select>
-                    -->
+                </td>
+                -->
+                <td class="statut">                    
+                    <!--DATALIST
+                    <input type="text" class="input" id="tbStatut" name="tbStatut" list="dlStatut">                    
+                    <datalist id="dlStatut" name="dlStatut">
+                        <?php //echo IL_Utils::getAutoComplete('statutBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                    </datalist>-->
+                    <select class="inputCombo" id="cbStatut"><option>En cours</option><option>Attribue</option><option>Recu</option></select>                    
                 </td>
                 <td class="commentaire"><textarea rows="1" class="" cols="60" type="text" class="input" id="tbCommentaire" name="tbCommentaire"></textarea></td>
                 <td class="ajouter">
@@ -398,7 +400,7 @@
         <table id="tbBonCommandes" class="tableData" cellspacing="0" cellpadding="0"></table>
     </form>
 
-    <!--<a href='https://interlivraison.reseaudynamique.com/boncommande/boncommande.php?succ=LCB'>LCB</a>-->
+    <!--<a href='https://interlivraison.reseaudynamique.com/boncommande/boncommande.php?succ=CIB'>CIB</a>-->
 <br>
     </div>
 </body>

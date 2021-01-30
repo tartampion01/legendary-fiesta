@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CIB.php');?>
+<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CIMO.php');?>
 <script type="text/javascript">
     
     $.datepicker.regional['fr'] = {clearText: 'Effacer', clearStatus: '',

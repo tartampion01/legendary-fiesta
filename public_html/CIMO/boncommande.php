@@ -320,6 +320,15 @@
                                     <option value="3600000">1h</option>
                                 </select>
                             </td>
+                            <td class="tableMenuTopArchive">
+                                <div>
+                                    <label style="font-size: small">Archivés</label>
+                                    </br>
+                                    <a href="boncommandearchives.php">
+                                        <img src="../assets/images/iconeArchive.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Archives"/>
+                                    </a>
+                                </div>
+                            </td>
                             <td class="tableMenuTopReload"><label style="font-size: small">Reload</label>
                                 </br>
                                     <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Reload" onclick="javascript:location.reload();"/>
@@ -346,7 +355,7 @@
                 <td class="ajouter"></td>
             </tr>
             <tr>
-                <td class="bonCommande"><input type="text" class="tbBonCommande" maxlength="6" id="tbBonCommande" name="tbBonCommande"></td>
+                <td class="bonCommande"><input type="text" class="tbBonCommande" maxlength="10" id="tbBonCommande" name="tbBonCommande"></td>
                 <td class="fournisseur">
                     <input type="text" class="tbFournisseur" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
                     <datalist class="input" id="dlFournisseur" name="dlFournisseur">

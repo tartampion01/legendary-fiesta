@@ -91,7 +91,7 @@
                                         /* Password is correct, so start a new session and
                                         save the username to the session */
                                         session_start();
-
+                                        
                                         $user = new IL_Users();
                                         $user->load(0,'',$username,1);
                                         IL_Session::w(IL_SessionVariables::USERNAME,$user->username);
@@ -100,9 +100,9 @@
                                         IL_Session::w(IL_SessionVariables::SUCCURSALE,$user->succursale);
                                         
                                         $pageDemandee = IL_Session::r(IL_SessionVariables::ASKED_PAGE);
-
-                                        setcookie('username', $user->username, time() + (86400 * 30), "/");
-                                        setcookie('succursale', $user->succursale, time() + (86400 * 30), "/");
+                                        
+                                        setcookie('USERNAME', $user->username, time() + (86400 * 30), "/");
+                                        setcookie('IL_SessionVariables::SUCCURSALE', $user->succursale, time() + (86400 * 30), "/");
                                         
                                         if( $user->succursale == "CIMO" )
                                             if( $pageDemandee == "" )

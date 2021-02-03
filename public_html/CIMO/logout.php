@@ -5,7 +5,7 @@ IL_Session::w(IL_SessionVariables::USERNAME,false);
 
 IL_Session::destroy();
 
-setcookie("username", "", time()-3600);
+setcookie("USERNAME", "", time()-3600);
 
 header('Location: ' . "login.php");
 ?>

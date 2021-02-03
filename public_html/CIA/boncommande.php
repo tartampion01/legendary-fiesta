@@ -299,11 +299,11 @@
     <form id="frm" name="frm" action=""> 
         <table style="width:100%;background-color: #FFFF99;">
             <tr>
-                <td style="width:40%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/LOGO_inter/logo_FFFF99_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
-                <td style="width:40%;text-align:center;">
+                <td style="width:30%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/LOGO_inter/logo_FFFF99_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
+                <td style="width:45%;text-align:center;">
                     <label class="h1bonCommande">Bons de commande</label>
                 </td>
-                <td style="width:20%;text-align:right;" valign="middle">    
+                <td style="width:25%;text-align:right;" valign="middle">    
                     
                     <table class="tableMenuTop">
                         <tr>
@@ -320,16 +320,25 @@
                                     <option value="3600000">1h</option>
                                 </select>
                             </td>
+                            <td class="tableMenuTopArchive">
+                                <div>
+                                    <label style="font-size: small">Archivés</label>
+                                    </br>
+                                    <a href="boncommandearchives.php">
+                                        <img src="../assets/images/iconeArchive.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Archives"/>
+                                    </a>
+                                </div>
+                            </td>
                             <td class="tableMenuTopReload"><label style="font-size: small">Reload</label>
                                 </br>
                                     <img src="../assets/images/iconeRefresh.png" alt="" style="width:24px; height: 24px;cursor: pointer; vertical-align: bottom;" title="Reload" onclick="javascript:location.reload();"/>
                             </td>
                             <td class="tableMenuTopLogout"><label style="font-size: small">Logout</label>
                                 </br>
-                                    <input class="boutonLogout" type="button" alt="Ajouter" onclick="javascript:window.location.replace('logout.php');" Title="Logout" alt="Logout">
-                            </td>                            
+                                    <input class="boutonLogout" type="button" alt="Ajouter" onclick="javascript:window.location.replace('logout.php');" Title="Logout" alt="Logout" />
+                            </td>
                         </tr>                        
-                    </table>                    
+                    </table>
                 </td>
         </table>        
         <datalist id="dl" name="dl"><?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?></datalist>         
@@ -346,7 +355,7 @@
                 <td class="ajouter"></td>
             </tr>
             <tr>
-                <td class="bonCommande"><input type="text" class="tbBonCommande" maxlength="6" id="tbBonCommande" name="tbBonCommande"></td>
+                <td class="bonCommande"><input type="text" class="tbBonCommande" maxlength="10" id="tbBonCommande" name="tbBonCommande"></td>
                 <td class="fournisseur">
                     <input type="text" class="tbFournisseur" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
                     <datalist class="input" id="dlFournisseur" name="dlFournisseur">

@@ -101,8 +101,8 @@
                                         
                                         $pageDemandee = IL_Session::r(IL_SessionVariables::ASKED_PAGE);
 
-                                        setcookie('username', $user->username, time() + (86400 * 30), "/");
-                                        setcookie('succursale', $user->succursale, time() + (86400 * 30), "/");
+                                        setcookie('USERNAME', $user->username, time() + (86400 * 30), "/");
+                                        setcookie('SUCCURSALE', $user->succursale, time() + (86400 * 30), "/");
                                         
                                         if( $user->succursale == "CIA" )
                                             if( $pageDemandee == "" )

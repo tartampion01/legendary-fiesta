@@ -306,7 +306,6 @@ class IL_Utils
         $data .= "<th>AV</th>";
         $data .= "<th>Heure</th>";
         $data .= "<th>Date</th>";
-        $data .= "<th>Chauffeur</th>";
         $data .= "<th>Statut</th>";
         $data .= "<th>Commentaire</th>";
         $data .= "<th>X</th>";
@@ -366,6 +365,96 @@ class IL_Utils
                     $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkBonCommande . '" class="tbCommentaireElargi" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
                     $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkBonCommande . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkBonCommande"] . ");' alt='Sauvegarder'>";
                     $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='if( confirmerSuppression(\"" . $row["bonCommande"] . "\"))deleteRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td></tr>";
+                }
+                
+                $data .= '<tr class=""><td class="edit">
+                              <img id="btnDeselectionner" style="visibility:hidden;" onclick="deselectionner();" src="../assets/images/iconeRemove.png" alt=""/></td>
+                              <td class="bonCommande"></td>
+                              <td class="fournisseur"></td>
+                              <td class="av"></td>
+                              <td class="heure"></td>
+                              <td class="date"></td>
+                              <td class="chauffeur"></td>
+                              <td class="lienChauffeur"></td>
+                              <td class="statut"></td>
+                              <td class="commentaire"></td>
+                              <td class="ajouter"></td></tr>';
+            }
+        }
+        catch (Exception $e) {
+            //echo $e;
+        }
+        
+        return $data;
+    }
+    
+    public static function getBonCommandeArchive($succursale){
+        
+        /*
+        $data = "<th># de commande</th>";
+        $data .= "<th>Fournisseur</th>";
+        $data .= "<th>AV</th>";
+        $data .= "<th>Heure</th>";
+        $data .= "<th>Date</th>";
+        $data .= "<th>Statut</th>";
+        $data .= "<th>Commentaire</th>";
+        $data .= "<th>X</th>";
+         * 
+         */
+        $data = '<tr class="trHeader">
+                    <td class="edit"></td>
+                    <td class="bonCommande"># de commande</td>
+                    <td class="fournisseur">Fournisseur</td>
+                    <td class="av">AV</td>
+                    <td class="heure">Heure</td>
+                    <td class="date">Date</td>
+                    <td class="statut">Statut</td>
+                    <td class="commentaire">Commentaire</td>
+                    <td class="ajouter"></td>
+                </tr>';
+        $conn = IL_Database::getConn();
+        mysqli_set_charset($conn,"utf8");
+        
+        $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, heure, date, chauffeur, statut, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=1";
+        
+        $result = mysqli_query($conn, $sql);
+        
+        try
+        {
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_assoc($result)) {
+                    $pkBonCommande = $row["pkBonCommande"];
+                    
+                    $data .= "<tr class='border_bottom' id='row_" . $pkBonCommande . "' class=''>";
+                    $data .= "<td id='cbEdit_" . $pkBonCommande . "' class='edit'></td>";
+                    $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbBonCommande' maxlength='6' value='" . $row["bonCommande"] . "'></input></td>";
+                    $data .= "<td class='fournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
+                    $data .= "<td class='av'><input type='text' id='tbAV_" . $pkBonCommande . "' class='tbAffichage av' list='dlAV' value='" . $row["av"] . "'></input></td>";
+                    $data .= "<td class='heure'><input type='text' id='tbHeure_" . $pkBonCommande . "' class='tbHeure' value='" . $row["heure"] . "'></input></td>";
+                    $data .= "<td class='date'><input type='text' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . str_replace("Ã©", "é", $row["date"]) . "'></input></td>";
+                    
+                    $statut = "";
+                    if( $row['statut'] == 'En cours')
+                    {
+                        $statut = '<select class="En cours" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option selected>En cours</option><option>Attribue</option><option>Recu</option></select>';
+                    }
+                    elseif( $row['statut'] == 'Attribue' )
+                    {
+                        $statut = '<select class="Attribue" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option>En cours</option><option selected>Attribue</option><option>Recu</option></select>';
+                    }
+                    else
+                    {
+                        $statut = '<select class="Recu" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut .= '<option>En cours</option><option>Attribue</option><option selected>Recu</option></select>';
+                    }
+                    
+                    $data .= "<td class='statut'>$statut</td>";
+                    //$data .= '<td class="textarea"><textarea rows="1" cols="60" id="tbCommentaire_' . $pkBonCommande . '">' . htmlspecialchars($row["commentaire"]) . '</textarea></td>';
+                    $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkBonCommande . '" class="tbCommentaireElargi" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
+                    $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkBonCommande . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkBonCommande"] . ");' alt='Sauvegarder'>";
+                    $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='deleteRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td></tr>";
                 }
                 
                 $data .= '<tr class=""><td class="edit">
@@ -846,6 +935,15 @@ class IL_Utils
         $conn = IL_Database::getConn();
         
         mysqli_query($conn, "UPDATE bon_commande SET archive=1 WHERE pkBonCommande='$pkBonCommande'");
+        
+        return "Bon de commande effacé";
+    }
+    
+    public static function deleteBonCommandeFromArchive($pkBonCommande)
+    {
+        $conn = IL_Database::getConn();
+        
+        mysqli_query($conn, "DELETE FROM bon_commande WHERE pkBonCommande=$pkBonCommande");
         
         return "Bon de commande effacé";
     }

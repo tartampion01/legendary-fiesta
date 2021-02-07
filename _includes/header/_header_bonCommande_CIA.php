@@ -3,7 +3,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once(dirname(__DIR__).'/commonIncludes.php');
+require_once(dirname(__DIR__).'/commonIncludes_CIA_CIMO.php');
 
 // Personne de 'loggé'
 if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
@@ -37,7 +37,7 @@ if(isset($_COOKIE['USERNAME'])) {
 ?>
 <head>
     <title>
-        <?PHP IL_Header::getPageTitle($NOMPAGE); ?>
+        Inter-Pickup - <?PHP IL_Header::getPageTitleBonCommande($NOMPAGE); ?>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>

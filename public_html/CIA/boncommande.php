@@ -6,11 +6,12 @@
         
     var timerDelay = 60000;
     var _dir = "asc";
+    var editModeActivated = false;
     
     function editMode(ceci, rowId){
         
         clearTimer();
-
+        editModeActivated = true;
         /* code for check box
         if( ceci.checked == true )
         {
@@ -54,7 +55,7 @@
             document.getElementById('btnAjouter_' + document.frm.radioEdit[i].value).className = 'boutonSaveLigneHidden';
             document.getElementById("row_" + document.frm.radioEdit[i].value).className = '';
         }
-        
+        editModeActivated = false;
         updateBonCommandes();
     }
     
@@ -67,6 +68,8 @@
         var date = document.getElementById('tbDate_' + rowId).value;
         //var chauffeur = document.getElementById('tbChauffeur_' + rowId).value;
         var chauffeur = "";
+        var dateRecu = document.getElementById('tbDateRecu_' + rowId).value;
+        var avRecu = document.getElementById('tbAVRecu_' + rowId).value;
         var commentaire = document.getElementById('tbCommentaire_' + rowId).value;
         
         var xhttp = new XMLHttpRequest();
@@ -77,7 +80,7 @@
             }
         };
 
-        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + bonCommande + "&3=" + fournisseur + "&4=" + av + "&5=" + heure + "&6=" + date + "&7=" + chauffeur + "&8=" + commentaire;
+        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + bonCommande + "&3=" + fournisseur + "&4=" + av + "&5=" + heure + "&6=" + date + "&7=" + chauffeur + "&8=" + commentaire + "&9=" + dateRecu + "&10=" + avRecu;
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
@@ -169,10 +172,38 @@
             }
         };
         
-        var dataToAdd = "&oper=updateStatut&1=" + pkBonCommande + "&2=" + dropDown.value;
+        // Update champ dateRecu
+        var dateRecu = "";
+        var dataToAdd = "";
+        if( dropDown.value.localeCompare("Recu") == 0 )
+        {
+            dateRecu = getDateHeureRecu();
+            document.getElementById('tbDateRecu_' + pkBonCommande).value = dateRecu;
+            dataToAdd = "&oper=updateStatutEtDateRecu&1=" + pkBonCommande + "&2=" + dropDown.value + "&3=" + dateRecu;
+        }
+        else{       
+            dataToAdd = "&oper=updateStatut&1=" + pkBonCommande + "&2=" + dropDown.value;
+        }
+
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
+    }
+    
+    function updateAvRecu(tb, pkBonCommande)
+    {
+        if(!editModeActivated){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    showBonCommandes();
+                }
+            };
+
+            var dataToAdd = "&oper=updateAvRecu&1=" + pkBonCommande + "&2=" + tb.value;
+            xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
+            xhttp.send();
+        }
     }
     
     function showBonCommandes() {
@@ -269,7 +300,25 @@
         var jour = d.getDate();
         document.getElementById(ceci.id).value = jour + ' ' + mois;
     }
-    
+    function getDateHeureRecu()
+    {
+       var dateRecu = "";
+       var d = new Date()
+       
+       var vMois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+       var mois = vMois[d.getMonth()];
+       var jour = d.getDate();
+       
+       dateRecu = jour + ' ' + mois;
+       
+       var heures = addZero(d.getHours());
+       var minutes = addZero(d.getMinutes());
+       
+       dateRecu = dateRecu + ' ' + heures + ':' + minutes;
+
+       return dateRecu;
+       
+    }
     function updateTimer(ceci)
     {
         timerDelay = ceci.value;

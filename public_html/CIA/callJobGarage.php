@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-require_once(dirname(__DIR__).'/../_includes/commonIncludes.php');
+require_once(dirname(__DIR__).'/../_includes/commonIncludes_CIA_CIMO.php');
 
 // NO LOGIN NO NOTHING'
 if( IL_Session::r(IL_SessionVariables::USERNAME) == false )

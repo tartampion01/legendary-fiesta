@@ -22,5 +22,20 @@ class IL_Header{
         echo $title == "" ? "INTER-Livraison" : $title;
     }
     
+    public static function getPageTitleBonCommande($pageName)
+    {   
+        $title = "";
+        
+        switch($pageName){
+            case "boncommande.php":$title = "Bons de commande";break;
+            case "boncommandearchives.php":$title = "Archive";break;
+            case "jobgarage.php":$title = "Garage";break;
+            case "login.php":$title = "Login";break;
+            default:;
+        }
+        
+        echo $title == "" ? "Bons de commande" : $title;
+    }
+    
 }
 ?>

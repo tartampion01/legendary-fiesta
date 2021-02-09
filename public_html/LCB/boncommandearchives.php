@@ -92,7 +92,7 @@
             }
         };
 
-        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=read&archive=1&dateChoisie=" + _dateChoisie, true);
+        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=readArchive&archive=1&dateChoisie=" + _dateChoisie, true);
         xhttp.send();
     }
     function deleteRow(pkBonCommande){

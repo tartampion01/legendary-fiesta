@@ -1389,20 +1389,21 @@ table.tableHaut tr td.ajouter { width: 9%;}
 
 table.tableData tr.trHeader td { font-size: 13px; font-family: verdana;font-weight: bold;background-color: gray;}
 table.tableData tr td { font-size: 11px; font-weight: bold; font-family: verdana;}
+table.tableData tr.trHeader td.sort{cursor:pointer;text-decoration:underline;}
 
 table.tableData tr td.edit{ width: 1%;}
-table.tableData tr td.bonCommande { width: 11%;}
+table.tableData tr td.bonCommande { width: 7%;}
 table.tableData tr td.fournisseur { width: 15%;padding-right: 3px;}
-table.tableData tr td.av { width: 7%;}
+table.tableData tr td.av { width: 4%;}
 table.tableData tr td.heure { width: 4%;}
 table.tableData tr td.date { width: 6%;padding-right: 3px;}
 /* table.tableData tr td.chauffeur { width: 15%;} */
 /* table.tableData tr td.lienChauffeur { width: 15px; text-align: left;} */
-table.tableData tr td.statut { width: 10%;}
-table.tableData tr td.dateRecu { width: 4%;padding-right: 3px;}
-table.tableData tr td.avRecu { width: 7%;}
-table.tableData tr td.commentaire { width: 25%;}
-table.tableData tr td.ajouter { width: 9%;padding-top: 5px;}
+table.tableData tr td.statut { width: 6%;}
+table.tableData tr td.dateRecu { width: 8%;padding-right: 3px;}
+table.tableData tr td.avRecu { width: 4%;}
+table.tableData tr td.commentaire { width: 38%;}
+table.tableData tr td.ajouter { width: 3%;padding-top: 5px;}
 
 table.tableData tr td select{background-color: #ff6666;}
 table.tableData tr td select.Attribue{background-color: #ffff66;}
@@ -1562,6 +1563,7 @@ table.tableData tr.rowEdit{
   visibility: visible;
 }
 
+/*
 .tbBonCommande{width:80px; font-size: 13px;}
 .tbFournisseur{width:190px; font-size: 13px;}
 .tbAV{width: 50px; font-size: 13px;}
@@ -1572,6 +1574,16 @@ table.tableData tr.rowEdit{
 .tbDateRecu{width:100px; font-size: 13px;}
 .tbAVRecu{width: 50px; font-size: 13px;}
 .tbCommentaireElargi{width:500px; font-size: 13px;}
+*/
+.tbBonCommande{width:97%; font-size: 13px;}
+.tbFournisseur{width:97%; font-size: 13px;}
+.tbAV{width: 97%; font-size: 13px;}
+.tbHeure{width:97%; font-size: 13px;}
+.tbDate{width:97%; font-size: 13px;}
+.tbCommentaire{width:97%; font-size: 13px;}
+.tbDateRecu{width:97%; font-size: 13px;}
+.tbAVRecu{width: 97%; font-size: 13px;}
+.tbCommentaireElargi{width:97%; font-size: 11px;}
 
 .tbEdit{
     

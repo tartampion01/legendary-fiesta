@@ -84,71 +84,74 @@
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
-        showBonCommandes();
-        
+        showBonCommandes();        
     }    
     
     function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("tableJobGarage");
+        table = document.getElementById("tbBonCommandes");
         switching = true;
         // Set the sorting direction to ascending:
 
         /* Make a loop that will continue until
         no switching has been done: */
         while (switching) {
-          // Start by saying: no switching is done:
-          switching = false;
-          rows = table.rows;
-          /* Loop through all table rows (except the
-          first, which contains table headers): */
-          // -2 because of empty row at bottom  
-          for (i = 1; i < (rows.length - 2); i++) {
-            // Start by saying there should be no switching:
-            shouldSwitch = false;
-            /* Get the two elements you want to compare,
-            one from current row and one from the next: */
-            //x = rows[i].getElementsByTagName("TD")[n];
-            x = rows[i].cells[n].getElementsByTagName('input')[0].value;
-            //y = rows[i + 1].getElementsByTagName("TD")[n];
-            y = rows[i + 1].cells[n].getElementsByTagName('input')[0].value;
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
 
-            /* Check if the two rows should switch place,
-            based on the direction, asc or desc: */
-            if (_dir == "asc") {
-              if (x.toLowerCase() > y.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            } else if (_dir == "desc") {
-              if (x.toLowerCase() < y.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
+            if( rows.length > 3){
+                /* Loop through all table rows (except the
+                first, which contains table headers): */
+                // -2 because of empty row at bottom  
+                for (i = 1; i < (rows.length - 2); i++) {
+                    // Start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /* Get the two elements you want to compare,
+                    one from current row and one from the next: */
+                    //x = rows[i].getElementsByTagName("TD")[n];
+                    x = rows[i].cells[n].getElementsByTagName('input')[0].value;
+                    //y = rows[i + 1].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].cells[n].getElementsByTagName('input')[0].value;
+
+                    /* Check if the two rows should switch place,
+                    based on the direction, asc or desc: */
+                    if (_dir == "asc") {
+                        if (x.toLowerCase() > y.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (_dir == "desc") {
+                        if (x.toLowerCase() < y.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /* If a switch has been marked, make the switch
+                    and mark that a switch has been done: */
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    // Each time a switch is done, increase this count by 1:
+                    switchcount ++;
+                }
+                else
+                {
+                    /* If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again. */
+                    if (switchcount == 0 && _dir == "asc") {
+                        _dir = "desc";
+                        switching = true;
+                    } else if( switchcount == 0 && _dir == "desc") {
+                        _dir = "asc";
+                        switching = true;
+                    }
+                }
             }
-          }
-          if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            // Each time a switch is done, increase this count by 1:
-            switchcount ++;
-          } else {
-            /* If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && _dir == "asc") {
-              _dir = "desc";
-              switching = true;
-            } else if( switchcount == 0 && _dir == "desc") {
-                _dir = "asc";
-                switching = true;
-            }
-          }
         }
-        
     }
     
     function ClearTopData()
@@ -174,20 +177,23 @@
         
         // Update champ dateRecu
         var dateRecu = "";
+        var avRecu = "";
         var dataToAdd = "";
         if( dropDown.value.localeCompare("Recu") == 0 )
         {
             dateRecu = getDateHeureRecu();
-            document.getElementById('tbDateRecu_' + pkBonCommande).value = dateRecu;
-            dataToAdd = "&oper=updateStatutEtDateRecu&1=" + pkBonCommande + "&2=" + dropDown.value + "&3=" + dateRecu;
+            avRecu = document.getElementById("tbAVRecu_" + pkBonCommande).value;
         }
-        else{       
-            dataToAdd = "&oper=updateStatut&1=" + pkBonCommande + "&2=" + dropDown.value;
+        else
+        {
+            document.getElementById("tbDateRecu_" + pkBonCommande).value = "";
+            document.getElementById("tbAVRecu_" + pkBonCommande).value = "";
         }
-
+        
+        dataToAdd = "&oper=updateStatutEtDateRecuEtAvRecu&1=" + pkBonCommande + "&2=" + dropDown.value + "&3=" + dateRecu + "&4=" + avRecu;
+        
         xhttp.open("GET", "callBonCommande.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
-        
     }
     
     function updateAvRecu(tb, pkBonCommande)
@@ -221,7 +227,7 @@
             }
         };
 
-        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=readWithoutDriver", true);
+        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=read", true);
         xhttp.send();
     }
     
@@ -349,7 +355,7 @@
         <table style="width:100%;background-color: #FFFF99;">
             <tr>
                 <td style="width:30%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/LOGO_inter/logo_FFFF99_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
-                <td style="width:45%;text-align:center;">
+                <td style="width:45%;text-align:left;">
                     <label class="h1bonCommande">Bons de commande</label>
                 </td>
                 <td style="width:25%;text-align:right;" valign="middle">    
@@ -404,7 +410,7 @@
                 <td class="ajouter"></td>
             </tr>
             <tr>
-                <td class="bonCommande"><input type="text" class="tbBonCommande" maxlength="10" id="tbBonCommande" name="tbBonCommande"></td>
+                <td class="bonCommande"><input type="text" class="tbBonCommande" id="tbBonCommande" name="tbBonCommande"></td>
                 <td class="fournisseur">
                     <input type="text" class="tbFournisseur" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
                     <datalist class="input" id="dlFournisseur" name="dlFournisseur">

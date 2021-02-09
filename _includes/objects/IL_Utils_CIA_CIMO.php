@@ -298,7 +298,7 @@ class IL_Utils
         return $data;
     }
     
-    public static function getBonCommandeWithoutDriver($succursale){
+    public static function getBonCommande($succursale){
         
         /*
         $data = "<th># de commande</th>";
@@ -313,15 +313,16 @@ class IL_Utils
          */
         $data = '<tr class="trHeader">
                     <td class="edit"></td>
-                    <td class="bonCommande"># de commande</td>
-                    <td class="fournisseur">Fournisseur</td>
-                    <td class="av">AV</td>
-                    <td class="heure">Heure</td>
-                    <td class="date">Date</td>
-                    <td class="statut">Statut</td>
-                    <td class="dateRecu">Date Reçu</td>
-                    <td class="avRecu">AV Reçu</td>
-                    <td class="commentaire">Commentaire</td>
+                    <td class="bonCommande sort" onclick="sortTable(1);" ># comm.&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="fournisseur sort" onclick="sortTable(2);">Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="av sort" onclick="sortTable(3);">AV&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="heure sort" onclick="sortTable(4);">Heure<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="date sort" onclick="sortTable(5);">Date&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg indexStatut"></td>
+                    <td class="statut sort" onclick="sortTable(6);">Statut&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="dateRecu sort" onclick="sortTable(7);">Date Reçu&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="avRecu sort" onclick="sortTable(9);">AV Reçu&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="commentaire sort" onclick="sortTable(10);">Commentaire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="ajouter"></td>
                 </tr>';
         $conn = IL_Database::getConn();
@@ -337,35 +338,42 @@ class IL_Utils
                 while($row = mysqli_fetch_assoc($result)) {
                     $pkBonCommande = $row["pkBonCommande"];
                     
+//
                     $data .= "<tr class='border_bottom' id='row_" . $pkBonCommande . "' class=''>";
                     $data .= "<td id='cbEdit_" . $pkBonCommande . "' class='edit'><input title='Modifier cette ligne' type='radio' id='radioEdit' name='radioEdit' class='chkEditRow' onclick='editMode(this," . $pkBonCommande . ");' value='" . $pkBonCommande . "' alt='Modifier'></td>";
                     $data .= "<td class='bonCommande'><input type='text' id='tbBonCommande_" . $pkBonCommande . "' class='tbBonCommande' maxlength='6' value='" . $row["bonCommande"] . "'></input></td>";
                     $data .= "<td class='fournisseur'><input type='text' id='tbFournisseur_" . $pkBonCommande . "' class='tbFournisseur' list='dlFournisseur' value='" . $row["fournisseur"] . "'></input></td>";
-                    $data .= "<td class='av'><input type='text' id='tbAV_" . $pkBonCommande . "' class='tbAffichage av' list='dlAV' value='" . $row["av"] . "'></input></td>";
+                    $data .= "<td class='av'><input type='text' id='tbAV_" . $pkBonCommande . "' class='tbAv' list='dlAV' value='" . $row["av"] . "'></input></td>";
                     $data .= "<td class='heure'><input type='text' id='tbHeure_" . $pkBonCommande . "' class='tbHeure' value='" . $row["heure"] . "'></input></td>";
                     $data .= "<td class='date'><input type='text' id='tbDate_" . $pkBonCommande . "' class='tbDate' value='" . str_replace("Ã©", "é", $row["date"]) . "'></input></td>";
                     
+                    // 3 possibilités de statut:
+                    // En cours, Attribue, Recu
                     $statut = "";
+                    $indexStatut = -1; // pour t5rier la colonne selon l'importance voulu et non la valeur du texte
                     if( $row['statut'] == 'En cours')
                     {
                         $statut = '<select class="En cours" onchange="updateStatut(this,\'' . $pkBonCommande . '\');">';
                         $statut .= '<option selected>En cours</option><option>Attribue</option><option>Recu</option></select>';
+                        $indexStatut = 2;
                     }
                     elseif( $row['statut'] == 'Attribue' )
                     {
                         $statut = '<select class="Attribue" onchange="updateStatut(this,\'' . $pkBonCommande . '\');">';
                         $statut .= '<option>En cours</option><option selected>Attribue</option><option>Recu</option></select>';
+                        $indexStatut = 1;
                     }
                     else
                     {
                         $statut = '<select class="Recu" onchange="updateStatut(this,\'' . $pkBonCommande . '\');">';
                         $statut .= '<option>En cours</option><option>Attribue</option><option selected>Recu</option></select>';
+                        $indexStatut = 3;
                     }
                     
-                    $data .= "<td class='statut'>$statut</td>";
+                    $data .= "<td class='jg indexStatut'><input type='text' id='tbIndexStatut_" . $pkBonCommande . "' class='jg tbIndexStatut' value='" . $indexStatut . "'></input></td><td class='jg statut'>$statut</td>";
                     //$data .= '<td class="textarea"><textarea rows="1" cols="60" id="tbCommentaire_' . $pkBonCommande . '">' . htmlspecialchars($row["commentaire"]) . '</textarea></td>';
                     $data .= "<td class='dateRecu'><input type='text' id='tbDateRecu_" . $pkBonCommande . "' class='tbDateRecu' value='" . str_replace("Ã©", "é", $row["dateRecu"]) . "'></input></td>";
-                    $data .= "<td class='avRecu'><input type='text' id='tbAVRecu_" . $pkBonCommande . "' onBlur='updateAvRecu(this,\"" . $pkBonCommande . "\");' class='tbAffichage avRecu' list='dlAV' value='" . $row["avRecu"] . "'></input></td>";
+                    $data .= "<td class='avRecu'><input type='text' id='tbAVRecu_" . $pkBonCommande . "' onBlur='updateAvRecu(this,\"" . $pkBonCommande . "\");' class='tbAvRecu' list='dlAV' value='" . $row["avRecu"] . "'></input></td>";
                     $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkBonCommande . '" class="tbCommentaireElargi" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
                     $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkBonCommande . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkBonCommande"] . ");' alt='Sauvegarder'>";
                     $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='if( confirmerSuppression(\"" . $row["bonCommande"] . "\"))deleteRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td></tr>";
@@ -409,19 +417,21 @@ class IL_Utils
          */
         $data = '<tr class="trHeader">
                     <td class="edit"></td>
-                    <td class="bonCommande"># de commande</td>
+                    <td class="bonCommande"># comm.</td>
                     <td class="fournisseur">Fournisseur</td>
                     <td class="av">AV</td>
                     <td class="heure">Heure</td>
                     <td class="date">Date</td>
                     <td class="statut">Statut</td>
+                    <td class="dateRecu">Date Reçu</td>
+                    <td class="avRecu">AV Reçu</td>
                     <td class="commentaire">Commentaire</td>
                     <td class="ajouter"></td>
                 </tr>';
         $conn = IL_Database::getConn();
         mysqli_set_charset($conn,"utf8");
         
-        $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, heure, date, chauffeur, statut, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=1";
+        $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, heure, date, chauffeur, statut, dateRecu, avRecu, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=1 ORDER BY pkBonCommande DESC";
         
         $result = mysqli_query($conn, $sql);
         
@@ -442,22 +452,24 @@ class IL_Utils
                     $statut = "";
                     if( $row['statut'] == 'En cours')
                     {
-                        $statut = '<select class="En cours" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut = '<select class="En cours" disabled>';
                         $statut .= '<option selected>En cours</option><option>Attribue</option><option>Recu</option></select>';
                     }
                     elseif( $row['statut'] == 'Attribue' )
                     {
-                        $statut = '<select class="Attribue" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut = '<select class="Attribue" disabled>';
                         $statut .= '<option>En cours</option><option selected>Attribue</option><option>Recu</option></select>';
                     }
                     else
                     {
-                        $statut = '<select class="Recu" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut = '<select class="Recu" disabled>';
                         $statut .= '<option>En cours</option><option>Attribue</option><option selected>Recu</option></select>';
                     }
                     
                     $data .= "<td class='statut'>$statut</td>";
                     //$data .= '<td class="textarea"><textarea rows="1" cols="60" id="tbCommentaire_' . $pkBonCommande . '">' . htmlspecialchars($row["commentaire"]) . '</textarea></td>';
+                    $data .= "<td class='dateRecu'><input type='text' id='tbDateRecu_" . $pkBonCommande . "' class='tbDateRecu' value='" . str_replace("Ã©", "é", $row["dateRecu"]) . "'></input></td>";
+                    $data .= "<td class='avRecu'><input type='text' id='tbAV_" . $pkBonCommande . "' class='tbAvRecu' list='dlAV' value='" . $row["av"] . "'></input></td>";
                     $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkBonCommande . '" class="tbCommentaireElargi" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
                     $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkBonCommande . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkBonCommande"] . ");' alt='Sauvegarder'>";
                     $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='deleteRow(" . $row["pkBonCommande"] . ");' alt='Supprimer'></td></tr>";
@@ -473,6 +485,8 @@ class IL_Utils
                               <td class="chauffeur"></td>
                               <td class="lienChauffeur"></td>
                               <td class="statut"></td>
+                              <td class="dateRecu"></td>
+                              <td class="avRecu"></td>
                               <td class="commentaire"></td>
                               <td class="ajouter"></td></tr>';
             }
@@ -794,7 +808,7 @@ class IL_Utils
         return $data;
     }
     
-    public static function getBonCommande($succursale){
+    public static function getBonCommande__($succursale){
         
         /*
         $data = "<th># de commande</th>";
@@ -982,11 +996,11 @@ class IL_Utils
         return "Bon de commande modifié - Statut";
     }
     
-    public static function updateStatutEtDateRecu($pkBonCommande, $nouveauStatut, $dateRecu)
+    public static function updateStatutEtDateRecuEtAvRecu($pkBonCommande, $nouveauStatut, $dateRecu, $avRecu)
     {
         $conn = IL_Database::getConn();
         
-        mysqli_query($conn, "UPDATE bon_commande SET statut='$nouveauStatut', dateRecu='$dateRecu' WHERE pkBonCommande='$pkBonCommande'");
+        mysqli_query($conn, "UPDATE bon_commande SET statut='$nouveauStatut', dateRecu='$dateRecu', avRecu='$avRecu' WHERE pkBonCommande='$pkBonCommande'");
         
         return "Bon de commande modifié - Statut Date";
     }

@@ -360,11 +360,11 @@ function sortTable(n) {
     <form id="frm" name="frm" action=""> 
         <table style="width:100%; background-color: #96B4C1;">
             <tr>
-                <td style="width:40%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/LOGO_inter/logo_96B4C1_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
-                <td style="width:40%;text-align:center;">
+                <td style="width:30%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/LOGO_inter/logo_96B4C1_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
+                <td style="width:45%;text-align:left;">
                     <label class="h1bonCommande">Jobs Garage</label>
                 </td>
-                <td style="width:20%;text-align:right;" valign="middle">    
+                <td style="width:25%;text-align:right;" valign="middle">    
                     
                     <table class="tableMenuTop">
                         <tr>

@@ -29,7 +29,6 @@
     <?php echo "var succ = '" . IL_Session::r(IL_SessionVariables::SUCCURSALE) . "';" ?>
         
     var timerDelay = 60000;
-    var _dir = "asc";
 
     function editMode(ceci, rowId){
         

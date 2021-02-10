@@ -5,25 +5,11 @@
     <?php echo "var succ = '" . IL_Session::r(IL_SessionVariables::SUCCURSALE) . "';" ?>
         
     var timerDelay = 60000;
-    var _dir = "asc";
     
     function editMode(ceci, rowId){
         
         clearTimer();
 
-        /* code for check box
-        if( ceci.checked == true )
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneVisible';
-            document.getElementById('row_' + rowId).className = 'rowEdit';
-        }
-        else
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneHidden';
-            document.getElementById('row_' + rowId).className = '';
-            updateBonCommandes();
-        }*/
-        
         // RADIO BUTTONS
         // Un seul bouton
         if( typeof document.frm.radioEdit.length == 'undefined' )

@@ -50,10 +50,7 @@ if(isset($_COOKIE['username'])) {
     <script type="application/javascript" src="../assets/js/sort_table.js"></script>
     
     <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande_LCB.css" />
-    <link rel="stylesheet" type="text/css" href="../../public_html/assets/css/bootstrap.css" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">    
     <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
 </head>
-<!--<div class="offline-ui"></div>-->
 <div class="loading" style="display: none;">Loading&#8230;</div>

@@ -37,23 +37,18 @@ if(isset($_COOKIE['USERNAME'])) {
 ?>
 <head>
     <title>
-        CIMO-Pickup - <?PHP IL_Header::getPageTitleBonCommande($NOMPAGE); ?>
-        
+        CIMO-Pickup - <?PHP IL_Header::getPageTitleBonCommande($NOMPAGE); ?>        
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
-    <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande_CIMO.css" />
-    <link rel="stylesheet" type="text/css" href="../../public_html/assets/css/bootstrap.css" />
-    
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="application/javascript" src="../assets/js/sort_table.js"></script>
     
+    <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande_CIMO.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
 </head>
-    
-    <!--<div class="offline-ui"></div>-->
-    <div class="loading" style="display: none;">Loading&#8230;</div>
+<div class="loading" style="display: none;">Loading&#8230;</div>

@@ -1,3 +1,4 @@
+var _dir = "asc";
 function sort_table(n, tableName) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById(tableName);
@@ -64,9 +65,10 @@ function sort_table(n, tableName) {
                 }
             }
         }
-        if(BREAKFREE > 1000)
+        if(BREAKFREE > 500)
         {
-            exit;
+            console.log("_cnt:" + BREAKFREE.toString());
+            return;
         }
     }
 }

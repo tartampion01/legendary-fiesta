@@ -1383,17 +1383,18 @@ table.tableHaut tr td.ajouter { width: 7%;}
 table.tableData tr.trHeader td { font-size: 13px; font-family: verdana;font-weight: bold;background-color: gray;}
 table.tableData tr td { font-size: 11px; font-weight: bold; font-family: verdana;}
 
+table.tableData tr td{padding-right: 1px;}
 table.tableData tr td.edit{ width: 1%;}
-table.tableData tr td.bonCommande { width: 12%;}
+table.tableData tr td.bonCommande { width: 8%;font-size: 11px;}
 table.tableData tr td.fournisseur { width: 12%;}
-table.tableData tr td.av { width: 3%;}
+table.tableData tr td.av { width: 5%;}
 table.tableData tr td.heure { width: 5%;}
 table.tableData tr td.date { width: 5%;}
-table.tableData tr td.chauffeur { width: 15%;}
-table.tableData tr td.lienChauffeur { width: 15px; text-align: left;}
-table.tableData tr td.statut { width: 12%;}
-table.tableData tr td.commentaire { width: 26%;}
-table.tableData tr td.ajouter { width: 7%;padding-top: 5px;}
+/*table.tableData tr td.chauffeur { width: 15%;}
+table.tableData tr td.lienChauffeur { width: 15px; text-align: left;}*/
+table.tableData tr td.statut { width: 7%;}
+table.tableData tr td.commentaire { width: 45%;}
+table.tableData tr td.ajouter { width: 10%;padding-top: 5px;}
 
 table.tableData tr td select{background-color: #ff6666;}
 table.tableData tr td select.Attribue{background-color: #ffff66;}
@@ -1427,31 +1428,32 @@ table.tableData tr.trHeader td.jg.transport{cursor:pointer;text-decoration:under
 table.tableData tr.trHeader td.jg.statut{cursor:pointer;text-decoration:underline;}
 table.tableData tr.trHeader td.jg.commentaire{cursor:pointer;text-decoration:underline;}
 
-table.tableData tr td.jg { font-size: 11px; font-weight: bold; font-family: verdana;}
+table.tableData tr td.jg { font-size: 11px; font-weight: bold; font-family: verdana;padding:0px;}
 
 table.tableData tr td.jg.edit{ width: 1%;}
 table.tableData tr td.jg.jobGarage { width: 6%;}
 table.tableData tr td.jg.av { width: 3%;}
 table.tableData tr td.jg.fournisseur { width: 10%;}
-table.tableData tr td.jg.vendeur { width: 10%;}
+table.tableData tr td.jg.vendeur { width: 5%;}
 table.tableData tr td.jg.heure { width: 5%;}
-table.tableData tr td.jg.date { width: 1%;}
+table.tableData tr td.jg.date { width: 5%;}
 table.tableData tr td.jg.indexStatut { width: 0%;display: none;}
-table.tableData tr td.jg.transport { width: 5%;}
-table.tableData tr td.jg.statut { width: 1%;}
-table.tableData tr td.jg.datePrevue { width: 20%;}
-table.tableData tr td.jg.commentaire { width: 26%;}
-table.tableData tr td.jg.ajouter { width: 7%;padding-top: 5px;}
+table.tableData tr td.jg.transport { width: 7%;}
+table.tableData tr td.jg.statut { width: 7%;}
+table.tableData tr td.jg.datePrevue { width: 10%;}
+table.tableData tr td.jg.commentaire { width: 30%;}
+table.tableData tr td.jg.ajouter { width: 5%;padding-top: 5px;}
 
-table.tableData tr td select.jg.transport{width:125px;background-color: #eeeeee;font-size:11px;}
-table.tableData tr td select.jg.Acommander{width:110px;background-color: #66ff66;font-size:11px;}
-table.tableData tr td select.jg.Commandee{width:110px;background-color: #ff6666;font-size:11px;}
-table.tableData tr td select.jg.Transit{width:110px;background-color: #ffff66;font-size:11px;}
-table.tableData tr td select.jg.Recu{width:110px;background-color: #9370DB;font-size:11px;}
-table.tableData tr td select.jg.Binjob{width:110px;background-color: #AFEEEE;font-size:11px;}
+table.tableData tr td select.jg.transport{width:120px;background-color: #eeeeee;font-size:11px;}
+table.tableData tr td select.jg.Acommander{width:95px;background-color: #66ff66;font-size:11px;}
+table.tableData tr td select.jg.Commandee{width:95px;background-color: #ff6666;font-size:11px;}
+table.tableData tr td select.jg.Transit{width:95px;background-color: #ffff66;font-size:11px;}
+table.tableData tr td select.jg.Recu{width:95px;background-color: #9370DB;font-size:11px;}
+table.tableData tr td select.jg.Binjob{width:95px;background-color: #AFEEEE;font-size:11px;}
 
 table.tableData tr td.datePrevue label{font-weight: normal;}
 
+/*
 .jg.tbJobGarage{width:55px; font-size: 11px;}
 .jg.tbAV{width:20px; font-size: 11px;}
 .jg.tbVendeur{width: 120px; font-size: 11px;}
@@ -1463,6 +1465,19 @@ table.tableData tr td.datePrevue label{font-weight: normal;}
 .jg.tbTransport{width:120px; font-size: 11px;}
 .jg.tbCommentaire{width:300px; font-size: 11px;}
 .jg.tbCommentaireElargi{width:300px; font-size: 11px;}
+*/
+
+.jg.tbJobGarage{width:98%; font-size: 11px;}
+.jg.tbAV{width:98%; font-size: 11px;}
+.jg.tbVendeur{width: 98%; font-size: 11px;}
+.jg.tbFournisseur{width:98%; font-size: 11px;}
+.jg.tbHeure{width:98%; font-size: 11px;}
+.jg.tbDate{width:98%; font-size: 11px;}
+.jg.tbDatePrevue{width:45%; font-size: 11px;}
+.jg.tbIndexStatut{width:0px; font-size: 11px;}
+.jg.tbTransport{width:98%; font-size: 11px;}
+.jg.tbCommentaire{width:98%; font-size: 11px;}
+.jg.tbCommentaireElargi{width:98%; font-size: 11px;}
 
 .jg.inputCombo {
   width:120px;
@@ -1553,6 +1568,7 @@ table.tableData tr.rowEdit{
   visibility: visible;
 }
 
+/*
 .tbBonCommande{width:50px; font-size: 13px;}
 .tbFournisseur{width:200px; font-size: 13px;}
 .tbAV{width: 30px; font-size: 13px;}
@@ -1561,6 +1577,16 @@ table.tableData tr.rowEdit{
 .tbChauffeur{width:100px; font-size: 13px;}
 .tbCommentaire{width:200px; font-size: 13px;}
 .tbCommentaireElargi{width:500px; font-size: 13px;}
+*/
+
+.tbBonCommande{width:97%; font-size: 13px;}
+.tbFournisseur{width:97%; font-size: 13px;}
+.tbAV{width: 97%; font-size: 13px;}
+.tbHeure{width:97%; font-size: 13px;}
+.tbDate{width:97%; font-size: 13px;}
+.tbChauffeur{width:97%; font-size: 13px;}
+.tbCommentaire{width:97%; font-size: 13px;}
+.tbCommentaireElargi{width:97%; font-size: 13px;}
 
 .tbEdit{
     

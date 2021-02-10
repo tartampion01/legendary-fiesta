@@ -9,19 +9,6 @@
     function editMode(ceci, rowId){
         
         clearTimer();
-
-        /* code for check box
-        if( ceci.checked == true )
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneVisible';
-            document.getElementById('row_' + rowId).className = 'rowEdit';
-        }
-        else
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneHidden';
-            document.getElementById('row_' + rowId).className = '';
-            updateJobGarage();
-        }*/
         
         // RADIO BUTTONS
         // Un seul bouton
@@ -266,11 +253,11 @@
     <form id="frm" name="frm" action=""> 
         <table style="width:100%;">
             <tr>
-                <td style="width:45%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
-                <td style="width:45%;text-align:center;">
+                <td style="width:30%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/LOGO_inter/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
+                <td style="width:60%;text-align:left;">
                     <label class="h1bonCommande">Jobs Garage Archivées</label>
                 </td>
-                <td style="width:10%;text-align:right;" valign="middle">    
+                <td style="width:10%;text-align:right;" valign="middle">
                     
                     <table class="tableMenuTop">
                         <tr>

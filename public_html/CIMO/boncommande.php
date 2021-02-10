@@ -92,16 +92,18 @@
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("tbBonCommandes");
         switching = true;
-        // Set the sorting direction to ascending:
-
+        var BREAKFREE = 0;
+        
         /* Make a loop that will continue until
         no switching has been done: */
         while (switching) {
+            BREAKFREE++; // PREVENT INFINITE LOOP ie. ALL VALUES IN COLUMN HAVE SAME VALUE
+            
             // Start by saying: no switching is done:
             switching = false;
             rows = table.rows;
 
-            if( rows.length > 3){
+            if( rows.length > 3){ // 3 ROWS: Header, Footer and 1 row of DATA! NO SORT UNDER 3
                 /* Loop through all table rows (except the
                 first, which contains table headers): */
                 // -2 because of empty row at bottom  
@@ -151,6 +153,10 @@
                         switching = true;
                     }
                 }
+            }
+            if(BREAKFREE > 1000)
+            {
+                exit;
             }
         }
     }

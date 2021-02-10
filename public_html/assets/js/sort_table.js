@@ -7,7 +7,7 @@ function sort_table(n, tableName) {
     /* Make a loop that will continue until
     no switching has been done: */
     while (switching) {
-        BREAKFREE++; // PREVENT INFINITE LOOP ie. ALL VALUES IN COLUMN HAVE SAME VALUE
+        BREAKFREE++; // PREVENT INFINITE LOOP ie. ALL CONTROLS IN COLUMN HAVE SAME VALUE
 
         // Start by saying: no switching is done:
         switching = false;

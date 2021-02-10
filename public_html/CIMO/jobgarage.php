@@ -29,88 +29,11 @@
     <?php echo "var succ = '" . IL_Session::r(IL_SessionVariables::SUCCURSALE) . "';" ?>
         
     var timerDelay = 60000;
-    var _dir = "asc";
-
-function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("tableJobGarage");
-        switching = true;
-        // Set the sorting direction to ascending:
-
-        /* Make a loop that will continue until
-        no switching has been done: */
-        while (switching) {
-          // Start by saying: no switching is done:
-          switching = false;
-          rows = table.rows;
-          /* Loop through all table rows (except the
-          first, which contains table headers): */
-          // -2 because of empty row at bottom  
-          for (i = 1; i < (rows.length - 2); i++) {
-            // Start by saying there should be no switching:
-            shouldSwitch = false;
-            /* Get the two elements you want to compare,
-            one from current row and one from the next: */
-            //x = rows[i].getElementsByTagName("TD")[n];
-            x = rows[i].cells[n].getElementsByTagName('input')[0].value;
-            //y = rows[i + 1].getElementsByTagName("TD")[n];
-            y = rows[i + 1].cells[n].getElementsByTagName('input')[0].value;
-
-            /* Check if the two rows should switch place,
-            based on the direction, asc or desc: */
-            if (_dir == "asc") {
-              if (x.toLowerCase() > y.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            } else if (_dir == "desc") {
-              if (x.toLowerCase() < y.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            }
-          }
-          if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            // Each time a switch is done, increase this count by 1:
-            switchcount ++;
-          } else {
-            /* If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && _dir == "asc") {
-              _dir = "desc";
-              switching = true;
-            } else if( switchcount == 0 && _dir == "desc") {
-                _dir = "asc";
-                switching = true;
-            }
-          }
-        }
-        
-    }
     
     function editMode(ceci, rowId){
         
         clearTimer();
 
-        /* code for check box
-        if( ceci.checked == true )
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneVisible';
-            document.getElementById('row_' + rowId).className = 'rowEdit';
-        }
-        else
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneHidden';
-            document.getElementById('row_' + rowId).className = '';
-            updateJobGarage();
-        }*/
-        
         // RADIO BUTTONS
         // Un seul bouton
         if( typeof document.frm.radioEdit.length == 'undefined' )
@@ -302,8 +225,6 @@ function sortTable(n) {
 
     function getHeure(ceci){
        var d = new Date()
-       //alert( d.getHours() );
-       //alert( d.getHours() );
        var heures = addZero(d.getHours());
        var minutes = addZero(d.getMinutes());
 
@@ -320,14 +241,12 @@ function sortTable(n) {
     
     function highlightRadioAM(ceci)
     {
-        //alert( ceci.id.replace('AM','PM') + 'label' );
         document.getElementById(ceci.id + 'label').style.backgroundColor = "#66FF99";
         document.getElementById(ceci.id.replace('AM','PM') + 'label').style.backgroundColor = "#C5C5C5";
     }
     
     function highlightRadioPM(ceci)
     {
-        //alert( ceci.id.replace('PM','AM') + 'label' );
         document.getElementById(ceci.id.replace('PM','AM') + 'label').style.backgroundColor = "#C5C5C5";
         document.getElementById(ceci.id + 'label').style.backgroundColor = "#CC9966";
     }

@@ -282,10 +282,9 @@ class IL_Utils
                               <td class="bonCommande"></td>
                               <td class="fournisseur"></td>
                               <td class="av"></td>
-                              <td class="heure"></td>
+                              <td class="heure"></td>s
                               <td class="date"></td>
                               <td class="chauffeur"></td>
-                              <td class="lienChauffeur"></td>
                               <td class="statut"></td>
                               <td class="commentaire"></td>
                               <td class="ajouter"></td></tr>';
@@ -313,22 +312,22 @@ class IL_Utils
          */
         $data = '<tr class="trHeader">
                     <td class="edit"></td>
-                    <td class="bonCommande sort" onclick="sortTable(1);" ># comm.&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="fournisseur sort" onclick="sortTable(2);">Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="av sort" onclick="sortTable(3);">AV&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="heure sort" onclick="sortTable(4);">Heure<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="date sort" onclick="sortTable(5);">Date&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="bonCommande sort" onclick="sort_table(1, this.parentNode.parentNode.parentNode.id);" ># comm.&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="fournisseur sort" onclick="sort_table(2, this.parentNode.parentNode.parentNode.id);">Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="av sort" onclick="sort_table(3, this.parentNode.parentNode.parentNode.id);">AV&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="heure sort" onclick="sort_table(4, this.parentNode.parentNode.parentNode.id);">Heure<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="date sort" onclick="sort_table(5, this.parentNode.parentNode.parentNode.id);">Date&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="jg indexStatut"></td>
-                    <td class="statut sort" onclick="sortTable(6);">Statut&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="dateRecu sort" onclick="sortTable(7);">Date Reçu&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="avRecu sort" onclick="sortTable(9);">AV Reçu&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="commentaire sort" onclick="sortTable(10);">Commentaire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="statut sort" onclick="sort_table(6, this.parentNode.parentNode.parentNode.id);">Statut&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="dateRecu sort" onclick="sort_table(8, this.parentNode.parentNode.parentNode.id);">Date Reçu&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="avRecu sort" onclick="sort_table(9, this.parentNode.parentNode.parentNode.id);">AV Reçu&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="commentaire sort" onclick="sort_table(10, this.parentNode.parentNode.parentNode.id);">Commentaire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="ajouter"></td>
                 </tr>';
         $conn = IL_Database::getConn();
         mysqli_set_charset($conn,"utf8");
         
-        $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, avRecu, heure, date, dateRecu, chauffeur, statut, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=0";
+        $sql = "SELECT pkBonCommande, bonCommande, fournisseur, av, avRecu, heure, date, dateRecu, chauffeur, statut, commentaire, archive FROM bon_commande WHERE succursale='$succursale' AND archive=0 ORDER BY fournisseur ASC";
         
         $result = mysqli_query($conn, $sql);
         
@@ -514,17 +513,17 @@ class IL_Utils
          */
         $data = '<tr class="trHeader">
                     <td class="jg edit"></td>
-                    <td class="jg jobGarage" onclick="sortTable(1);"># job&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="jg av" onclick="sortTable(2);">AV<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="jg vendeur" onclick="sortTable(3);">Demandeur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="jg fournisseur" onclick="sortTable(4);">Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg jobGarage" onclick="sort_table(1, this.parentNode.parentNode.parentNode.id);"># job&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg av" onclick="sort_table(2, this.parentNode.parentNode.parentNode.id);">AV<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg vendeur" onclick="sort_table(3, this.parentNode.parentNode.parentNode.id);">Demandeur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg fournisseur" onclick="sort_table(4, this.parentNode.parentNode.parentNode.id);">Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="jg heure">Heure</td>
                     <td class="jg date">Date</td>                    
-                    <td class="jg transport" onclick="sortTable(7);">Transport&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg transport" onclick="sort_table(7, this.parentNode.parentNode.parentNode.id);">Transport&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="jg indexStatut"></td>
-                    <td class="jg statut" onclick="sortTable(8);">Statut&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg statut" onclick="sort_table(8, this.parentNode.parentNode.parentNode.id);">Statut&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="jg datePrevue">Date prévue</td>
-                    <td class="jg commentaire"onclick="sortTable(11);">Commentaire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg commentaire"onclick="sort_table(11, this.parentNode.parentNode.parentNode.id);">Commentaire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <!--<td class="jg datePrevue">Receptionnee</td>-->
                     <td class="jg ajouter"></td>
                 </tr>';
@@ -629,7 +628,7 @@ class IL_Utils
                         $data .= '<input type="radio" id="rbPM_' . $pkJobGarage . '" name="rbAMouPM_' . $pkJobGarage . '" onclick="highlightRadioPM(this);" value="PM" checked="checked" /><label for="rbPM_' . $pkJobGarage . '" id="rbPM_' . $pkJobGarage . 'label" style="background-color:#CC9966">PM</label></td>';
                     }
                     
-                    $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkJobGarage . '" class="jg tbCommentaire" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
+                    $data .= '<td class="jg commentaire"><input type="text" id="tbCommentaire_' . $pkJobGarage . '" class="jg tbCommentaire" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
                     
                     $checked = "";
                     if( $row["receptionnee"] == "1")
@@ -637,7 +636,7 @@ class IL_Utils
                     
                     //$data .= '<td class="jg receptionnee"><input onClick="updateStatutReceptionnee(this,\'' . $row["pkJobGarage"] . '\');" type="checkbox" id="cbReceptionnee_' . $pkJobGarage . '" class="jg tbRecetpionnee"' . $checked . '></input></td>"';
                     
-                    $data .= "<td class='ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkJobGarage . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkJobGarage"] . ");' alt='Sauvegarder'>";
+                    $data .= "<td class='jg ajouter'>" . "<input title='Sauvegarder la ligne' id='btnAjouter_" . $pkJobGarage . "' type='button' class='boutonSaveLigneHidden' onclick='saveRow(" . $row["pkJobGarage"] . ");' alt='Sauvegarder'>";
                     $data .= "<input type='button' title='Enlever la ligne' class='boutonDelete' onclick='if( confirmerSuppression(\"" . $row["jobGarage"] . "\"))deleteRow(" . $row["pkJobGarage"] . ");' alt='Supprimer'></td></tr>";
                 }
                 
@@ -784,7 +783,7 @@ class IL_Utils
                     
                     //$data .= '<td class="jg receptionnee"><input onClick="updateStatutReceptionnee(this,\'' . $row["pkJobGarage"] . '\');" type="checkbox" id="cbReceptionnee_' . $pkJobGarage . '" class="jg tbRecetpionnee"' . $checked . '></input></td>"';
                     
-                    $data .= "<td class='ajouter'><input type='button' title='Enlever la ligne' class='boutonDelete' onclick='if( confirmerSuppression(\"" . $row["jobGarage"] . "\"))deleteArchive(" . $row["pkJobGarage"] . ");' alt='Supprimer'></td></tr>";
+                    $data .= "<td class='ajouter'><input type='button' title='Enlever la ligne' class='boutonDelete' onclick='deleteArchive(" . $row["pkJobGarage"] . ");' alt='Supprimer'></td></tr>";
                 }
                 
                 $data .= '<tr>

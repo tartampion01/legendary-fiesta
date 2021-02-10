@@ -436,17 +436,17 @@ class IL_Utils
                     $statut = "";
                     if( $row['statut'] == 'En cours')
                     {
-                        $statut = '<select class="En cours" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut = '<select class="En cours" disabled>';
                         $statut .= '<option selected>En cours</option><option>Attribue</option><option>Recu</option></select>';
                     }
                     elseif( $row['statut'] == 'Attribue' )
                     {
-                        $statut = '<select class="Attribue" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut = '<select class="Attribue" disabled>';
                         $statut .= '<option>En cours</option><option selected>Attribue</option><option>Recu</option></select>';
                     }
                     else
                     {
-                        $statut = '<select class="Recu" onchange="updateStatut(this,\'' . $row["pkBonCommande"] . '\');">';
+                        $statut = '<select class="Recu" disabled>';
                         $statut .= '<option>En cours</option><option>Attribue</option><option selected>Recu</option></select>';
                     }
                     
@@ -494,17 +494,17 @@ class IL_Utils
          */
         $data = '<tr class="trHeader">
                     <td class="jg edit"></td>
-                    <td class="jg jobGarage" onclick="sortTable(1);"># job&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="jg av" onclick="sortTable(2);">AV<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="jg vendeur" onclick="sortTable(3);">Demandeur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
-                    <td class="jg fournisseur" onclick="sortTable(4);">Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg jobGarage" onclick="sort_table(1, this.parentNode.parentNode.parentNode.id);"># job&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg av" onclick="sort_table(2, this.parentNode.parentNode.parentNode.id);">AV<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg vendeur" onclick="sort_table(3, this.parentNode.parentNode.parentNode.id);">Demandeur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg fournisseur" onclick="sort_table(4, this.parentNode.parentNode.parentNode.id);">Fournisseur&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="jg heure">Heure</td>
                     <td class="jg date">Date</td>                    
-                    <td class="jg transport" onclick="sortTable(7);">Transport&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg transport" onclick="sort_table(7, this.parentNode.parentNode.parentNode.id);">Transport&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="jg indexStatut"></td>
-                    <td class="jg statut" onclick="sortTable(8);">Statut&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg statut" onclick="sort_table(8, this.parentNode.parentNode.parentNode.id);">Statut&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <td class="jg datePrevue">Date prévue</td>
-                    <td class="jg commentaire"onclick="sortTable(11);">Commentaire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
+                    <td class="jg commentaire"onclick="sort_table(11, this.parentNode.parentNode.parentNode.id);">Commentaire&nbsp;<img class="sortableArrows" src="../assets/images/sortable.png"></img></td>
                     <!--<td class="jg datePrevue">Receptionnee</td>-->
                     <td class="jg ajouter"></td>
                 </tr>';
@@ -609,7 +609,7 @@ class IL_Utils
                         $data .= '<input type="radio" id="rbPM_' . $pkJobGarage . '" name="rbAMouPM_' . $pkJobGarage . '" onclick="highlightRadioPM(this);" value="PM" checked="checked" /><label for="rbPM_' . $pkJobGarage . '" id="rbPM_' . $pkJobGarage . 'label" style="background-color:#CC9966">PM</label></td>';
                     }
                     
-                    $data .= '<td class="commentaire"><input type="text" id="tbCommentaire_' . $pkJobGarage . '" class="jg tbCommentaire" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
+                    $data .= '<td class="jg commentaire"><input type="text" id="tbCommentaire_' . $pkJobGarage . '" class="jg tbCommentaire" value="' . htmlspecialchars($row["commentaire"]) . '"></input></td>';
                     
                     $checked = "";
                     if( $row["receptionnee"] == "1")
@@ -633,7 +633,7 @@ class IL_Utils
                               <td class="jg statut"></td>
                               <td class="jg datePreveu"></td>
                               <td class="jg commentaire"></td>
-                              <td class="ajouter"></td></tr>';
+                              <td class="jg ajouter"></td></tr>';
             }
         }
         catch (Exception $e) {

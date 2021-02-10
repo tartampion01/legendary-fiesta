@@ -31,69 +31,6 @@
     var timerDelay = 60000;
     var _dir = "asc";
 
-function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("tableJobGarage");
-        switching = true;
-        // Set the sorting direction to ascending:
-
-        /* Make a loop that will continue until
-        no switching has been done: */
-        while (switching) {
-          // Start by saying: no switching is done:
-          switching = false;
-          rows = table.rows;
-          /* Loop through all table rows (except the
-          first, which contains table headers): */
-          // -2 because of empty row at bottom  
-          for (i = 1; i < (rows.length - 2); i++) {
-            // Start by saying there should be no switching:
-            shouldSwitch = false;
-            /* Get the two elements you want to compare,
-            one from current row and one from the next: */
-            //x = rows[i].getElementsByTagName("TD")[n];
-            x = rows[i].cells[n].getElementsByTagName('input')[0].value;
-            //y = rows[i + 1].getElementsByTagName("TD")[n];
-            y = rows[i + 1].cells[n].getElementsByTagName('input')[0].value;
-
-            /* Check if the two rows should switch place,
-            based on the direction, asc or desc: */
-            if (_dir == "asc") {
-              if (x.toLowerCase() > y.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            } else if (_dir == "desc") {
-              if (x.toLowerCase() < y.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            }
-          }
-          if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            // Each time a switch is done, increase this count by 1:
-            switchcount ++;
-          } else {
-            /* If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && _dir == "asc") {
-              _dir = "desc";
-              switching = true;
-            } else if( switchcount == 0 && _dir == "desc") {
-                _dir = "asc";
-                switching = true;
-            }
-          }
-        }
-        
-    }
-    
     function editMode(ceci, rowId){
         
         clearTimer();
@@ -360,11 +297,11 @@ function sortTable(n) {
     <form id="frm" name="frm" action=""> 
         <table style="width:100%; background-color: #96B4C1;">
             <tr>
-                <td style="width:40%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/LOGO_inter/logo_96B4C1_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
-                <td style="width:40%;text-align:center;">
+                <td style="width:30%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/LOGO_inter/logo_96B4C1_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
+                <td style="width:45%;text-align:left;">
                     <label class="h1bonCommande">Jobs Garage</label>
                 </td>
-                <td style="width:20%;text-align:right;" valign="middle">    
+                <td style="width:25%;text-align:right;" valign="middle">    
                     
                     <table class="tableMenuTop">
                         <tr>

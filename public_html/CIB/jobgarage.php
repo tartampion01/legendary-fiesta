@@ -29,24 +29,10 @@
     <?php echo "var succ = '" . IL_Session::r(IL_SessionVariables::SUCCURSALE) . "';" ?>
         
     var timerDelay = 60000;
-    var _dir = "asc";
 
     function editMode(ceci, rowId){
         
         clearTimer();
-
-        /* code for check box
-        if( ceci.checked == true )
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneVisible';
-            document.getElementById('row_' + rowId).className = 'rowEdit';
-        }
-        else
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneHidden';
-            document.getElementById('row_' + rowId).className = '';
-            updateJobGarage();
-        }*/
         
         // RADIO BUTTONS
         // Un seul bouton
@@ -238,8 +224,6 @@
 
     function getHeure(ceci){
        var d = new Date()
-       //alert( d.getHours() );
-       //alert( d.getHours() );
        var heures = addZero(d.getHours());
        var minutes = addZero(d.getMinutes());
 
@@ -256,14 +240,12 @@
     
     function highlightRadioAM(ceci)
     {
-        //alert( ceci.id.replace('AM','PM') + 'label' );
         document.getElementById(ceci.id + 'label').style.backgroundColor = "#66FF99";
         document.getElementById(ceci.id.replace('AM','PM') + 'label').style.backgroundColor = "#C5C5C5";
     }
     
     function highlightRadioPM(ceci)
     {
-        //alert( ceci.id.replace('PM','AM') + 'label' );
         document.getElementById(ceci.id.replace('PM','AM') + 'label').style.backgroundColor = "#C5C5C5";
         document.getElementById(ceci.id + 'label').style.backgroundColor = "#CC9966";
     }

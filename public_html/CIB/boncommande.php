@@ -4,8 +4,7 @@
     // WRITE JS VARIABLE WITH PHP SESSION VALUE
     <?php echo "var succ = '" . IL_Session::r(IL_SessionVariables::SUCCURSALE) . "';" ?>
         
-    var timerDelay = 60000;
-    var _dir = "asc";
+    var timerDelay = 60000;    
     
     function editMode(ceci, rowId){
         

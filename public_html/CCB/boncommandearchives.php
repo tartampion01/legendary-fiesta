@@ -1,4 +1,4 @@
-<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CIL.php');?>
+<?php require_once(dirname(__DIR__) . '/../_includes/header/_header_bonCommande_CCB.php');?>
 <script type="text/javascript">
     
     // WRITE JS VARIABLE WITH PHP SESSION VALUE
@@ -11,19 +11,6 @@
     function editMode(ceci, rowId){
         
         clearTimer();
-
-        /* code for check box
-        if( ceci.checked == true )
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneVisible';
-            document.getElementById('row_' + rowId).className = 'rowEdit';
-        }
-        else
-        {
-            document.getElementById('btnAjouter_' + rowId).className = 'boutonSaveLigneHidden';
-            document.getElementById('row_' + rowId).className = '';
-            updateBonCommandes();
-        }*/
         
         // RADIO BUTTONS
         // Un seul bouton
@@ -92,7 +79,7 @@
             }
         };
 
-        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=read&archive=1&dateChoisie=" + _dateChoisie, true);
+        xhttp.open("GET", "callBonCommande.php?succ=" + succ  + "&oper=readArchive&archive=1&dateChoisie=" + _dateChoisie, true);
         xhttp.send();
     }
     function deleteRow(pkBonCommande){
@@ -182,8 +169,8 @@
     <form id="frm" name="frm" action=""> 
         <table>
             <tr>
-                <td style="width:30%;text-align:center;"><img alt='LOGO' style="width: 262px; height: 110px;" src="../assets/images/LOGO_inter/logo_FFFF99_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>
-                <td style="width:50%;text-align:center;">
+                <td style="width:30%;text-align:left;"><img style="width: 388px; height: 81px;" src="../assets/images/LOGO_inter/logo_C5C5C5_<?php echo IL_Session::r(IL_SessionVariables::SUCCURSALE); ?>.png" alt=""/></td>            
+                <td style="width:50%;text-align:left;">
                     <label class="h1bonCommande">Bons de commande Archivés</label>
                 </td>
                 <td style="width:20%;text-align:right;" valign="middle">

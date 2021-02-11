@@ -74,6 +74,7 @@
         var av = document.getElementById('tbAV_' + rowId).value;
         var vendeur = document.getElementById('tbVendeur_' + rowId).value;
         var fournisseur = document.getElementById('tbFournisseur_' + rowId).value;
+        var compagnie = document.getElementById('tbCompagnie_' + rowId).value;
         var heure = document.getElementById('tbHeure_' + rowId).value;
         var date = document.getElementById('tbDate_' + rowId).value;
         var transport = document.getElementById('tbTransport_' + rowId).value;
@@ -89,12 +90,11 @@
             }
         };
 
-        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + jobGarage + "&3=" + av + "&4=" + vendeur + "&5=" + fournisseur + "&6=" + heure + "&7=" + date + "&8=" + transport + "&9=" + datePrevue + "&10=" + AMouPM + "&11=" + commentaire;
+        var dataToAdd = "&oper=updateLigne&1=" + rowId + "&2=" + jobGarage + "&3=" + av + "&4=" + vendeur + "&5=" + fournisseur + "&6=" + compagnie + "&7=" + heure + "&8=" + date + "&9=" + transport + "&10=" + datePrevue + "&11=" + AMouPM + "&12=" + commentaire;
         xhttp.open("GET", "callJobGarage.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
-        
+
         showJobGarage();
-        
     }    
     
     function ClearTopData()
@@ -103,6 +103,7 @@
         document.getElementById('tbAV').value = '';
         document.getElementById('tbVendeur').value = '';
         document.getElementById('tbFournisseur').value = '';
+        document.getElementById('tbCompagnie').value = '';
         document.getElementById('tbHeure').value = '';
         document.getElementById('tbDate').value = '';
         document.getElementById('tbCommentaire').value = '';
@@ -200,6 +201,7 @@
         var av = document.getElementById('tbAV').value;
         var vendeur = document.getElementById('tbVendeur').value;
         var fournisseur = document.getElementById('tbFournisseur').value;
+        var compagnie = document.getElementById('tbCompagnie').value;
         var heure = document.getElementById('tbHeure').value;
         var date = document.getElementById('tbDate').value;
         var transport = document.getElementById('tbTransport').value;
@@ -208,7 +210,7 @@
         var AMouPM = document.getElementById('rbAM').checked ? "AM" : "PM";
         var commentaire = document.getElementById('tbCommentaire').value;
         
-        var dataToAdd = "&oper=add&1=" + jobGarage + "&2=" + av + "&3=" + vendeur + "&4=" + fournisseur + "&5=" + heure + "&6=" + date + "&7=" + transport + "&8=" + statut + "&9=" + datePrevue +  "&10=" + AMouPM + "&11=" + commentaire;
+        var dataToAdd = "&oper=add&1=" + jobGarage + "&2=" + av + "&3=" + vendeur + "&4=" + fournisseur + "&5=" + compagnie + "&6=" + heure + "&7=" + date + "&8=" + transport + "&9=" + statut +  "&10=" + datePrevue + "&11=" + AMouPM + "&12=" + commentaire;
         xhttp.open("GET", "callJobGarage.php?succ=" + succ + dataToAdd, true);
         xhttp.send();
         
@@ -317,6 +319,7 @@
                 <td class="jg av">AV</td>
                 <td class="jg vendeur">Demandeur</td>
                 <td class="jg fournisseur">Fournisseur</td>
+                <td class="jg compagnie">Compagnie</td>
                 <td class="jg heure">Heure</td>
                 <td class="jg date">Date</td>                
                 <td class="jg transport">Transport</td>
@@ -349,7 +352,12 @@
                         <?php echo IL_Utils::getAutoComplete('fournisseurJobGarage', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                 </td>
-                
+                <td class="jg compagnie">
+                    <input type="text" class="jg tbCompagnie" name="tbCompagnie" id="tbCompagnie" list="dlCompagnie">
+                    <datalist class="jg input" id="dlCompagnie" name="dlCompagnie">
+                        <?php echo IL_Utils::getAutoComplete('compagnieJobGarage', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                    </datalist>
+                </td>
                 <td class="heure">
                     <input type="text" class="jg tbHeure" id="tbHeure" onfocus="getHeure(this);" name="tbHeure">
                 </td>

@@ -1370,8 +1370,8 @@ i.fa {
 table.tableHaut tr td.edit { width:1%; }
 table.tableHaut tr td{ font-size: 13px; font-family: verdana;font-weight: bold; }
 table.tableHaut tr td.bonCommande { width: 10%; }
-table.tableHaut tr td.fournisseur { width: 12%; }
 table.tableHaut tr td.av { width: 3%; }
+table.tableHaut tr td.fournisseur { width: 12%; }
 table.tableHaut tr td.heure { width: 5%; }
 table.tableHaut tr td.date { width: 5%; }
 table.tableHaut tr td.chauffeur { width: 15%; }
@@ -1386,10 +1386,10 @@ table.tableData tr td { font-size: 11px; font-weight: bold; font-family: verdana
 table.tableData tr td{padding-right: 1px;}
 table.tableData tr td.edit{ width: 1%;}
 table.tableData tr td.bonCommande { width: 8%;font-size: 11px;}
+table.tableData tr td.av { width: 3%;}
 table.tableData tr td.fournisseur { width: 12%;}
-table.tableData tr td.av { width: 5%;}
 table.tableData tr td.heure { width: 5%;}
-table.tableData tr td.date { width: 5%;}
+table.tableData tr td.date { width: 6%;}
 /*table.tableData tr td.chauffeur { width: 15%;}
 table.tableData tr td.lienChauffeur { width: 15px; text-align: left;}*/
 table.tableData tr td.statut { width: 7%;}
@@ -1407,15 +1407,16 @@ table.tableData tr td select.DS2{background-color: #ff66ff;}
 table.tableHaut tr td.edit.jg { width:1%; }
 table.tableHaut tr td.jg{ font-size: 13px; font-family: verdana;font-weight: bold; }
 table.tableHaut tr td.jg.jobgarage { width: 6%; }
-table.tableHaut tr td.jg.vendeur { width: 10%; }
-table.tableHaut tr td.jg.fournisseur { width: 10%; }
+table.tableHaut tr td.jg.vendeur { width: 8%; }
+table.tableHaut tr td.jg.fournisseur { width: 8%; }
+table.tableHaut tr td.jg.compagnie { width: 8%; }
 table.tableHaut tr td.jg.heure { width: 5%; }
 table.tableHaut tr td.jg.date { width: 1%; }
 table.tableHaut tr td.jg.transport { width: 5%; }
 table.tableHaut tr td.jg.indexStatut { width: 0%;display: none;}
 table.tableHaut tr td.jg.statut { width: 1%; }
 table.tableHaut tr td.jg.datePrevue { width: 13%; }
-table.tableHaut tr td.jg.commentaire { width: 29%;}
+table.tableHaut tr td.jg.commentaire { width: 22%;}
 table.tableHaut tr td.jg.ajouter { width: 8%;}
                 
 table.tableData tr.trHeader td.jg { font-size: 13px; font-family: verdana;font-weight: bold;background-color: gray;}
@@ -1433,15 +1434,16 @@ table.tableData tr td.jg { font-size: 11px; font-weight: bold; font-family: verd
 table.tableData tr td.jg.edit{ width: 1%;}
 table.tableData tr td.jg.jobGarage { width: 4%;}
 table.tableData tr td.jg.av { width: 3%;}
-table.tableData tr td.jg.vendeur { width: 5%;}
+table.tableData tr td.jg.vendeur { width: 7%;}
 table.tableData tr td.jg.fournisseur { width: 8%;}
+table.tableData tr td.jg.compagnie { width: 8%;}
 table.tableData tr td.jg.heure { width: 4%;}
 table.tableData tr td.jg.date { width: 5%;}
 table.tableData tr td.jg.indexStatut { width: 0%;display: none;}
 table.tableData tr td.jg.transport { width: 7%;}
 table.tableData tr td.jg.statut { width: 7%;}
 table.tableData tr td.jg.datePrevue { width: 10%;}
-table.tableData tr td.jg.commentaire { width: 37%;}
+table.tableData tr td.jg.commentaire { width: 27%;}
 table.tableData tr td.jg.ajouter { width: 7%;padding-top: 5px;}
 
 table.tableData tr td select.jg.transport{width:120px;background-color: #eeeeee;font-size:11px;}
@@ -1471,6 +1473,7 @@ table.tableData tr td.datePrevue label{font-weight: normal;}
 .jg.tbAV{width:75%; font-size: 11px;}
 .jg.tbVendeur{width: 95%; font-size: 11px;}
 .jg.tbFournisseur{width:95%; font-size: 11px;}
+.jg.tbCompagnie{width:95%; font-size: 11px;}
 .jg.tbHeure{width:98%; font-size: 11px;}
 .jg.tbDate{width:98%; font-size: 11px;}
 .jg.tbDatePrevue{width:45%; font-size: 11px;}
@@ -1567,6 +1570,27 @@ table.tableData tr.rowEdit{
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.warningTip {
+  position: relative;
+  display: inline-block;
+}
+
+.warningTip .warningTipText {
+  width: 420px;
+  background-color: rgba( 236, 112, 99, 0.65);
+  color: #333333;
+  text-align: left;
+  border-radius: 2px;
+  padding: 2px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 7px;
+  left: 105%;
+}
+
 
 /*
 .tbBonCommande{width:50px; font-size: 13px;}

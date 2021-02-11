@@ -3,7 +3,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once(dirname(__DIR__).'/commonIncludes.php');
+require_once(dirname(__DIR__).'/commonIncludes_CIB.php');
 
 // Personne de 'loggé'
 if( IL_Session::r(IL_SessionVariables::USERNAME) == false )
@@ -41,17 +41,15 @@ if(isset($_COOKIE['username'])) {
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
     <script type="text/json" class="communicator">[{"nop":""}]</script>
     <script type="text/json" class="dsAjaxV2">[{"nop":""}]</script>
-    
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="application/javascript" src="../assets/js/sort_table.js"></script>
     
     <link rel="stylesheet" type="text/css" href="../assets/css/style_bonCommande_CIB.css" />
-    <link rel="stylesheet" type="text/css" href="../../public_html/assets/css/bootstrap.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <link rel="stylesheet" href='<?PHP echo $NOMPAGE ?>' />
 </head>
 <div class="loading" style="display: none;">Loading&#8230;</div>

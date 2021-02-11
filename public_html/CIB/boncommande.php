@@ -191,6 +191,14 @@
         document.getElementById(ceci.id).value = jour + ' ' + mois;
     }
     
+    function warning(display)
+    {
+        var c = document.getElementById("warning");
+        c.style.display = display;
+        
+        c.setAttribute("style", "visibility:" + display + ";");
+    }
+    
     function updateTimer(ceci)
     {
         timerDelay = ceci.value;
@@ -258,8 +266,8 @@
         <table id="tbEntrerBonCommande" class="tableHaut">
             <tr>            
                 <td class="bonCommande"># de commande</td>
-                <td class="fournisseur">Fournisseur</td>
                 <td class="av">AV</td>
+                <td class="fournisseur">Fournisseur</td>
                 <td class="heure">Heure</td>
                 <td class="date">Date</td>
                 <td class="statut">Statut</td>
@@ -267,12 +275,11 @@
                 <td class="ajouter"></td>
             </tr>
             <tr>
-                <td class="bonCommande"><input type="text" class="tbBonCommande" maxlength="6" id="tbBonCommande" name="tbBonCommande"></td>
-                <td class="fournisseur">
-                    <input type="text" class="tbFournisseur" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
-                    <datalist class="input" id="dlFournisseur" name="dlFournisseur">
-                        <?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
-                    </datalist>
+                <td class="bonCommande">
+                    <div class="warningTip">
+                        <span class="warningTipText" id="warning" style="visibility: hidden;">&nbsp;La personne qui crée le PO est responsable de l’enlever </span>
+                    </div>
+                    <input type="text" class="tbBonCommande" maxlength="6" id="tbBonCommande" name="tbBonCommande" onblur="warning('hidden');" onfocus="warning('visible');">
                 </td>
                 <td class="av">
                     <input type="text" class="tbAV" id="tbAV" name="tbAV" list="dlAV">
@@ -280,6 +287,13 @@
                         <?php echo IL_Utils::getAutoComplete('aviseur', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
                 </td>
+                <td class="fournisseur">
+                    <input type="text" class="tbFournisseur" name="tbFournisseur" id="tbFournisseur" list="dlFournisseur">
+                    <datalist class="input" id="dlFournisseur" name="dlFournisseur">
+                        <?php echo IL_Utils::getAutoComplete('fournisseurBonCommande', 0, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
+                    </datalist>
+                </td>
+                
                 <td class="heure"><input type="text" class="tbHeure" id="tbHeure" onfocus="getHeure(this);" name="tbHeure"></td>
                 <td class="date"><input type="text" class="tbDate" id="tbDate" onfocus="getDate(this);" name="tbDate"></td>
                 <!--
@@ -288,7 +302,6 @@
                     <datalist id="dlChauffeur" name="dlChauffeur">
                         <?php //echo IL_Utils::getAutoComplete('chauffeur', 1, IL_Session::r(IL_SessionVariables::SUCCURSALE)); ?>
                     </datalist>
-                    <!--
                     <select id="ddChauffeur" class="inputCombo">
                         <option value="https://my31.geotab.com/">Jean-Guy</option>
                         <option value="https://my31.geotab.com/">Claude</option>
@@ -315,7 +328,7 @@
                         <span class="tooltiptext">Ajouter</span>
                     </div>
                 </td>
-            </tr>
+            </tr>            
         </table>
         <hr>
         <table id="tbBonCommandes" class="tableData" cellspacing="0" cellpadding="0"></table>

@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__DIR__).'/../_includes/commonIncludes.php');
+require_once(dirname(__DIR__).'/../_includes/commonIncludes_CIB.php');
 
 IL_Session::w(IL_SessionVariables::USERNAME,false);
 
